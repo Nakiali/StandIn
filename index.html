@@ -165,6 +165,10 @@ function logout(){
   document.getElementById('auth').style.display='flex';
   document.getElementById('app').style.display='none';
 }
+ function showPage(page) {
+ document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+ document.getElementById('page-' + page).style.display = 'block';
+}
 </script>
 
 </body>
