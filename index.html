@@ -60,10 +60,65 @@ button{background:#0D2B55;color:white;border:none}
 <button onclick="doRegister()">Create Account</button>
 </div>
 
-<div id="app" style="display:none">
-<h1 id="welcome"></h1>
-<p id="role"></p>
-<button onclick="logout()">Logout</button>
+<div id="app" style="display:none; height:100vh; font-family:Arial;">
+
+  <!-- TOP BAR -->
+  <div style="background:#0D2B55;color:white;padding:10px;display:flex;justify-content:space-between;">
+    <div><strong>StandIn Corp</strong></div>
+    <div>
+      <span id="userNameTop"></span>
+      <button onclick="logout()" style="margin-left:10px;">Logout</button>
+    </div>
+  </div>
+
+  <div style="display:flex;height:100%;">
+
+    <!-- SIDEBAR -->
+    <div style="width:200px;background:#eee;padding:10px;">
+      <div><strong>Menu</strong></div>
+      <hr>
+
+      <button onclick="showPage('dashboard')">Dashboard</button><br><br>
+      <button onclick="showPage('book')">Book Engagement</button><br><br>
+      <button onclick="showPage('engagements')">My Engagements</button><br><br>
+
+      <!-- ADMIN ONLY -->
+      <div id="adminMenu" style="display:none;margin-top:20px;">
+        <hr>
+        <strong>Admin</strong><br><br>
+        <button onclick="showPage('admin')">Admin Panel</button>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div style="flex:1;padding:20px;">
+
+      <!-- DASHBOARD -->
+      <div id="page-dashboard" class="page">
+        <h2>Dashboard</h2>
+        <p>Welcome to your dashboard.</p>
+      </div>
+
+      <!-- BOOK -->
+      <div id="page-book" class="page" style="display:none;">
+        <h2>Book Engagement</h2>
+        <p>This will be built next.</p>
+      </div>
+
+      <!-- ENGAGEMENTS -->
+      <div id="page-engagements" class="page" style="display:none;">
+        <h2>My Engagements</h2>
+        <p>No engagements yet.</p>
+      </div>
+
+      <!-- ADMIN -->
+      <div id="page-admin" class="page" style="display:none;">
+        <h2>Admin Panel</h2>
+        <p>Admin controls will go here.</p>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <script>
