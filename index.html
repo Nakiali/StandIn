@@ -1,0 +1,2966 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+<title>StandIn Corp — Platform</title>
+<meta name="description" content="StandIn Corp — Professional Corporate Representation Platform"/>
+<meta name="theme-color" content="#071A36"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="StandIn Corp"/>
+<link rel="manifest" href="./manifest.json"/>
+<link rel="apple-touch-icon" href="./icon-192.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── ROOT & RESET ─────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D2B55; --navy-dk:#071A36; --navy-md:#1A3F72; --navy-lt:#2A5090;
+  --gold:#C49A2A; --gold-lt:#E8B830; --gold-bg:#FDF8EE;
+  --steel:#1A6FA8; --steel-lt:#D0E4F5; --steel-bg:#EBF4FB;
+  --green:#2E7D52; --green-lt:#E8F5EE;
+  --red:#C0522A; --red-lt:#FDEEE8;
+  --purple:#5C2A8A; --purple-lt:#F0EBF8;
+  --white:#FFFFFF; --off:#F7F8FC; --surface:#FFFFFF;
+  --border:#E5E9F2; --border-dk:#CBD5E1;
+  --txt:#1E293B; --txt-md:#475569; --txt-lt:#94A3B8;
+  --shadow:0 1px 4px rgba(13,43,85,.08),0 4px 16px rgba(13,43,85,.06);
+  --shadow-md:0 4px 24px rgba(13,43,85,.14);
+  --shadow-lg:0 12px 48px rgba(13,43,85,.2);
+  --r:8px; --r-lg:12px;
+  --sidebar:240px;
+  --topbar:60px;
+}
+html,body{height:100%;overflow:hidden}
+body{font-family:'DM Sans',sans-serif;background:var(--off);color:var(--txt);font-size:14px}
+*::-webkit-scrollbar{width:4px;height:4px}
+*::-webkit-scrollbar-track{background:transparent}
+*::-webkit-scrollbar-thumb{background:var(--border-dk);border-radius:4px}
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600;line-height:1.2}
+button{cursor:pointer;font-family:'DM Sans',sans-serif}
+input,select,textarea{font-family:'DM Sans',sans-serif}
+
+/* ── AUTH SCREENS ─────────────────────────────────── */
+#auth-screen{
+  position:fixed;inset:0;z-index:9999;
+  background:var(--navy-dk);
+  display:flex;align-items:center;justify-content:center;
+  padding:1rem;
+}
+.auth-card{
+  background:var(--white);border-radius:var(--r-lg);
+  width:100%;max-width:420px;overflow:hidden;
+  box-shadow:var(--shadow-lg);
+  animation:slideUp .4s ease;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+.auth-header{
+  background:var(--navy);padding:2rem;
+  border-bottom:3px solid var(--gold);
+}
+.auth-logo{
+  font-family:'Cormorant Garamond',serif;font-size:1.7rem;
+  font-weight:700;color:var(--white);
+}
+.auth-logo span{color:var(--gold)}
+.auth-subtitle{font-size:.82rem;color:rgba(255,255,255,.5);margin-top:.3rem}
+.auth-tabs{display:flex;border-bottom:1px solid var(--border)}
+.auth-tab{
+  flex:1;padding:.85rem;background:none;border:none;
+  font-size:.85rem;font-weight:600;color:var(--txt-lt);
+  border-bottom:2px solid transparent;transition:all .2s;
+}
+.auth-tab.active{color:var(--navy);border-color:var(--gold)}
+.auth-body{padding:1.8rem}
+.auth-form{display:flex;flex-direction:column;gap:1rem}
+.field label{display:block;font-size:.75rem;font-weight:600;color:var(--navy);margin-bottom:.35rem;letter-spacing:.03em;text-transform:uppercase}
+.field input,.field select{
+  width:100%;padding:.72rem .9rem;border:1.5px solid var(--border);
+  border-radius:var(--r);font-size:.9rem;color:var(--txt);
+  background:var(--off);transition:border .2s,box-shadow .2s;outline:none;
+}
+.field input:focus,.field select:focus{border-color:var(--steel);box-shadow:0 0 0 3px rgba(26,111,168,.1)}
+.role-row{display:flex;gap:.6rem}
+.role-btn{
+  flex:1;padding:.6rem;border:1.5px solid var(--border);border-radius:var(--r);
+  background:var(--off);font-size:.82rem;font-weight:600;color:var(--txt-md);
+  transition:all .2s;
+}
+.role-btn.active{border-color:var(--navy);background:var(--navy);color:var(--white)}
+.btn-primary{
+  width:100%;padding:.82rem;background:var(--navy);color:var(--white);
+  border:none;border-radius:var(--r);font-size:.9rem;font-weight:600;
+  transition:background .2s,transform .15s;
+}
+.btn-primary:hover{background:var(--navy-md);transform:translateY(-1px)}
+.auth-demo{
+  margin-top:1rem;padding:1rem;background:var(--steel-bg);
+  border-radius:var(--r);border:1px solid var(--steel-lt);
+}
+.auth-demo p{font-size:.78rem;color:var(--steel);font-weight:600;margin-bottom:.5rem}
+.demo-accounts{display:flex;flex-direction:column;gap:.35rem}
+.demo-acc{
+  display:flex;justify-content:space-between;align-items:center;
+  font-size:.75rem;color:var(--txt-md);
+  padding:.3rem .5rem;background:var(--white);border-radius:4px;
+  cursor:pointer;transition:background .15s;
+}
+.demo-acc:hover{background:var(--steel-lt)}
+.demo-acc code{font-family:'DM Mono',monospace;color:var(--steel);font-size:.72rem}
+
+/* ── APP SHELL ────────────────────────────────────── */
+#app{display:none;height:100vh;flex-direction:column}
+#app.visible{display:flex}
+
+/* Topbar */
+.topbar{
+  height:var(--topbar);background:var(--navy-dk);
+  display:flex;align-items:center;padding:0 1.2rem;
+  gap:1rem;border-bottom:2px solid var(--gold);
+  flex-shrink:0;position:relative;z-index:100;
+}
+.topbar-logo{
+  font-family:'Cormorant Garamond',serif;font-size:1.3rem;
+  font-weight:700;color:var(--white);white-space:nowrap;
+}
+.topbar-logo span{color:var(--gold)}
+.topbar-search{
+  flex:1;max-width:360px;position:relative;margin:0 1rem;
+}
+.topbar-search input{
+  width:100%;padding:.5rem .9rem .5rem 2.2rem;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;color:var(--white);font-size:.82rem;outline:none;
+  transition:background .2s;
+}
+.topbar-search input::placeholder{color:rgba(255,255,255,.35)}
+.topbar-search input:focus{background:rgba(255,255,255,.13);border-color:rgba(196,154,42,.4)}
+.topbar-search svg{position:absolute;left:.65rem;top:50%;transform:translateY(-50%);width:14px;height:14px;stroke:rgba(255,255,255,.4);fill:none;stroke-width:2}
+.topbar-right{display:flex;align-items:center;gap:.8rem;margin-left:auto}
+.topbar-notif{
+  position:relative;width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+}
+.topbar-notif svg{width:16px;height:16px;stroke:rgba(255,255,255,.6);fill:none;stroke-width:2}
+.notif-badge{
+  position:absolute;top:-2px;right:-2px;width:14px;height:14px;
+  background:var(--red);border-radius:50%;font-size:8px;font-weight:700;
+  color:var(--white);display:flex;align-items:center;justify-content:center;
+  border:2px solid var(--navy-dk);
+}
+.user-pill{
+  display:flex;align-items:center;gap:.6rem;cursor:pointer;
+  padding:.35rem .7rem;border-radius:20px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  transition:background .2s;
+}
+.user-pill:hover{background:rgba(255,255,255,.14)}
+.user-avatar{
+  width:26px;height:26px;border-radius:50%;
+  background:linear-gradient(135deg,var(--gold),var(--gold-lt));
+  display:flex;align-items:center;justify-content:center;
+  font-size:.72rem;font-weight:700;color:var(--navy-dk);
+}
+.user-name{font-size:.8rem;font-weight:600;color:var(--white)}
+.user-role{font-size:.68rem;color:rgba(255,255,255,.4)}
+.logout-btn{
+  padding:.4rem .8rem;background:rgba(192,82,42,.2);border:1px solid rgba(192,82,42,.4);
+  border-radius:var(--r);font-size:.75rem;font-weight:600;color:#FCA;
+  cursor:pointer;transition:background .2s;
+}
+.logout-btn:hover{background:rgba(192,82,42,.35)}
+
+/* Main layout */
+.main-layout{display:flex;flex:1;overflow:hidden}
+
+/* Sidebar */
+.sidebar{
+  width:var(--sidebar);background:var(--navy);
+  display:flex;flex-direction:column;flex-shrink:0;
+  overflow-y:auto;border-right:1px solid rgba(255,255,255,.06);
+}
+.sidebar-section{padding:.8rem 0}
+.sidebar-label{
+  font-size:.65rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,.25);padding:.2rem 1.2rem .5rem;
+}
+.nav-item{
+  display:flex;align-items:center;gap:.75rem;
+  padding:.65rem 1.2rem;color:rgba(255,255,255,.55);
+  cursor:pointer;transition:all .18s;border-left:3px solid transparent;
+  font-size:.85rem;font-weight:500;
+}
+.nav-item svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8;flex-shrink:0}
+.nav-item:hover{background:rgba(255,255,255,.06);color:rgba(255,255,255,.85)}
+.nav-item.active{
+  background:rgba(196,154,42,.1);color:var(--gold);
+  border-left-color:var(--gold);
+}
+.nav-badge{
+  margin-left:auto;background:var(--red);color:var(--white);
+  font-size:.65rem;font-weight:700;padding:.1rem .4rem;
+  border-radius:8px;min-width:18px;text-align:center;
+}
+.nav-badge.green{background:var(--green)}
+.sidebar-footer{margin-top:auto;padding:1rem 1.2rem;border-top:1px solid rgba(255,255,255,.06)}
+.sidebar-footer p{font-size:.72rem;color:rgba(255,255,255,.2);line-height:1.6}
+
+/* Content area */
+.content{flex:1;overflow-y:auto;padding:1.8rem 2rem 4rem}
+
+/* ── PAGES ────────────────────────────────────────── */
+.page{display:none;animation:fadeIn .25s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+/* Back button */
+.back-btn{
+  display:inline-flex;align-items:center;gap:.45rem;
+  padding:.45rem 1rem;border-radius:var(--r);border:1.5px solid var(--border-dk);
+  background:var(--white);color:var(--txt-md);font-size:.82rem;font-weight:600;
+  cursor:pointer;transition:all .18s;margin-bottom:1.2rem;
+}
+.back-btn:hover{border-color:var(--navy);color:var(--navy);background:var(--off)}
+.back-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2}
+
+/* Page header */
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1.8rem;gap:1rem;flex-wrap:wrap}
+.page-title{font-size:1.7rem;color:var(--navy);line-height:1}
+.page-sub{font-size:.85rem;color:var(--txt-lt);margin-top:.35rem}
+.page-actions{display:flex;gap:.7rem;flex-shrink:0}
+
+/* Stat cards row */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem;margin-bottom:2rem}
+.stat-card{
+  background:var(--surface);border-radius:var(--r);padding:1.2rem 1.4rem;
+  border:1px solid var(--border);box-shadow:var(--shadow);
+  display:flex;flex-direction:column;gap:.3rem;
+  transition:box-shadow .2s,transform .2s;
+}
+.stat-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+.stat-icon{
+  width:36px;height:36px;border-radius:var(--r);
+  display:flex;align-items:center;justify-content:center;margin-bottom:.4rem;
+}
+.stat-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.stat-icon.blue{background:var(--steel-bg);color:var(--steel)}
+.stat-icon.gold{background:var(--gold-bg);color:var(--gold)}
+.stat-icon.green{background:var(--green-lt);color:var(--green)}
+.stat-icon.purple{background:var(--purple-lt);color:var(--purple)}
+.stat-icon.red{background:var(--red-lt);color:var(--red)}
+.stat-value{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:700;color:var(--navy);line-height:1}
+.stat-label{font-size:.75rem;color:var(--txt-lt);font-weight:500}
+.stat-change{font-size:.72rem;font-weight:600}
+.stat-change.up{color:var(--green)}.stat-change.down{color:var(--red)}
+
+/* Cards */
+.card{background:var(--surface);border-radius:var(--r);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden}
+.card-header{padding:1.1rem 1.4rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:1rem;font-weight:600;color:var(--navy)}
+.card-body{padding:1.4rem}
+
+/* Table */
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse}
+th{text-align:left;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--txt-lt);padding:.7rem 1rem;border-bottom:1px solid var(--border);white-space:nowrap}
+td{padding:.85rem 1rem;border-bottom:1px solid var(--border);font-size:.85rem;color:var(--txt)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--off)}
+
+/* Badges */
+.badge{
+  display:inline-flex;align-items:center;gap:.3rem;
+  font-size:.7rem;font-weight:700;padding:.22rem .6rem;
+  border-radius:20px;white-space:nowrap;
+}
+.badge-pending{background:#FEF3C7;color:#92400E}
+.badge-confirmed{background:var(--steel-bg);color:var(--steel)}
+.badge-active{background:var(--green-lt);color:var(--green)}
+.badge-completed{background:var(--off);color:var(--txt-lt)}
+.badge-cancelled{background:var(--red-lt);color:var(--red)}
+.badge-gold{background:var(--gold-bg);color:#92620A}
+.badge-purple{background:var(--purple-lt);color:var(--purple)}
+
+/* Buttons small */
+.btn-sm{
+  display:inline-flex;align-items:center;gap:.35rem;
+  padding:.42rem .85rem;border-radius:var(--r);font-size:.78rem;
+  font-weight:600;border:none;cursor:pointer;transition:all .18s;
+  white-space:nowrap;
+}
+.btn-sm svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
+.btn-navy{background:var(--navy);color:var(--white)}
+.btn-navy:hover{background:var(--navy-md)}
+.btn-gold{background:var(--gold);color:var(--navy-dk)}
+.btn-gold:hover{background:var(--gold-lt)}
+.btn-outline{background:transparent;color:var(--navy);border:1.5px solid var(--border-dk)}
+.btn-outline:hover{border-color:var(--navy);background:var(--off)}
+.btn-green{background:var(--green);color:var(--white)}
+.btn-green:hover{opacity:.9}
+.btn-red{background:var(--red);color:var(--white)}
+.btn-red:hover{opacity:.9}
+.btn-ghost{background:transparent;color:var(--txt-md);border:1px solid var(--border)}
+.btn-ghost:hover{background:var(--off)}
+
+/* Two column layout */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.4rem}
+
+/* Form styles */
+.form-grid{display:grid;gap:1rem}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-field{}
+.form-field label{display:block;font-size:.75rem;font-weight:600;color:var(--navy);margin-bottom:.35rem;text-transform:uppercase;letter-spacing:.03em}
+.form-field input,.form-field select,.form-field textarea{
+  width:100%;padding:.7rem .9rem;border:1.5px solid var(--border);
+  border-radius:var(--r);font-size:.88rem;color:var(--txt);
+  background:var(--off);transition:border .2s,box-shadow .2s;outline:none;
+}
+.form-field input:focus,.form-field select:focus,.form-field textarea:focus{
+  border-color:var(--steel);box-shadow:0 0 0 3px rgba(26,111,168,.1);background:var(--white);
+}
+textarea.form-field-input{resize:vertical;min-height:90px}
+.form-field textarea{resize:vertical;min-height:90px}
+
+/* Timeline */
+.timeline{display:flex;flex-direction:column;gap:0}
+.tl-item{display:flex;gap:1rem;padding:.9rem 0;border-bottom:1px solid var(--border)}
+.tl-item:last-child{border:none}
+.tl-dot{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700}
+.tl-dot.done{background:var(--green-lt);color:var(--green)}
+.tl-dot.active{background:var(--gold-bg);color:var(--gold)}
+.tl-dot.pending{background:var(--off);color:var(--txt-lt);border:1.5px solid var(--border)}
+.tl-content{}
+.tl-title{font-weight:600;font-size:.88rem;color:var(--navy)}
+.tl-desc{font-size:.78rem;color:var(--txt-lt);margin-top:.15rem}
+.tl-time{font-size:.72rem;color:var(--txt-lt);margin-top:.2rem;font-family:'DM Mono',monospace}
+
+/* Rep card */
+.rep-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:var(--r);
+  padding:1.2rem;transition:all .2s;cursor:pointer;
+}
+.rep-card:hover{border-color:var(--navy);box-shadow:var(--shadow-md)}
+.rep-card.selected{border-color:var(--gold);background:var(--gold-bg);box-shadow:0 0 0 2px var(--gold)}
+.rep-avatar{
+  width:44px;height:44px;border-radius:50%;
+  background:linear-gradient(135deg,var(--navy),var(--navy-md));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-weight:700;color:var(--gold);font-size:1rem;
+}
+.rep-meta{display:flex;align-items:center;gap:.8rem;margin-bottom:.8rem}
+.rep-info{}
+.rep-name{font-weight:600;font-size:.92rem;color:var(--navy)}
+.rep-cat{font-size:.75rem;color:var(--txt-lt);margin-top:.1rem}
+.rep-stars{color:var(--gold);font-size:.75rem;letter-spacing:.05em}
+.rep-rating{font-size:.75rem;color:var(--txt-lt)}
+.rep-bio{font-size:.8rem;color:var(--txt-md);line-height:1.5;margin-bottom:.8rem}
+.rep-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.rep-tag{background:var(--steel-bg);color:var(--steel);font-size:.68rem;font-weight:600;padding:.18rem .55rem;border-radius:4px}
+
+/* Progress steps */
+.progress-steps{display:flex;align-items:center;margin-bottom:2rem;gap:0}
+.ps-item{display:flex;align-items:center;flex:1}
+.ps-num{
+  width:30px;height:30px;border-radius:50%;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.78rem;font-weight:700;border:2px solid var(--border);
+  background:var(--white);color:var(--txt-lt);transition:all .3s;
+}
+.ps-num.done{background:var(--green);border-color:var(--green);color:var(--white)}
+.ps-num.active{background:var(--navy);border-color:var(--navy);color:var(--white)}
+.ps-label{font-size:.72rem;font-weight:600;color:var(--txt-lt);margin-left:.4rem;white-space:nowrap}
+.ps-label.active{color:var(--navy)}
+.ps-line{flex:1;height:2px;background:var(--border);margin:0 .5rem}
+.ps-line.done{background:var(--green)}
+
+/* Notifications panel */
+.notif-panel{
+  position:absolute;top:calc(var(--topbar) + .5rem);right:1rem;
+  width:320px;background:var(--white);border-radius:var(--r-lg);
+  border:1px solid var(--border);box-shadow:var(--shadow-lg);
+  z-index:500;display:none;overflow:hidden;
+  animation:slideUp .2s ease;
+}
+.notif-panel.open{display:block}
+.notif-header{padding:.9rem 1.2rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.notif-title{font-weight:700;font-size:.9rem;color:var(--navy)}
+.notif-item{padding:.9rem 1.2rem;border-bottom:1px solid var(--border);display:flex;gap:.8rem;cursor:pointer;transition:background .15s}
+.notif-item:hover{background:var(--off)}
+.notif-item:last-child{border:none}
+.notif-dot{width:8px;height:8px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:.25rem}
+.notif-text p{font-size:.82rem;color:var(--txt);line-height:1.45}
+.notif-text span{font-size:.72rem;color:var(--txt-lt);font-family:'DM Mono',monospace}
+
+/* Modal overlay */
+.modal-over{position:fixed;inset:0;background:rgba(7,26,54,.7);backdrop-filter:blur(4px);z-index:800;display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-over.open{display:flex}
+.modal-box{background:var(--white);border-radius:var(--r-lg);width:100%;max-width:560px;overflow:hidden;box-shadow:var(--shadow-lg);animation:slideUp .3s ease}
+.modal-head{background:var(--navy);padding:1.4rem 1.6rem;display:flex;justify-content:space-between;align-items:center;border-bottom:3px solid var(--gold)}
+.modal-head h3{font-size:1.3rem;color:var(--white)}
+.modal-x{background:none;border:none;color:rgba(255,255,255,.6);font-size:1.2rem;cursor:pointer;padding:.2rem;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:background .2s}
+.modal-x:hover{background:rgba(255,255,255,.15)}
+.modal-body{padding:1.6rem;max-height:70vh;overflow-y:auto}
+.modal-foot{padding:1.1rem 1.6rem;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:.7rem}
+
+/* Activity feed */
+.activity-feed{display:flex;flex-direction:column;gap:.5rem}
+.activity-item{
+  display:flex;align-items:flex-start;gap:.8rem;
+  padding:.75rem;border-radius:var(--r);background:var(--off);
+}
+.act-icon{width:28px;height:28px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center}
+.act-icon svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2}
+.act-icon.blue{background:var(--steel-bg);color:var(--steel)}
+.act-icon.gold{background:var(--gold-bg);color:var(--gold)}
+.act-icon.green{background:var(--green-lt);color:var(--green)}
+.act-icon.red{background:var(--red-lt);color:var(--red)}
+.act-text p{font-size:.82rem;color:var(--txt);line-height:1.45}
+.act-time{font-size:.7rem;color:var(--txt-lt);font-family:'DM Mono',monospace;margin-top:.15rem}
+
+/* Rating stars */
+.star-row{display:flex;gap:.3rem}
+.star{font-size:1.3rem;cursor:pointer;color:var(--border-dk);transition:color .15s}
+.star.lit{color:var(--gold)}
+
+/* Toast */
+#toast{
+  position:fixed;bottom:1.5rem;right:1.5rem;
+  background:var(--navy-dk);color:var(--white);
+  padding:.8rem 1.4rem;border-radius:var(--r);border-left:4px solid var(--gold);
+  font-size:.85rem;font-weight:500;z-index:9999;
+  transform:translateY(120%);transition:transform .35s ease;
+  box-shadow:var(--shadow-lg);max-width:320px;
+}
+#toast.show{transform:translateY(0)}
+
+/* Responsive */
+@media(max-width:900px){
+  :root{--sidebar:200px}
+  .two-col,.three-col{grid-template-columns:1fr}
+}
+@media(max-width:640px){
+  :root{--sidebar:0px}
+  .sidebar{display:none}
+  .content{padding:1rem}
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<!-- FIREBASE SDK (compat v10) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+/* =============================================================
+   PASTE YOUR FIREBASE CONFIG HERE
+   Firebase Console > Project Settings > Your apps > SDK setup
+   ============================================================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyC9pJoyiaA6AjQ6yZQRUVYwv2lIfXGiCfo",
+  authDomain: "standin-app-dddd1.firebaseapp.com",
+  projectId: "standin-app-dddd1",
+  storageBucket: "standin-app-dddd1.firebasestorage.app",
+  messagingSenderId: "373636498898",
+  appId: "1:373636498898:web:8be8e6cf1a9c57b01d740b"
+};
+firebase.initializeApp(firebaseConfig);
+var db = firebase.firestore();
+
+/* In-memory cache hydrated from Firestore on startup */
+var _fsUsers={}, _fsClients=[], _fsReps=[], _fsEngagements=[], _fsReady=false;
+
+function bootstrapFirestore(callback) {
+  var left=4;
+  function done(){ if(--left===0){ _fsReady=true; if(callback) callback(); } }
+
+  db.collection('standin_users').get().then(function(snap){
+    _fsUsers={};
+    snap.forEach(function(doc){ _fsUsers[doc.id]=doc.data(); });
+    if(Object.keys(_fsUsers).length===0){
+      var seed={pw:'Wanjala@2018',role:'admin',name:'CEO / Admin',created:new Date().toISOString()};
+      db.collection('standin_users').doc('nakibongochiali@gmail.com').set(seed);
+      _fsUsers['nakibongochiali@gmail.com']=seed;
+    }
+    done();
+  }).catch(function(e){ console.warn('[FB] users',e); done(); });
+
+  db.collection('standin_clients').doc('registry').get().then(function(doc){
+    _fsClients=doc.exists?(doc.data().list||[]):[];
+    done();
+  }).catch(function(e){ console.warn('[FB] clients',e); done(); });
+
+  db.collection('standin_reps').doc('roster').get().then(function(doc){
+    _fsReps=doc.exists?(doc.data().list||[]):[];
+    done();
+  }).catch(function(e){ console.warn('[FB] reps',e); done(); });
+
+  db.collection('standin_engagements').doc('log').get().then(function(doc){
+    _fsEngagements=doc.exists?(doc.data().list||[]):[];
+    done();
+  }).catch(function(e){ console.warn('[FB] engagements',e); done(); });
+}
+
+/* CRUD wrappers (replaces all localStorage calls) */
+function loadUsers()          { return _fsUsers; }
+function saveUsers(obj)       { _fsUsers=obj; Object.keys(obj).forEach(function(e){ db.collection('standin_users').doc(e).set(obj[e]); }); }
+function loadClients()        { return _fsClients.slice(); }
+function saveClients(arr)     { _fsClients=arr; db.collection('standin_clients').doc('registry').set({list:arr}); }
+function loadReps()           { return _fsReps.slice(); }
+function saveReps(arr)        { _fsReps=arr; db.collection('standin_reps').doc('roster').set({list:arr}); }
+function loadEngagements()    { return _fsEngagements.slice(); }
+function saveEngagements(arr) { _fsEngagements=arr; db.collection('standin_engagements').doc('log').set({list:arr}); }
+
+/* Notifications (session-only) */
+var _notifications=[];
+function addNotification(html,type){
+  _notifications.unshift({html:html,type:type||'blue',time:new Date().toLocaleTimeString()});
+  _renderNotif();
+  var b=document.getElementById('notifBadge');
+  if(b){ b.style.display='flex'; b.textContent=_notifications.length; }
+}
+function _renderNotif(){
+  var panel=document.getElementById('notifPanel'); if(!panel) return;
+  var hdr='<div class="notif-header"><span class="notif-title">Notifications</span><button class="btn-sm btn-ghost" onclick="toggleNotif()">&#x2715;</button></div>';
+  var rows=_notifications.slice(0,30).map(function(n){
+    var col=n.type==='green'?'var(--green)':n.type==='gold'?'var(--gold)':'var(--steel)';
+    return '<div class="notif-item"><div class="notif-dot" style="background:'+col+'"></div><div class="notif-text"><p>'+n.html+'</p><span>'+n.time+'</span></div></div>';
+  }).join('');
+  panel.innerHTML=hdr+(rows||'<div class="notif-item"><div class="notif-text"><p>No notifications yet.</p><span>&#x2014;</span></div></div>');
+}
+
+/* Loading overlay */
+function showLoadingOverlay(msg){
+  var el=document.getElementById('fb-loading');
+  if(el){ el.querySelector('p').textContent=msg||'Loading...'; el.style.display='flex'; }
+}
+function hideLoadingOverlay(){
+  var el=document.getElementById('fb-loading'); if(el) el.style.display='none';
+}
+</script>
+</head>
+<body>
+
+<!-- Firebase loading overlay -->
+<div id="fb-loading" style="position:fixed;inset:0;z-index:99999;background:#071A36;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem">
+  <div style="font-family:Georgia,serif;font-size:2rem;font-weight:700;color:#fff">StandIn<span style="color:#C49A2A">Corp</span></div>
+  <div style="width:40px;height:40px;border:3px solid rgba(196,154,42,.3);border-top-color:#C49A2A;border-radius:50%;animation:fbspin .8s linear infinite"></div>
+  <p style="color:rgba(255,255,255,.5);font-size:.85rem;font-family:sans-serif">Connecting to platform...</p>
+</div>
+<style>@keyframes fbspin{to{transform:rotate(360deg)}}</style>
+
+<!-- ════════════════════════════════════════════
+     AUTH SCREEN
+════════════════════════════════════════════ -->
+<div id="auth-screen">
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="auth-logo">StandIn<span>Corp</span></div>
+      <div class="auth-subtitle">Professional Corporate Representation Platform</div>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" onclick="switchAuthTab('login',this)">Sign In</button>
+      <button class="auth-tab" onclick="switchAuthTab('register',this)">Create Account</button>
+    </div>
+    <div class="auth-body">
+      <!-- LOGIN -->
+      <div id="tab-login" class="auth-form">
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" id="login-email" placeholder="you@company.com"/>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="login-pw" placeholder="••••••••"/>
+        </div>
+        <button class="btn-primary" onclick="doLogin()">Sign In to Platform</button>
+
+      </div>
+      <!-- REGISTER -->
+      <div id="tab-register" class="auth-form" style="display:none">
+        <div class="field">
+          <label>Full Name</label>
+          <input type="text" id="reg-name" placeholder="Your full name"/>
+        </div>
+        <div class="field">
+          <label>Email Address</label>
+          <input type="email" id="reg-email" placeholder="you@company.com"/>
+        </div>
+        <div class="field">
+          <label>Password</label>
+          <input type="password" id="reg-pw" placeholder="Min 8 characters"/>
+        </div>
+        <div class="field">
+          <label>Organisation / Company</label>
+          <input type="text" id="reg-org" placeholder="Your company or organisation name"/>
+        </div>
+        <div class="field">
+          <label>Phone Number</label>
+          <input type="tel" id="reg-phone" placeholder="+254 7XX XXX XXX"/>
+        </div>
+        <div class="field">
+          <label>I am a</label>
+          <div class="role-row">
+            <button class="role-btn active" id="role-client" onclick="setRole('client')">Client</button>
+            <button class="role-btn" id="role-rep" onclick="setRole('rep')">Representative</button>
+          </div>
+        </div>
+        <button class="btn-primary" onclick="doRegister()">Create Account</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════════
+     APP SHELL
+════════════════════════════════════════════ -->
+<div id="app">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-logo">StandIn<span>Corp</span></div>
+    <div class="topbar-search">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      <input type="text" placeholder="Search engagements, reps, clients..."/>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-notif" onclick="toggleNotif()">
+        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9M13.73 21a2 2 0 01-3.46 0"/></svg>
+        <div class="notif-badge" id="notifBadge">1</div>
+      </div>
+      <div class="user-pill" id="userPill">
+        <div class="user-avatar" id="userAvatar">JD</div>
+        <div>
+          <div class="user-name" id="userName">—</div>
+          <div class="user-role" id="userRoleLabel">Client</div>
+        </div>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- NOTIFICATIONS PANEL -->
+  <div class="notif-panel" id="notifPanel">
+    <div class="notif-header">
+      <span class="notif-title">Notifications</span>
+      <button class="btn-sm btn-ghost" onclick="toggleNotif()">✕</button>
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+      <!-- CLIENT NAV -->
+      <div id="nav-client" style="display:none">
+        <div class="sidebar-section">
+          <div class="sidebar-label">Main</div>
+          <div class="nav-item active" onclick="showPage('dash-client',this)">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Dashboard
+          </div>
+          <div class="nav-item" onclick="showPage('book-eng',this)">
+            <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+            Book Engagement
+          </div>
+          <div class="nav-item" onclick="showPage('my-engs',this)">
+            <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+            My Engagements <span class="nav-badge" id="clientEngsNavBadge" style="display:none">0</span>
+          </div>
+          <div class="nav-item" onclick="showPage('reports',this)">
+            <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+            Debrief Reports
+          </div>
+          <div class="nav-item" onclick="showPage('invoices',this)">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Invoices
+          </div>
+        </div>
+        <div class="sidebar-section">
+          <div class="sidebar-label">Account</div>
+          <div class="nav-item" onclick="showPage('profile',this)">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            My Profile
+          </div>
+          <div class="nav-item" onclick="showPage('settings',this)">
+            <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+            Settings
+          </div>
+        </div>
+        <div class="sidebar-footer">
+          <p>© 2025 StandIn Corp<br/>All engagements are NDA-protected and insured.</p>
+        </div>
+      </div>
+
+      <!-- REP NAV -->
+      <div id="nav-rep" style="display:none">
+        <div class="sidebar-section">
+          <div class="sidebar-label">Main</div>
+          <div class="nav-item active" onclick="showPage('dash-rep',this)">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            My Dashboard
+          </div>
+          <div class="nav-item" onclick="showPage('my-assignments',this)">
+            <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+            My Assignments <span class="nav-badge green" id="myAssignmentsNavBadge" style="display:none">0</span>
+          </div>
+          <div class="nav-item" onclick="showPage('availability',this)">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Availability
+          </div>
+          <div class="nav-item" onclick="showPage('my-earnings',this)">
+            <svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg>
+            Earnings
+          </div>
+        </div>
+        <div class="sidebar-footer">
+          <p>You are a verified<br/><strong>StandIn Corp Professional</strong></p>
+        </div>
+      </div>
+
+      <!-- ADMIN NAV -->
+      <div id="nav-admin" style="display:none">
+        <div class="sidebar-section">
+          <div class="sidebar-label">Operations</div>
+          <div class="nav-item active" onclick="showPage('dash-admin',this)">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+            Ops Dashboard
+          </div>
+          <div class="nav-item" onclick="showPage('all-engs',this)">
+            <svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+            All Engagements <span class="nav-badge" id="allEngsNavBadge" style="display:none">0</span>
+          </div>
+          <div class="nav-item" onclick="showPage('manage-reps',this)">
+            <svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+            Manage Reps
+          </div>
+          <div class="nav-item" onclick="showPage('clients-list',this)">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            Clients
+          </div>
+          <div class="nav-item" onclick="showPage('analytics',this)">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Analytics
+          </div>
+        </div>
+        <div class="sidebar-footer"><p style="margin-bottom:.7rem">Admin Access — All Systems</p><button onclick="exportPWAData()" style="width:100%;margin-bottom:.4rem;padding:.4rem .6rem;background:rgba(196,154,42,.15);border:1px solid rgba(196,154,42,.3);border-radius:var(--r);color:var(--gold);font-size:.72rem;font-weight:600;cursor:pointer;text-align:left">💾 Backup Data</button><label style="width:100%;display:block;padding:.4rem .6rem;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:var(--r);color:rgba(255,255,255,.4);font-size:.72rem;font-weight:600;cursor:pointer;text-align:left">📂 Restore Backup<input type="file" accept=".json" style="display:none" onchange="importPWAData(this.files[0])"></label></div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content" id="mainContent">
+
+      <!-- ══════════ CLIENT DASHBOARD ══════════ -->
+      <div class="page active" id="page-dash-client">
+        <div class="page-header">
+          <div><h1 class="page-title">Good morning, <span id="clientGreetName">Jane</span></h1><p class="page-sub">Here's your StandIn Corp account overview.</p></div>
+          <div class="page-actions">
+            <button class="btn-sm btn-gold" onclick="showPage('book-eng',document.querySelector('#nav-client .nav-item:nth-child(2)'))">
+              <svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg>
+              Book a Rep
+            </button>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card" style="cursor:pointer" onclick="showPage('my-engs',null)" title="View all engagements"><div class="stat-icon blue"><svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div class="stat-value" id="clientStatEngs">0</div><div class="stat-label">Total Engagements</div><div class="stat-change" id="clientStatEngsChange">&mdash;</div></div>
+          <div class="stat-card" style="cursor:pointer" onclick="openUpcomingDetail()" title="View upcoming engagements"><div class="stat-icon gold"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="stat-value" id="clientStatUpcoming">0</div><div class="stat-label">Upcoming</div><div class="stat-change">&mdash;</div></div>
+          <div class="stat-card" style="cursor:pointer" onclick="openRatingSummary()" title="View rating breakdown"><div class="stat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="stat-value" id="clientStatRating">&mdash;</div><div class="stat-label">Avg Rep Rating</div><div class="stat-change">&mdash;</div></div>
+          <div class="stat-card" style="cursor:pointer" onclick="showPage('invoices',null)" title="View invoices"><div class="stat-icon purple"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg></div><div class="stat-value" id="clientStatSpent">KSh 0</div><div class="stat-label">Total Spent</div><div class="stat-change">This year</div></div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Active & Upcoming Engagements</span><button class="btn-sm btn-outline" onclick="showPage('my-engs',null)">View All</button></div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Engagement</th><th>Date</th><th>Rep</th><th>Status</th><th></th></tr></thead>
+                <tbody id="clientDashEngTable">
+                  <tr><td colspan="5" style="text-align:center;color:var(--txt-lt);padding:1.5rem;font-size:.85rem">No engagements yet. <a href="#" onclick="showPage('book-eng',null)" style="color:var(--steel)">Book your first rep →</a></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Recent Activity</span></div>
+            <div class="card-body">
+              <div class="activity-feed" id="clientActivityFeed">
+                <div class="activity-item"><div class="act-icon blue"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><div class="act-text"><p>Welcome to StandIn Corp! Your account is ready.</p><div class="act-time">Now</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ BOOK ENGAGEMENT ══════════ -->
+      <div class="page" id="page-book-eng">
+        <button class="back-btn" onclick="showPage('dash-client',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>← Back to Dashboard</button>
+      <div class="page-header">
+          <div><h1 class="page-title">Book a Representative</h1><p class="page-sub">Complete the steps below to book your professional delegate.</p></div>
+        </div>
+        <!-- Progress -->
+        <div class="progress-steps" id="bookProgress">
+          <div class="ps-item"><div class="ps-num active" id="ps1">1</div><div class="ps-label active">Details</div></div>
+          <div class="ps-line" id="pl1"></div>
+          <div class="ps-item"><div class="ps-num" id="ps2">2</div><div class="ps-label">Briefing</div></div>
+          <div class="ps-line" id="pl2"></div>
+          <div class="ps-item"><div class="ps-num" id="ps3">3</div><div class="ps-label">Match Rep</div></div>
+          <div class="ps-line" id="pl3"></div>
+          <div class="ps-item"><div class="ps-num" id="ps4">4</div><div class="ps-label">Confirm</div></div>
+        </div>
+
+        <!-- Step 1: Details -->
+        <div id="book-step1" class="card">
+          <div class="card-header"><span class="card-title">Step 1 — Engagement Details</span><span class="badge badge-gold">Required</span></div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-row">
+                <div class="form-field">
+                  <label>Meeting Type</label>
+                  <select id="b-type">
+                    <option value="">Select type...</option>
+                    <option>Board Meeting</option>
+                    <option>Legal Hearing / Tribunal</option>
+                    <option>Investor Pitch</option>
+                    <option>Donor / NGO Meeting</option>
+                    <option>Financial Audit</option>
+                    <option>Government / Regulatory</option>
+                    <option>Technical Review</option>
+                    <option>General Coordination</option>
+                  </select>
+                </div>
+                <div class="form-field">
+                  <label>Service Tier</label>
+                  <select id="b-tier">
+                    <option value="">Select tier...</option>
+                    <option value="1">Tier 1 — Standard (KSh 25,900–64,800)</option>
+                    <option value="2">Tier 2 — Professional (KSh 103,600–323,700)</option>
+                    <option value="3">Tier 3 — Executive (KSh 388,500+)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-field">
+                  <label>Meeting Date & Time</label>
+                  <input type="datetime-local" id="b-date"/>
+                </div>
+                <div class="form-field">
+                  <label>Expected Duration</label>
+                  <select id="b-duration">
+                    <option>1–2 hours</option>
+                    <option>Half day (3–4 hours)</option>
+                    <option>Full day (6–8 hours)</option>
+                    <option>Multi-day</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-field">
+                  <label>Meeting Location</label>
+                  <input type="text" id="b-location" placeholder="e.g. Nairobi CBD, Boardroom 4"/>
+                </div>
+                <div class="form-field">
+                  <label>Expertise Required</label>
+                  <select id="b-expertise">
+                    <option>General Business</option>
+                    <option>Legal</option>
+                    <option>Finance & Accounting</option>
+                    <option>Technology / IT</option>
+                    <option>Healthcare / Medical</option>
+                    <option>Government & Policy</option>
+                    <option>Engineering</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-field">
+                <label>Urgency</label>
+                <div class="role-row">
+                  <button class="role-btn active" id="urg-standard" onclick="setUrgency('standard')">Standard (48hrs+)</button>
+                  <button class="role-btn" id="urg-urgent" onclick="setUrgency('urgent')">Urgent (24hrs) +40%</button>
+                  <button class="role-btn" id="urg-same" onclick="setUrgency('same')">Same Day +60%</button>
+                </div>
+              </div>
+            </div>
+            <div style="margin-top:1.4rem;display:flex;justify-content:flex-end">
+              <button class="btn-sm btn-navy" style="padding:.65rem 1.6rem;font-size:.88rem" onclick="bookNext(2)">Next: Briefing →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Briefing -->
+        <div id="book-step2" class="card" style="display:none">
+          <div class="card-header"><span class="card-title">Step 2 — Your Briefing</span><span class="badge badge-gold">Confidential</span></div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-field">
+                <label>Meeting Objectives</label>
+                <textarea id="b-objectives" placeholder="What should your representative achieve at this meeting? What outcomes are you expecting?"></textarea>
+              </div>
+              <div class="form-field">
+                <label>Key Speaking Points</label>
+                <textarea id="b-points" placeholder="List the key points your representative should communicate or defend on your behalf..."></textarea>
+              </div>
+              <div class="form-field">
+                <label>Authority & Scope Limits</label>
+                <textarea id="b-scope" placeholder="What is your rep authorised to commit to? What must be escalated to you before any agreement?"></textarea>
+              </div>
+              <div class="form-field">
+                <label>Other Attendees (if known)</label>
+                <input type="text" id="b-attendees" placeholder="e.g. Board of Directors, Donor Representatives, Legal Counsel"/>
+              </div>
+            </div>
+            <div style="display:flex;gap:.8rem;justify-content:space-between;margin-top:1.4rem">
+              <button class="btn-sm btn-ghost" onclick="bookNext(1)">← Back</button>
+              <button class="btn-sm btn-navy" style="padding:.65rem 1.6rem;font-size:.88rem" onclick="bookNext(3)">Next: Match Rep →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Match Rep -->
+        <div id="book-step3" class="card" style="display:none">
+          <div class="card-header"><span class="card-title">Step 3 — Select Your Representative</span><span class="badge badge-confirmed">AI-Matched</span></div>
+          <div class="card-body">
+            <p style="font-size:.85rem;color:var(--txt-lt);margin-bottom:1.2rem">Based on your engagement details, our matching engine has selected the top 3 professionals from our vetted roster.</p>
+            <div class="three-col" id="repMatchGrid">
+              <div class="rep-card selected" onclick="selectRep(this,'Representative')">
+                <div class="rep-meta">
+                  <div class="rep-avatar">DO</div>
+                  <div class="rep-info">
+                    <div class="rep-name">Representative</div>
+                    <div class="rep-cat">Senior Finance Professional</div>
+                  </div>
+                </div>
+                <div class="rep-stars">★★★★★</div>
+                <div class="rep-rating" style="margin-bottom:.6rem">4.9 / 5.0 · 47 engagements</div>
+                <div class="rep-bio">Former CFO with 14 years in East African financial services. Specialises in board-level representation and investor relations.</div>
+                <div class="rep-tags" style="margin-top:.7rem">
+                  <span class="rep-tag">Finance</span><span class="rep-tag">Board Meetings</span><span class="rep-tag">Investor Relations</span>
+                </div>
+                <div style="margin-top:.8rem;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--gold);font-weight:600">Match Score: 97%</div>
+              </div>
+              <div class="rep-card" onclick="selectRep(this,'Representative')">
+                <div class="rep-meta">
+                  <div class="rep-avatar">AK</div>
+                  <div class="rep-info">
+                    <div class="rep-name">Representative</div>
+                    <div class="rep-cat">Legal Professional</div>
+                  </div>
+                </div>
+                <div class="rep-stars">★★★★★</div>
+                <div class="rep-rating" style="margin-bottom:.6rem">4.8 / 5.0 · 31 engagements</div>
+                <div class="rep-bio">Senior advocate with corporate law background. Experienced in regulatory hearings, board governance, and NGO compliance.</div>
+                <div class="rep-tags" style="margin-top:.7rem">
+                  <span class="rep-tag">Legal</span><span class="rep-tag">Compliance</span><span class="rep-tag">NGO</span>
+                </div>
+                <div style="margin-top:.8rem;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--txt-lt);font-weight:600">Match Score: 88%</div>
+              </div>
+              <div class="rep-card" onclick="selectRep(this,'Representative')">
+                <div class="rep-meta">
+                  <div class="rep-avatar">JM</div>
+                  <div class="rep-info">
+                    <div class="rep-name">Representative</div>
+                    <div class="rep-cat">Executive Business Delegate</div>
+                  </div>
+                </div>
+                <div class="rep-stars">★★★★☆</div>
+                <div class="rep-rating" style="margin-bottom:.6rem">4.6 / 5.0 · 22 engagements</div>
+                <div class="rep-bio">MBA-qualified executive with C-suite representation experience across FMCG, government, and development sectors.</div>
+                <div class="rep-tags" style="margin-top:.7rem">
+                  <span class="rep-tag">Executive</span><span class="rep-tag">Government</span><span class="rep-tag">General</span>
+                </div>
+                <div style="margin-top:.8rem;font-family:'DM Mono',monospace;font-size:.75rem;color:var(--txt-lt);font-weight:600">Match Score: 81%</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:.8rem;justify-content:space-between;margin-top:1.4rem">
+              <button class="btn-sm btn-ghost" onclick="bookNext(2)">← Back</button>
+              <button class="btn-sm btn-navy" style="padding:.65rem 1.6rem;font-size:.88rem" onclick="bookNext(4)">Next: Confirm →</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 4: Confirm -->
+        <div id="book-step4" class="card" style="display:none">
+          <div class="card-header"><span class="card-title">Step 4 — Confirm & Sign</span><span class="badge badge-gold">Final Step</span></div>
+          <div class="card-body">
+            <div class="two-col">
+              <div>
+                <h3 style="font-size:1.1rem;margin-bottom:1rem">Engagement Summary</h3>
+                <div style="display:flex;flex-direction:column;gap:.6rem;font-size:.88rem">
+                  <div style="display:flex;justify-content:space-between;padding:.6rem;background:var(--off);border-radius:var(--r)"><span style="color:var(--txt-lt)">Meeting Type</span><strong id="sum-type">Board Meeting</strong></div>
+                  <div style="display:flex;justify-content:space-between;padding:.6rem;background:var(--off);border-radius:var(--r)"><span style="color:var(--txt-lt)">Service Tier</span><strong>Tier 2 — Professional</strong></div>
+                  <div style="display:flex;justify-content:space-between;padding:.6rem;background:var(--off);border-radius:var(--r)"><span style="color:var(--txt-lt)">Representative</span><strong id="sum-rep">Representative</strong></div>
+                  <div style="display:flex;justify-content:space-between;padding:.6rem;background:var(--off);border-radius:var(--r)"><span style="color:var(--txt-lt)">Date</span><strong id="sum-date">Apr 18, 2025</strong></div>
+                  <div style="display:flex;justify-content:space-between;padding:.6rem;background:var(--gold-bg);border-radius:var(--r);border:1px solid rgba(196,154,42,.3)"><span style="color:var(--txt-lt)">Estimated Fee</span><strong style="color:var(--gold);font-size:1rem">KSh 155,000 – KSh —</strong></div>
+                </div>
+              </div>
+              <div>
+                <h3 style="font-size:1.1rem;margin-bottom:1rem">NDA & Agreement</h3>
+                <div style="background:var(--off);border:1px solid var(--border);border-radius:var(--r);padding:1.2rem;font-size:.82rem;color:var(--txt-md);line-height:1.7;max-height:200px;overflow-y:auto">
+                  <strong>Non-Disclosure Agreement — StandIn Corp</strong><br/><br/>
+                  By confirming this engagement, both parties agree that: (1) All information shared during the briefing process is strictly confidential. (2) The representative is bound by this NDA for a period of 5 years from the date of engagement. (3) Breach of confidentiality is subject to financial penalties as outlined in the Master Services Agreement. (4) The scope of authority for this engagement is limited to the actions defined in the briefing document. (5) StandIn Corp's professional indemnity insurance covers this engagement up to the limits specified in the policy document available on request.
+                </div>
+                <div style="margin-top:1rem;display:flex;align-items:flex-start;gap:.6rem">
+                  <input type="checkbox" id="nda-agree" style="margin-top:.2rem;accent-color:var(--navy)"/>
+                  <label for="nda-agree" style="font-size:.82rem;color:var(--txt-md);cursor:pointer">I have read and agree to the NDA and Scope-of-Authority agreement. I authorise StandIn Corp to proceed with this engagement.</label>
+                </div>
+              </div>
+            </div>
+            <div style="display:flex;gap:.8rem;justify-content:space-between;margin-top:1.8rem">
+              <button class="btn-sm btn-ghost" onclick="bookNext(3)">← Back</button>
+              <button class="btn-sm btn-gold" style="padding:.72rem 2rem;font-size:.92rem" onclick="confirmBooking()">
+                ✓ Confirm & Submit Booking
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ MY ENGAGEMENTS ══════════ -->
+      <div class="page" id="page-my-engs">
+        <button class="back-btn" onclick="showPage('dash-client',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>← Back to Dashboard</button>
+      <div class="page-header">
+          <div><h1 class="page-title">My Engagements</h1><p class="page-sub">All your representation bookings in one place.</p></div>
+          <div class="page-actions">
+            <button class="btn-sm btn-gold" onclick="showPage('book-eng',null)">+ New Booking</button>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">All Engagements</span>
+            <div style="display:flex;gap:.5rem">
+              <button class="btn-sm btn-ghost" onclick="filterEngs('all',this)" style="background:var(--navy);color:var(--white)">All</button>
+              <button class="btn-sm btn-ghost" onclick="filterEngs('active',this)">Active</button>
+              <button class="btn-sm btn-ghost" onclick="filterEngs('upcoming',this)">Upcoming</button>
+              <button class="btn-sm btn-ghost" onclick="filterEngs('completed',this)">Completed</button>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>ID</th><th>Meeting</th><th>Date</th><th>Representative</th><th>Tier</th><th>Status</th><th>Fee</th><th>Actions</th></tr></thead>
+              <tbody id="engsTableBody">
+                <tr><td colspan="8" style="text-align:center;color:var(--txt-lt);padding:1.5rem;font-size:.85rem">No engagements yet. <a href="#" onclick="showPage('book-eng',null)" style="color:var(--steel)">Book your first rep &rarr;</a></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ DEBRIEF REPORTS ══════════ -->
+      <div class="page" id="page-reports">
+        <button class="back-btn" onclick="showPage('my-engs',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>&larr; Back to My Engagements</button>
+      <div class="page-header"><div><h1 class="page-title">Debrief Reports</h1><p class="page-sub">Post-engagement reports delivered within 24 hours of each completed engagement.</p></div></div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Your Debrief Reports</span></div>
+          <div class="card-body">
+            <div id="reportsContainer" style="color:var(--txt-lt);font-size:.88rem;padding:.5rem">
+              No debrief reports yet. Completed engagements will appear here.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ INVOICES ══════════ -->
+      <div class="page" id="page-invoices">
+        <button class="back-btn" onclick="showPage('dash-client',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>← Back to Dashboard</button>
+      <div class="page-header"><div><h1 class="page-title">Invoices & Billing</h1><p class="page-sub">Your payment history and outstanding invoices.</p></div></div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="stat-value">KSh 0</div><div class="stat-label">Total Paid</div></div>
+          <div class="stat-card"><div class="stat-icon gold"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div><div class="stat-value">KSh 0</div><div class="stat-label">Outstanding</div></div>
+          <div class="stat-card"><div class="stat-icon blue"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/></svg></div><div class="stat-value">0</div><div class="stat-label">Total Invoices</div></div>
+        </div>
+        <div class="card">
+          <div class="card-header"><span class="card-title">Invoice History</span></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Invoice</th><th>Engagement</th><th>Date</th><th>Amount</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody>
+                <tr><td colspan="6" style="text-align:center;color:var(--txt-lt);padding:1.5rem;font-size:.85rem">No invoices yet.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ PROFILE & SETTINGS ══════════ -->
+      <div class="page" id="page-profile">
+        <button class="back-btn" onclick="showPage('dash-client',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>← Back to Dashboard</button>
+      <div class="page-header"><div><h1 class="page-title">My Profile</h1><p class="page-sub">Manage your account and preferences.</p></div><div class="page-actions"><button class="btn-sm btn-gold">Save Changes</button></div></div>
+        <div class="two-col">
+          <div class="card"><div class="card-header"><span class="card-title">Personal Information</span></div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-row"><div class="form-field"><label>Full Name</label><input type="text" id="prof-name" value=""/></div><div class="form-field"><label>Email</label><input type="email" id="prof-email" value=""/></div></div>
+              <div class="form-row"><div class="form-field"><label>Phone</label><input type="tel" value=""/></div><div class="form-field"><label>Organisation</label><input type="text" value=""/></div></div>
+              <div class="form-field"><label>Role / Title</label><input type="text" value=""/></div>
+            </div>
+          </div></div>
+          <div class="card"><div class="card-header"><span class="card-title">Security</span></div>
+          <div class="card-body">
+            <div class="form-grid">
+              <div class="form-field"><label>Current Password</label><input type="password" placeholder="••••••••"/></div>
+              <div class="form-field"><label>New Password</label><input type="password" placeholder="Min 8 characters"/></div>
+              <div class="form-field"><label>Confirm New Password</label><input type="password" placeholder="Repeat new password"/></div>
+              <button class="btn-sm btn-navy" style="width:fit-content">Update Password</button>
+            </div>
+          </div></div>
+        </div>
+      </div>
+      <div class="page" id="page-settings">
+        <button class="back-btn" onclick="showPage('dash-client',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>← Back to Dashboard</button>
+      <div class="page-header"><div><h1 class="page-title">Settings</h1><p class="page-sub">Platform preferences and notification settings.</p></div></div>
+        <div class="card" style="max-width:560px"><div class="card-header"><span class="card-title">Notification Preferences</span></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:1rem">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem;background:var(--off);border-radius:var(--r)"><span style="font-size:.88rem;font-weight:500">Rep Assignment Alerts</span><input type="checkbox" checked style="accent-color:var(--navy);width:16px;height:16px"/></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem;background:var(--off);border-radius:var(--r)"><span style="font-size:.88rem;font-weight:500">Debrief Report Ready</span><input type="checkbox" checked style="accent-color:var(--navy);width:16px;height:16px"/></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem;background:var(--off);border-radius:var(--r)"><span style="font-size:.88rem;font-weight:500">Invoice & Payment Alerts</span><input type="checkbox" checked style="accent-color:var(--navy);width:16px;height:16px"/></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem;background:var(--off);border-radius:var(--r)"><span style="font-size:.88rem;font-weight:500">SMS Notifications</span><input type="checkbox" style="accent-color:var(--navy);width:16px;height:16px"/></div>
+        </div></div>
+      </div>
+
+      <!-- ══════════ REP DASHBOARD ══════════ -->
+      <div class="page" id="page-dash-rep">
+        <div class="page-header">
+          <div><h1 class="page-title">My Rep Dashboard</h1><p class="page-sub">Welcome back. Manage your profile, availability, and assignments.</p></div>
+          <div class="page-actions">
+            <button class="btn-sm btn-outline" onclick="openEditRepProfile()">
+              <svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              Edit Profile
+            </button>
+          </div>
+        </div>
+        <div class="stats-row">
+          <div class="stat-card" style="cursor:pointer" onclick="showPage('my-assignments',null)"><div class="stat-icon green"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div><div class="stat-value">0</div><div class="stat-label">Total Engagements</div></div>
+          <div class="stat-card"><div class="stat-icon gold"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="stat-value">0</div><div class="stat-label">Active Assignment</div></div>
+          <div class="stat-card"><div class="stat-icon blue"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div><div class="stat-value">—</div><div class="stat-label">My Rating</div></div>
+          <div class="stat-card" style="cursor:pointer" onclick="showPage('my-earnings',null)"><div class="stat-icon purple"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg></div><div class="stat-value">KSh 0</div><div class="stat-label">Total Earned</div></div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Active Assignment — Action Required</span><span class="badge badge-active">Live</span></div>
+            <div class="card-body">
+              <div style="padding:1.5rem;text-align:center;color:var(--txt-lt);font-size:.88rem">
+                <div style="font-size:2rem;margin-bottom:.5rem">📋</div>
+                No active assignments at the moment.<br/>Assignments will appear here once you are matched to an engagement.
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">My Recent Engagements</span></div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Meeting</th><th>Date</th><th>Status</th><th>Fee</th></tr></thead>
+                <tbody>
+                  <tr><td colspan="4" style="text-align:center;color:var(--txt-lt);padding:1.2rem;font-size:.85rem">No engagements yet.</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ REP ASSIGNMENTS ══════════ -->
+      <div class="page" id="page-my-assignments">
+        <button class="back-btn" onclick="showPage('dash-rep',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>← Back to Rep Dashboard</button>
+      <div class="page-header"><div><h1 class="page-title">My Assignments</h1><p class="page-sub">All engagements assigned to you.</p></div></div>
+        <div class="card"><div class="card-header"><span class="card-title">All Assignments</span></div>
+          <div class="table-wrap"><table>
+            <thead><tr><th>ID</th><th>Meeting</th><th>Client</th><th>Date</th><th>Status</th><th>Fee</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td colspan="7" style="text-align:center;color:var(--txt-lt);padding:1.5rem;font-size:.85rem">No assignments yet.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- ══════════ REP AVAILABILITY ══════════ -->
+      <div class="page" id="page-availability">
+        <button class="back-btn" onclick="showPage('dash-rep',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>← Back to Rep Dashboard</button>
+      <div class="page-header"><div><h1 class="page-title">My Availability</h1><p class="page-sub">Set your working days and block out unavailable dates.</p></div><div class="page-actions"><button class="btn-sm btn-gold" onclick="toast('Availability saved!')">Save Changes</button></div></div>
+        <div class="two-col">
+          <div class="card"><div class="card-header"><span class="card-title">Weekly Availability</span></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:.8rem">
+            ${['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'].map((d,i)=>`<div style="display:flex;justify-content:space-between;align-items:center;padding:.8rem;background:var(--off);border-radius:var(--r)"><strong style="font-size:.88rem">${d}</strong><input type="checkbox" ${i<5?'checked':''} style="accent-color:var(--navy);width:16px;height:16px"/></div>`).join('')}
+          </div></div>
+          <div class="card"><div class="card-header"><span class="card-title">Blocked Dates</span></div>
+          <div class="card-body">
+            <div class="form-field" style="margin-bottom:1rem"><label>Add Blocked Date</label><input type="date"/></div>
+            <div class="form-field" style="margin-bottom:1rem"><label>Reason</label><input type="text" placeholder="Holiday, personal, etc."/></div>
+            <button class="btn-sm btn-navy" onclick="toast('Date blocked successfully')">Block This Date</button>
+            <div style="margin-top:1.2rem;display:flex;flex-direction:column;gap:.5rem">
+              <div style="display:flex;justify-content:space-between;padding:.6rem .8rem;background:var(--red-lt);border-radius:var(--r);font-size:.82rem"><span>Apr 25, 2025</span><span style="color:var(--red)">Personal Leave</span><button class="btn-sm btn-ghost" style="font-size:.7rem;padding:.2rem .5rem">✕</button></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+
+      <!-- ══════════ REP EARNINGS ══════════ -->
+      <div class="page" id="page-my-earnings">
+        <button class="back-btn" onclick="showPage('dash-rep',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>← Back to Rep Dashboard</button>
+      <div class="page-header"><div><h1 class="page-title">My Earnings</h1><p class="page-sub">Track your income and payment history.</p></div></div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-icon green"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg></div><div class="stat-value">KSh 0</div><div class="stat-label">Total Earned</div></div>
+          <div class="stat-card"><div class="stat-icon gold"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg></div><div class="stat-value">KSh 0</div><div class="stat-label">This Quarter</div></div>
+          <div class="stat-card"><div class="stat-icon blue"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div><div class="stat-value">KSh 0</div><div class="stat-label">Pending Payment</div></div>
+        </div>
+        <div class="card"><div class="card-header" style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem">
+  <span class="card-title">Payment History</span>
+  <div style="display:flex;gap:.5rem">
+    <button class="btn-sm btn-navy" onclick="downloadEarningsPDF()" style="display:inline-flex;align-items:center;gap:.35rem"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Export PDF</button>
+    <button class="btn-sm btn-outline" onclick="downloadEarningsCSV()" style="display:inline-flex;align-items:center;gap:.35rem"><svg viewBox="0 0 24 24" style="width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Export CSV</button>
+  </div>
+</div>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Engagement</th><th>Date</th><th>Fee</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td colspan="4" style="text-align:center;color:var(--txt-lt);padding:1.5rem;font-size:.85rem">No payment history yet.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- ══════════ ADMIN DASHBOARD ══════════ -->
+      <div class="page" id="page-dash-admin">
+        <div class="page-header"><div><h1 class="page-title">Operations Dashboard</h1><p class="page-sub">Full platform overview — real-time.</p></div><div class="page-actions"><button class="btn-sm btn-gold" onclick="downloadAdminReport()">⬇ Export Report</button></div></div>
+        <div class="stats-row">
+          <div class="stat-card" style="cursor:pointer" onclick="showPage('all-engs',null)"><div class="stat-icon blue"><svg viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg></div><div class="stat-value" id="adminStatEngs">0</div><div class="stat-label">Active Engagements</div><div class="stat-change">Live</div></div>
+          <div class="stat-card" style="cursor:pointer" onclick="showPage('clients-list',null)"><div class="stat-icon gold"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="stat-value" id="adminStatClients">0</div><div class="stat-label">Registered Clients</div><div class="stat-change" id="adminStatClientsChange">—</div></div>
+          <div class="stat-card" style="cursor:pointer" onclick="showPage('manage-reps',null)"><div class="stat-icon green"><svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div class="stat-value" id="adminStatReps">0</div><div class="stat-label">Registered Reps</div><div class="stat-change" id="adminStatRepsChange">—</div></div>
+          <div class="stat-card" style="cursor:pointer" onclick="showPage('analytics',null)"><div class="stat-icon purple"><svg viewBox="0 0 24 24"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 100 7h5a3.5 3.5 0 110 7H6"/></svg></div><div class="stat-value" id="adminStatRevenue">KSh 0</div><div class="stat-label">Revenue This Month</div><div class="stat-change">—</div></div>
+          <div class="stat-card" style="cursor:pointer" onclick="showPage('manage-reps',null)"><div class="stat-icon red"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div><div class="stat-value" id="adminStatPending">0</div><div class="stat-label">Pending Rep Verifications</div><div class="stat-change down" id="adminStatPendingChange">—</div></div>
+        </div>
+        <div class="two-col">
+          <div class="card">
+            <div class="card-header"><span class="card-title">Pending Actions</span><span class="badge badge-pending">5 items</span></div>
+            <div class="card-body">
+              <div class="activity-feed" id="adminPendingFeed">
+                <div class="activity-item"><div class="act-icon blue"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><div class="act-text"><p>Platform is live. Waiting for registrations.</p><div class="act-time">Now</div></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><span class="card-title">Platform Activity — Live</span></div>
+            <div class="card-body">
+              <div class="timeline" id="adminActivityTimeline">
+                <div class="tl-item"><div class="tl-dot active">●</div><div class="tl-content"><div class="tl-title">Platform launched — ready for registrations</div><div class="tl-time">Now</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════ ALL ENGAGEMENTS (ADMIN) ══════════ -->
+      <div class="page" id="page-all-engs">
+        <button class="back-btn" onclick="showPage('dash-admin',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>← Back to Ops Dashboard</button>
+      <div class="page-header"><div><h1 class="page-title">All Engagements</h1><p class="page-sub">Full platform engagement log.</p></div><div class="page-actions"><button class="btn-sm btn-gold" onclick="downloadCSV()">⬇ Export CSV</button></div></div>
+        <div class="card"><div class="card-header"><span class="card-title">Engagement Registry</span></div>
+          <div class="table-wrap"><table>
+            <thead><tr><th>ID</th><th>Client</th><th>Meeting</th><th>Rep</th><th>Date</th><th>Tier</th><th>Status</th><th>Revenue</th><th>Actions</th></tr></thead>
+            <tbody id="adminEngsTableBody">
+              <!-- Populated dynamically from localStorage -->
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- ══════════ MANAGE REPS (ADMIN) ══════════ -->
+      <div class="page" id="page-manage-reps">
+        <button class="back-btn" onclick="showPage('dash-admin',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>← Back to Ops Dashboard</button>
+      <div class="page-header"><div><h1 class="page-title">Manage Representatives</h1><p class="page-sub">Vetting, roster, and performance management.</p></div><div class="page-actions"><button class="btn-sm btn-gold" onclick="openModal('addRepModal')">+ Add Rep</button></div></div>
+        <div class="card"><div class="card-header"><span class="card-title">Representative Roster</span></div>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Rep</th><th>Category</th><th>Tier</th><th>Rating</th><th>Engagements</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="adminRepTableBody">
+              <!-- Populated dynamically from localStorage -->
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- ══════════ CLIENTS (ADMIN) ══════════ -->
+      <div class="page" id="page-clients-list">
+        <button class="back-btn" onclick="showPage('dash-admin',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>← Back to Ops Dashboard</button>
+      <div class="page-header"><div><h1 class="page-title">Client Accounts</h1><p class="page-sub">All registered corporate clients.</p></div></div>
+        <div class="card"><div class="card-header"><span class="card-title">Client Registry</span></div>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Client</th><th>Organisation</th><th>Engagements</th><th>Total Spend</th><th>Status</th></tr></thead>
+            <tbody id="adminClientTableBody">
+              <!-- Populated dynamically from localStorage -->
+            </tbody>
+          </table></div>
+        </div>
+      </div>
+
+      <!-- ══════════ ANALYTICS (ADMIN) ══════════ -->
+      <div class="page" id="page-analytics">
+        <button class="back-btn" onclick="showPage('dash-admin',null)"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>← Back to Ops Dashboard</button>
+      <div class="page-header"><div><h1 class="page-title">Analytics</h1><p class="page-sub">Platform performance and revenue insights.</p></div></div>
+        <div class="stats-row">
+          <div class="stat-card"><div class="stat-icon green"><svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg></div><div class="stat-value" id="analRevenue">KSh 0</div><div class="stat-label">Revenue This Month</div><div class="stat-change">—</div></div>
+          <div class="stat-card" style="cursor:pointer" onclick="showPage('clients-list',null)"><div class="stat-icon gold"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/></svg></div><div class="stat-value" id="analClients">0</div><div class="stat-label">Active Clients</div><div class="stat-change">—</div></div>
+          <div class="stat-card" style="cursor:pointer" onclick="showPage('all-engs',null)"><div class="stat-icon blue"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="stat-value" id="analEngs">0</div><div class="stat-label">Engagements YTD</div><div class="stat-change">—</div></div>
+          <div class="stat-card" style="cursor:pointer" onclick="showPage('manage-reps',null)"><div class="stat-icon purple"><svg viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div><div class="stat-value" id="analReps">0</div><div class="stat-label">Active Reps</div><div class="stat-change">—</div></div>
+        </div>
+        <div class="two-col">
+          <div class="card"><div class="card-header"><span class="card-title">Revenue by Tier</span></div>
+          <div class="card-body" style="display:flex;flex-direction:column;gap:.8rem">
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.4rem"><span>Tier 1 — Standard</span><strong>KSh —</strong></div>
+              <div style="background:var(--border);border-radius:4px;height:8px"><div style="background:var(--steel);height:8px;border-radius:4px;width:21%;transition:width .6s ease"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.4rem"><span>Tier 2 — Professional</span><strong>KSh —</strong></div>
+              <div style="background:var(--border);border-radius:4px;height:8px"><div style="background:var(--gold);height:8px;border-radius:4px;width:58%;transition:width .6s ease"></div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:.4rem"><span>Tier 3 — Executive</span><strong>KSh —</strong></div>
+              <div style="background:var(--border);border-radius:4px;height:8px"><div style="background:var(--purple);height:8px;border-radius:4px;width:21%;transition:width .6s ease"></div></div>
+            </div>
+          </div></div>
+          <div class="card"><div class="card-header"><span class="card-title">Top Performing Reps</span></div>
+          <div class="table-wrap"><table>
+            <thead><tr><th>Rep</th><th>Engagements</th><th>Rating</th><th>Revenue</th></tr></thead>
+            <tbody id="topRepsBody">
+              <tr><td colspan="4" style="text-align:center;color:var(--txt-lt);padding:1.2rem;font-size:.85rem">No data yet.</td></tr>
+            </tbody>
+          </table></div>
+        </div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /main-layout -->
+</div><!-- /app -->
+
+<!-- ── MODALS ──────────────────────────────────────── -->
+<!-- Rating Modal -->
+<div class="modal-over" id="ratingModal">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-head"><h3>Rate Your Representative</h3><button class="modal-x" onclick="closeModal('ratingModal')">✕</button></div>
+    <div class="modal-body">
+      <div style="text-align:center;margin-bottom:1.5rem">
+        <div class="rep-avatar" style="width:56px;height:56px;font-size:1.3rem;margin:0 auto 0.8rem">AK</div>
+        <div style="font-weight:700;font-size:1rem">Representative</div>
+        <div style="font-size:.82rem;color:var(--txt-lt)">Legal Tribunal Hearing — Mar 30, 2025</div>
+      </div>
+      <div style="text-align:center;margin-bottom:1.2rem">
+        <div style="font-size:.82rem;color:var(--txt-lt);margin-bottom:.6rem">Overall performance</div>
+        <div class="star-row" style="justify-content:center" id="starRow">
+          <span class="star lit" onclick="rateStar(1)">★</span>
+          <span class="star lit" onclick="rateStar(2)">★</span>
+          <span class="star lit" onclick="rateStar(3)">★</span>
+          <span class="star lit" onclick="rateStar(4)">★</span>
+          <span class="star lit" onclick="rateStar(5)">★</span>
+        </div>
+      </div>
+      <div class="form-field"><label>Comments (optional)</label><textarea placeholder="How did your representative perform? Any specific feedback..."></textarea></div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sm btn-ghost" onclick="closeModal('ratingModal')">Cancel</button>
+      <button class="btn-sm btn-gold" onclick="submitRating()">Submit Rating</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast">✓ Action completed successfully.</div>
+
+<script>
+// ── MODAL HELPERS (defined early so all inline onclick calls work) ──
+function openModal(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.add('open');
+}
+function closeModal(id) {
+  var el = document.getElementById(id);
+  if (el) el.classList.remove('open');
+}
+function openSubmitDebriefModal() { openModal('submitDebriefModal'); }
+
+// STATE (Firebase-backed -- see Firebase <script> block in <head>)
+// loadUsers/saveUsers/loadClients/saveClients/loadReps/saveReps/
+// loadEngagements/saveEngagements are all defined there.
+var USERS       = {};
+var CLIENT_LIST = [];
+var REP_LIST    = [];
+let currentUser = null;
+let selectedRep = null;
+let currentBookStep = 1;
+let selectedRole = 'client';
+let selectedUrgency = 'standard';
+
+// ── AUTH ──────────────────────────────────────────
+function switchAuthTab(tab, btn) {
+  document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-login').style.display = tab === 'login' ? 'flex' : 'none';
+  document.getElementById('tab-register').style.display = tab === 'register' ? 'flex' : 'none';
+}
+
+function setRole(r) {
+  selectedRole = r;
+  document.getElementById('role-client').classList.toggle('active', r === 'client');
+  document.getElementById('role-rep').classList.toggle('active', r === 'rep');
+}
+
+function doLogin() {
+  var email = document.getElementById('login-email').value.trim().toLowerCase();
+  var pw    = document.getElementById('login-pw').value.trim();
+  USERS = loadUsers();
+  // case-insensitive email lookup
+  var matchKey = Object.keys(USERS).find(function(k){ return k.toLowerCase() === email; });
+  if (!matchKey || USERS[matchKey].pw !== pw) { toast('❌ Invalid email or password'); return; }
+  loginAs(USERS[matchKey].role, USERS[matchKey].name);
+}
+
+function doRegister() {
+  var name  = document.getElementById('reg-name').value.trim();
+  var email = document.getElementById('reg-email').value.trim();
+  var pw    = document.getElementById('reg-pw').value.trim();
+  var org   = (document.getElementById('reg-org') ? document.getElementById('reg-org').value.trim() : '');
+  var phone = (document.getElementById('reg-phone') ? document.getElementById('reg-phone').value.trim() : '');
+  if (!name || !email || !pw) { toast('Please fill all fields'); return; }
+  if (!email.includes('@') || !email.includes('.')) { toast('Please enter a valid email address'); return; }
+  if (pw.length < 8) { toast('Password must be at least 8 characters'); return; }
+  USERS = loadUsers();
+  if (USERS[email]) { toast('An account with this email already exists. Please sign in.'); return; }
+  // Save to persistent user store
+  USERS[email] = { pw: pw, role: selectedRole, name: name, org: org, phone: phone, created: new Date().toISOString() };
+  saveUsers(USERS);
+  // Add to appropriate registry
+  if (selectedRole === 'client') {
+    var clients = loadClients();
+    clients.push({ name: name, email: email, org: org || '—', phone: phone, engagements: 0, spend: 0, status: 'Active', created: new Date().toISOString() });
+    saveClients(clients);
+    CLIENT_LIST = clients;
+  } else if (selectedRole === 'rep') {
+    var reps = loadReps();
+    reps.push({ name: name, email: email, org: org || '—', phone: phone, category: '—', tier: 'Standard', rating: '—', engagements: 0, status: 'Pending', created: new Date().toISOString() });
+    saveReps(reps);
+    REP_LIST = reps;
+  }
+  toast('✅ Account created! Welcome, ' + name.split(' ')[0] + '!');
+  loginAs(selectedRole, name);
+}
+
+function loginAs(role, name) {
+  currentUser = { role: role, name: name };
+  // Refresh in-memory lists from storage
+  CLIENT_LIST = loadClients();
+  REP_LIST    = loadReps();
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('app').classList.add('visible');
+  // Set UI
+  var initials = name.split(' ').map(function(n){ return n[0]; }).join('').toUpperCase();
+  document.getElementById('userAvatar').textContent = initials;
+  document.getElementById('userName').textContent = name;
+  document.getElementById('userRoleLabel').textContent = role.charAt(0).toUpperCase() + role.slice(1);
+  document.getElementById('clientGreetName').textContent = name.split(' ')[0];
+  if (document.getElementById('prof-name')) document.getElementById('prof-name').value = name;
+  // Show correct nav
+  document.getElementById('nav-client').style.display = role === 'client' ? 'block' : 'none';
+  document.getElementById('nav-rep').style.display    = role === 'rep'    ? 'block' : 'none';
+  document.getElementById('nav-admin').style.display  = role === 'admin'  ? 'block' : 'none';
+  // Show correct dashboard
+  var dashId = role === 'client' ? 'dash-client' : role === 'rep' ? 'dash-rep' : 'dash-admin';
+  showPage(dashId, document.querySelector('#nav-' + role + ' .nav-item'));
+  // If admin, render live tables from storage
+  if (role === 'admin') { renderAdminClientTable(); renderAdminRepTable(); renderAdminDashStats(); }
+  // If rep, compute and display their assignment count
+  if (role === 'rep') { updateMyAssignmentsBadge(name); }
+  toast('Welcome back, ' + name.split(' ')[0] + '! 👋');
+}
+
+function doLogout() {
+  currentUser = null;
+  document.getElementById('auth-screen').style.display = 'flex';
+  document.getElementById('app').classList.remove('visible');
+  document.getElementById('login-email').value = '';
+  document.getElementById('login-pw').value = '';
+}
+
+// ── NAVIGATION ────────────────────────────────────
+function showPage(id, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  if (navEl) {
+    const navGroup = navEl.closest('[id^="nav-"]');
+    if (navGroup) navGroup.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+    navEl.classList.add('active');
+  }
+  document.getElementById('mainContent').scrollTop = 0;
+  // Close notif panel
+  document.getElementById('notifPanel').classList.remove('open');
+}
+
+// ── BOOKING FLOW ──────────────────────────────────
+function bookNext(step) {
+  for (let i = 1; i <= 4; i++) {
+    const el = document.getElementById('book-step' + i);
+    if (el) el.style.display = i === step ? 'block' : 'none';
+  }
+  // Update progress
+  for (let i = 1; i <= 4; i++) {
+    const num = document.getElementById('ps' + i);
+    const line = document.getElementById('pl' + i);
+    if (num) {
+      num.className = 'ps-num' + (i < step ? ' done' : i === step ? ' active' : '');
+      if (i < step) num.textContent = '✓';
+      else num.textContent = i;
+    }
+    if (line) line.className = 'ps-line' + (i < step ? ' done' : '');
+    const label = num ? num.nextElementSibling : null;
+    if (label) label.className = 'ps-label' + (i === step ? ' active' : '');
+  }
+  if (step === 3) { _populateRepMatchGrid(); }
+  currentBookStep = step;
+  document.getElementById('mainContent').scrollTop = 0;
+}
+
+function setUrgency(u) {
+  selectedUrgency = u;
+  ['standard','urgent','same'].forEach(k => {
+    document.getElementById('urg-' + k).classList.toggle('active', k === u);
+  });
+}
+
+function selectRep(card, name) {
+  document.querySelectorAll('#repMatchGrid .rep-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedRep = name;
+}
+
+
+function _populateRepMatchGrid() {
+  var grid = document.getElementById('repMatchGrid');
+  if (!grid) return;
+  var reps = loadReps().filter(function(r){ return r.status === 'Active'; });
+  if (reps.length === 0) {
+    grid.innerHTML = '<div style="padding:1.5rem;text-align:center;color:var(--txt-lt);font-size:.85rem;background:var(--off);border-radius:var(--r);border:1.5px dashed var(--border-dk)">No active representatives available yet. Please check back soon.</div>';
+    return;
+  }
+  grid.innerHTML = reps.map(function(r) {
+    var initials = r.name.split(' ').map(function(n){return n[0];}).join('').toUpperCase();
+    var stars    = r.rating && r.rating !== '—' ? parseFloat(r.rating).toFixed(1) : '—';
+    var starStr  = stars !== '—' ? ('★'.repeat(Math.round(parseFloat(stars))) + ' ' + stars + ' / 5.0') : 'New';
+    return '<div class="rep-card" onclick="selectRep(this,'' + esc(r.name) + '')">' +
+      '<div class="rep-meta"><div class="rep-avatar" style="background:linear-gradient(135deg,var(--navy),var(--navy-md));color:var(--gold)">' + initials + '</div>' +
+      '<div class="rep-info"><div class="rep-name">' + esc(r.name) + '</div>' +
+      '<div class="rep-cat">' + esc(r.category||'—') + ' · ' + esc(r.tier||'Standard') + '</div>' +
+      '<div class="rep-stars">' + starStr + '</div></div></div>' +
+      '<div class="rep-bio">' + esc((r.bio||'Experienced professional representative.').slice(0,120)) + '</div>' +
+      '<div class="rep-tags"><span class="rep-tag">' + esc(r.category||'General') + '</span></div></div>';
+  }).join('');
+}
+function confirmBooking() {
+  if (!document.getElementById('nda-agree').checked) {
+    toast('Please agree to the NDA and scope-of-authority agreement to proceed.');
+    return;
+  }
+  var type     = document.getElementById('b-type').value || 'Board Meeting';
+  var location = document.getElementById('b-location') ? document.getElementById('b-location').value.trim() : '—';
+  var dateVal  = document.getElementById('b-date') ? document.getElementById('b-date').value : '';
+  var tierSel  = document.getElementById('b-tier') ? document.getElementById('b-tier').value : 'T1';
+  var tierCode = tierSel.indexOf('2') > -1 ? 'T2' : tierSel.indexOf('3') > -1 ? 'T3' : 'T1';
+  var feeMap   = { 'T1':'KSh 25,900–64,800', 'T2':'KSh 103,600–323,700', 'T3':'KSh 388,500+' };
+  var clientName = (currentUser && currentUser.name) ? currentUser.name : 'Client';
+
+  // Generate engagement ID
+  var engs = loadEngagements();
+  var engNum = engs.length + 1;
+  var engId  = 'ENG-' + String(1000 + engNum).slice(1);
+
+  // Build engagement record
+  var newEng = {
+    id:      engId,
+    client:  clientName,
+    meeting: type,
+    location:location || '—',
+    rep:     selectedRep || 'Unmatched',
+    date:    dateVal ? new Date(dateVal).toLocaleDateString('en-KE',{day:'2-digit',month:'short',year:'numeric'}) : new Date().toLocaleDateString('en-KE',{day:'2-digit',month:'short',year:'numeric'}),
+    tier:    tierCode,
+    status:  'Pending',
+    fee:     feeMap[tierCode] || 'KSh —',
+    created: new Date().toISOString()
+  };
+  engs.push(newEng);
+  saveEngagements(engs);
+
+  // Update summary fields in confirm step
+  document.getElementById('sum-type').textContent = type;
+  document.getElementById('sum-rep').textContent  = selectedRep;
+  document.getElementById('sum-date').textContent = newEng.date;
+
+  // Update All Engagements nav badge immediately
+  var badge = document.getElementById('allEngsNavBadge');
+  if (badge) { badge.style.display = 'inline-flex'; badge.textContent = engs.length; }
+
+  // Add notification
+  addNotification('New booking confirmed: <strong>' + esc(type) + '</strong> — ' + engId, 'green');
+
+  toast('✅ Booking confirmed! ' + engId + ' created. Your rep will be briefed within 24 hours.');
+  setTimeout(function() {
+    showPage('my-engs', null);
+    bookNext(1);
+    document.getElementById('nda-agree').checked = false;
+  }, 2000);
+}
+
+// ── ENGAGEMENT FILTER ─────────────────────────────
+function filterEngs(filter, btn) {
+  document.querySelectorAll('.card-header button').forEach(b => {
+    b.style.background = ''; b.style.color = '';
+  });
+  btn.style.background = 'var(--navy)'; btn.style.color = 'var(--white)';
+  document.querySelectorAll('#engsTableBody tr').forEach(row => {
+    const status = row.getAttribute('data-status');
+    row.style.display = (filter === 'all' || status === filter || (filter === 'upcoming' && status === 'pending') || (filter === 'active' && status === 'confirmed')) ? '' : 'none';
+  });
+}
+
+// ── MODALS ─────────────────────────────────────────
+function openEngModal()    { toast('Engagement details loading...'); }
+function openRatingModal() { openModal('ratingModal'); }
+
+document.querySelectorAll('.modal-over').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+
+// Rating stars
+let currentRating = 5;
+function rateStar(n) {
+  currentRating = n;
+  document.querySelectorAll('#starRow .star').forEach((s, i) => {
+    s.classList.toggle('lit', i < n);
+  });
+}
+function submitRating() {
+  closeModal('ratingModal');
+  toast('⭐ Rating submitted! Thank you for your feedback.');
+}
+
+// ── NOTIFICATIONS ─────────────────────────────────
+function toggleNotif() {
+  document.getElementById('notifPanel').classList.toggle('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.topbar-notif') && !e.target.closest('#notifPanel')) {
+    document.getElementById('notifPanel').classList.remove('open');
+  }
+});
+
+// ── TOAST ──────────────────────────────────────────
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+// ── KEYBOARD SHORTCUTS ─────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-over').forEach(m => m.classList.remove('open'));
+  }
+});
+
+// ── AUTO-ANIMATE PROGRESS BARS ─────────────────────
+setTimeout(() => {
+  document.querySelectorAll('[style*="width:0%"]').forEach(el => {
+    const target = el.getAttribute('data-width');
+    if (target) el.style.width = target;
+  });
+}, 500);
+
+// Engagements + notifications: handled by Firebase block in <head>
+function refreshNotifBadge(){
+  var b=document.getElementById('notifBadge');
+  if(!b) return;
+  b.style.display=_notifications.length?'flex':'none';
+  b.textContent=_notifications.length;
+}
+function refreshNotifPanel(){ _renderNotif(); }
+document.addEventListener('DOMContentLoaded', function(){ refreshNotifBadge(); });
+
+</script>
+
+<!-- ══ ADDITIONAL MODALS ══════════════════════════════════ -->
+
+<!-- Upcoming Engagements Detail -->
+<div class="modal-over" id="upcomingModal">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-head"><h3>Upcoming Engagements</h3><button class="modal-x" onclick="closeModal('upcomingModal')">✕</button></div>
+    <div class="modal-body">
+      <div style="display:flex;flex-direction:column;gap:.8rem">
+        <div style="padding:1rem;background:var(--off);border-radius:8px;border-left:4px solid var(--steel);cursor:pointer" onclick="openEngModal();closeModal('upcomingModal')">
+          <div style="font-weight:700;color:var(--navy)">Board Sub-Committee</div>
+          <div style="font-size:.82rem;color:var(--txt-md);margin:.3rem 0">Apr 18, 2025 · 10:00 AM · NCBA Towers, Nairobi CBD</div>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem">
+            <span class="badge badge-confirmed">Confirmed</span>
+            <span class="badge badge-gold">Tier 2 — Professional</span>
+            <span style="font-size:.78rem;color:var(--txt-lt)">Rep: Representative</span>
+          </div>
+        </div>
+        <div style="padding:1rem;background:var(--off);border-radius:8px;border-left:4px solid var(--gold);cursor:pointer" onclick="toast('Engagement details loading...');closeModal('upcomingModal')">
+          <div style="font-weight:700;color:var(--navy)">Donor Review Meeting</div>
+          <div style="font-size:.82rem;color:var(--txt-md);margin:.3rem 0">Apr 22, 2025 · 09:00 AM · Westlands, Nairobi</div>
+          <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.5rem">
+            <span class="badge badge-pending">Pending Match</span>
+            <span class="badge badge-purple">Tier 1 — Standard</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sm btn-ghost" onclick="closeModal('upcomingModal')">Close</button>
+      <button class="btn-sm btn-navy" onclick="showPage('my-engs',null);closeModal('upcomingModal')">View All Engagements</button>
+    </div>
+  </div>
+</div>
+
+<!-- Rating Summary -->
+<div class="modal-over" id="ratingDetailModal">
+  <div class="modal-box" style="max-width:420px">
+    <div class="modal-head"><h3>Rep Rating Summary</h3><button class="modal-x" onclick="closeModal('ratingDetailModal')">✕</button></div>
+    <div class="modal-body">
+      <div style="text-align:center;padding:1rem 0;margin-bottom:1rem">
+        <div style="font-family:'Cormorant Garamond',serif;font-size:3.5rem;font-weight:700;color:var(--gold);line-height:1">4.8</div>
+        <div style="font-size:1.5rem;color:var(--gold);margin:.3rem 0">★★★★★</div>
+        <div style="font-size:.85rem;color:var(--txt-lt)">Average across 6 completed engagements</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:.7rem">
+        <div style="display:flex;align-items:center;gap:1rem">
+          <span style="width:50px;font-size:.82rem;color:var(--txt-lt)">5 ★</span>
+          <div style="flex:1;background:var(--border);border-radius:4px;height:10px"><div style="background:var(--green);height:10px;border-radius:4px;width:83%"></div></div>
+          <span style="font-size:.82rem;color:var(--txt-md);width:16px">5</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem">
+          <span style="width:50px;font-size:.82rem;color:var(--txt-lt)">4 ★</span>
+          <div style="flex:1;background:var(--border);border-radius:4px;height:10px"><div style="background:var(--gold);height:10px;border-radius:4px;width:17%"></div></div>
+          <span style="font-size:.82rem;color:var(--txt-md);width:16px">1</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:1rem">
+          <span style="width:50px;font-size:.82rem;color:var(--txt-lt)">3 ★</span>
+          <div style="flex:1;background:var(--border);border-radius:4px;height:10px"><div style="background:var(--border-dk);height:10px;border-radius:4px;width:0%"></div></div>
+          <span style="font-size:.82rem;color:var(--txt-md);width:16px">0</span>
+        </div>
+      </div>
+      <div style="margin-top:1.2rem;padding:.8rem;background:var(--green-lt);border-radius:8px;border:1px solid var(--green);font-size:.82rem;color:var(--green);font-weight:600;text-align:center">
+        ✓ You are in the top 15% of clients by rep performance
+      </div>
+    </div>
+    <div class="modal-foot"><button class="btn-sm btn-ghost" onclick="closeModal('ratingDetailModal')">Close</button></div>
+  </div>
+</div>
+
+<!-- Invoice Detail Modal -->
+<div class="modal-over" id="invoiceModal">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-head"><h3 id="invoiceModalTitle">Invoice</h3><button class="modal-x" onclick="closeModal('invoiceModal')">✕</button></div>
+    <div class="modal-body" id="invoiceModalBody"></div>
+    <div class="modal-foot">
+      <button class="btn-sm btn-ghost" onclick="closeModal('invoiceModal')">Close</button>
+      <button class="btn-sm btn-navy" id="invoiceDlBtn">⬇ Download</button>
+      <button class="btn-sm btn-gold" id="invoicePayBtn" style="display:none">Pay Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- Rep Profile Modal -->
+<div class="modal-over" id="repProfileModal">
+  <div class="modal-box" style="max-width:480px">
+    <div class="modal-head"><h3 id="repProfileTitle">Rep Profile</h3><button class="modal-x" onclick="closeModal('repProfileModal')">✕</button></div>
+    <div class="modal-body" id="repProfileBody"></div>
+    <div class="modal-foot">
+      <button class="btn-sm btn-ghost" onclick="closeModal('repProfileModal')">Close</button>
+      <button class="btn-sm btn-gold" onclick="toast('Engagement assigned!');closeModal('repProfileModal')">Assign to Engagement</button>
+    </div>
+  </div>
+</div>
+
+<!-- Client Detail Modal -->
+<div class="modal-over" id="clientDetailModal">
+  <div class="modal-box" style="max-width:460px">
+    <div class="modal-head"><h3 id="clientDetailTitle">Client Profile</h3><button class="modal-x" onclick="closeModal('clientDetailModal')">✕</button></div>
+    <div class="modal-body" id="clientDetailBody"></div>
+    <div class="modal-foot"><button class="btn-sm btn-ghost" onclick="closeModal('clientDetailModal')">Close</button></div>
+  </div>
+</div>
+
+<!-- Brief Full View Modal -->
+<div class="modal-over" id="briefModal">
+  <div class="modal-box" style="max-width:560px">
+    <div class="modal-head"><h3>Engagement Brief — ENG-007</h3><button class="modal-x" onclick="closeModal('briefModal')">✕</button></div>
+    <div class="modal-body">
+      <div style="display:flex;flex-direction:column;gap:1rem;font-size:.88rem">
+        <div style="padding:1rem;background:var(--off);border-radius:var(--r)">
+          <div style="font-weight:700;color:var(--navy);margin-bottom:.4rem">Meeting Objectives</div>
+          <p style="color:var(--txt-md);line-height:1.7">Present the Q1 2025 financial performance report. Defend variance in operating expenses. Seek board approval for Q2 budget allocation of KSh 8.2M.</p>
+        </div>
+        <div style="padding:1rem;background:var(--off);border-radius:var(--r)">
+          <div style="font-weight:700;color:var(--navy);margin-bottom:.4rem">Key Speaking Points</div>
+          <ul style="color:var(--txt-md);padding-left:1.2rem;line-height:1.8">
+            <li>Revenue up 22% YoY, aligned with Q1 forecast</li>
+            <li>OPEX variance explained by one-off recruitment costs</li>
+            <li>Q2 budget breakdown available in Appendix B</li>
+            <li>3 enterprise prospects at proposal stage</li>
+          </ul>
+        </div>
+        <div style="padding:1rem;background:var(--gold-bg);border-radius:var(--r);border:1px solid rgba(196,154,42,.25)">
+          <div style="font-weight:700;color:var(--navy);margin-bottom:.4rem">⚠ Authority & Scope Limits</div>
+          <p style="color:var(--txt-md);line-height:1.7">Rep may NOT commit to budget reductions exceeding 10% without calling the MD directly. All binding resolutions must be escalated immediately via secure channel.</p>
+        </div>
+        <div style="padding:1rem;background:var(--off);border-radius:var(--r)">
+          <div style="font-weight:700;color:var(--navy);margin-bottom:.4rem">Other Attendees</div>
+          <p style="color:var(--txt-md)">Board Chairman, 4 Non-Executive Directors, Company Secretary, External Auditor (PWC)</p>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sm btn-ghost" onclick="closeModal('briefModal')">Close</button>
+      <button class="btn-sm btn-navy" onclick="downloadBrief()">⬇ Download Brief</button>
+    </div>
+  </div>
+</div>
+
+<!-- Submit Debrief Modal -->
+<div class="modal-over" id="submitDebriefModal">
+  <div class="modal-box" style="max-width:500px">
+    <div class="modal-head"><h3>Submit Debrief — ENG-007</h3><button class="modal-x" onclick="closeModal('submitDebriefModal')">✕</button></div>
+    <div class="modal-body">
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div class="form-field">
+          <label>Meeting Outcome Summary *</label>
+          <textarea style="width:100%;padding:.7rem .9rem;border:1.5px solid var(--border);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:.88rem;min-height:90px;resize:vertical;outline:none;background:var(--off)" placeholder="Describe what happened at the meeting, key decisions made, and outcomes..."></textarea>
+        </div>
+        <div class="form-field">
+          <label>Actions Required by Client</label>
+          <textarea style="width:100%;padding:.7rem .9rem;border:1.5px solid var(--border);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:.88rem;min-height:70px;resize:vertical;outline:none;background:var(--off)" placeholder="List any follow-up actions the client needs to take..."></textarea>
+        </div>
+        <div class="form-field">
+          <label>Any Issues or Escalations?</label>
+          <select style="width:100%;padding:.7rem .9rem;border:1.5px solid var(--border);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:.88rem;outline:none;background:var(--off)">
+            <option>No issues — meeting went as planned</option>
+            <option>Minor deviation from brief (noted above)</option>
+            <option>Client escalation required</option>
+            <option>Meeting was cancelled / postponed</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sm btn-ghost" onclick="closeModal('submitDebriefModal')">Cancel</button>
+      <button class="btn-sm btn-gold" onclick="submitDebriefForm()">✓ Submit Debrief Report</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADDITIONAL JAVASCRIPT ══════════════════════════════ -->
+<style>
+.stat-card[onclick] { cursor:pointer }
+.stat-card[onclick]:hover { box-shadow:var(--shadow-md); transform:translateY(-2px) }
+tr[onclick] { cursor:pointer }
+tr[onclick]:hover td { background:var(--steel-bg) !important }
+</style>
+
+<script>
+// Clickable stat card functions
+function openUpcomingDetail() { openModal('upcomingModal'); }
+function openRatingSummary()  { openModal('ratingDetailModal'); }
+function openOverdueDetail()  { openModal('overdueModal'); }
+function submitDebriefForm() {
+  closeModal('submitDebriefModal');
+  toast('✅ Debrief submitted! Client will receive their report within 1 hour.');
+}
+
+// Rep profile modal
+function openRepProfile(name, category, tier, rating, engs, pay) {
+  var initials = name.split(' ').map(function(n){ return n[0]; }).join('');
+  document.getElementById('repProfileTitle').textContent = name + ' — Profile';
+  document.getElementById('repProfileBody').innerHTML =
+    '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding:1rem;background:var(--navy);border-radius:8px">' +
+      '<div style="width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-lt));display:flex;align-items:center;justify-content:center;font-family:Cormorant Garamond,serif;font-weight:700;font-size:1.2rem;color:var(--navy-dk);flex-shrink:0">' + initials + '</div>' +
+      '<div><div style="font-weight:700;font-size:1rem;color:var(--white)">' + name + '</div>' +
+      '<div style="font-size:.82rem;color:rgba(255,255,255,.55);margin:.2rem 0">' + tier + ' · ' + category + '</div>' +
+      '<div style="color:var(--gold)">★★★★★ ' + rating + ' / 5.0</div></div>' +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;font-size:.88rem">' +
+      '<div style="padding:.8rem;background:var(--off);border-radius:8px"><div style="color:var(--txt-lt);font-size:.72rem;margin-bottom:.2rem">ENGAGEMENTS</div><strong>' + engs + '</strong></div>' +
+      '<div style="padding:.8rem;background:var(--gold-bg);border-radius:8px;border:1px solid rgba(196,154,42,.2)"><div style="color:var(--txt-lt);font-size:.72rem;margin-bottom:.2rem">PAY RATE</div><strong style="color:var(--gold)">' + pay + '</strong></div>' +
+      '<div style="padding:.8rem;background:var(--off);border-radius:8px"><div style="color:var(--txt-lt);font-size:.72rem;margin-bottom:.2rem">CATEGORY</div><strong>' + category + '</strong></div>' +
+      '<div style="padding:.8rem;background:var(--green-lt);border-radius:8px;border:1px solid var(--green)"><div style="color:var(--txt-lt);font-size:.72rem;margin-bottom:.2rem">STATUS</div><strong style="color:var(--green)">Active ✓</strong></div>' +
+    '</div>';
+  openModal('repProfileModal');
+}
+
+// Client detail modal
+function openClientDetail(name, org, email, engs, spend, status) {
+  var initials = name.split(' ').map(function(n){ return n[0]; }).join('');
+  document.getElementById('clientDetailTitle').textContent = name + ' — Profile';
+  document.getElementById('clientDetailBody').innerHTML =
+    '<div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;padding:1rem;background:var(--navy);border-radius:8px">' +
+      '<div style="width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,var(--steel),var(--navy-md));display:flex;align-items:center;justify-content:center;font-family:Cormorant Garamond,serif;font-weight:700;font-size:1.1rem;color:var(--white);flex-shrink:0">' + initials + '</div>' +
+      '<div><div style="font-weight:700;color:var(--white)">' + name + '</div>' +
+      '<div style="font-size:.82rem;color:rgba(255,255,255,.55)">' + org + '</div>' +
+      '<div style="font-size:.78rem;color:rgba(255,255,255,.4)">' + email + '</div></div>' +
+    '</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem;font-size:.88rem">' +
+      '<div style="padding:.8rem;background:var(--off);border-radius:8px"><div style="color:var(--txt-lt);font-size:.72rem;margin-bottom:.2rem">ENGAGEMENTS</div><strong>' + engs + '</strong></div>' +
+      '<div style="padding:.8rem;background:var(--gold-bg);border-radius:8px;border:1px solid rgba(196,154,42,.2)"><div style="color:var(--txt-lt);font-size:.72rem;margin-bottom:.2rem">TOTAL SPEND</div><strong style="color:var(--gold)">' + spend + '</strong></div>' +
+      '<div style="padding:.8rem;background:var(--green-lt);border-radius:8px;border:1px solid var(--green)"><div style="color:var(--txt-lt);font-size:.72rem;margin-bottom:.2rem">STATUS</div><strong style="color:var(--green)">' + status + ' ✓</strong></div>' +
+      '<div style="padding:.8rem;background:var(--off);border-radius:8px"><div style="color:var(--txt-lt);font-size:.72rem;margin-bottom:.2rem">AVG RATING</div><strong>4.8 ★</strong></div>' +
+    '</div>' +
+    '<div style="display:flex;gap:.6rem;margin-top:1rem">' +
+      '<button class="btn-sm btn-navy" onclick="toast(\'Email sent!\')">Send Email</button>' +
+      '<button class="btn-sm btn-outline" onclick="showPage(\'all-engs\',null);closeModal(\'clientDetailModal\')">View Engagements</button>' +
+    '</div>';
+  openModal('clientDetailModal');
+}
+
+// Invoice modal
+function openInvoiceModal(invId, desc, date, amount, isPending) {
+  document.getElementById('invoiceModalTitle').textContent = 'Invoice — ' + invId;
+  var payBtn = document.getElementById('invoicePayBtn');
+  var dlBtn  = document.getElementById('invoiceDlBtn');
+  payBtn.style.display = isPending ? 'inline-flex' : 'none';
+  payBtn.onclick = function(){ payInvoiceNow(invId); };
+  dlBtn.onclick  = function(){ downloadInvoiceDirect(invId, desc, date, amount, isPending ? 'PENDING' : 'PAID'); };
+  document.getElementById('invoiceModalBody').innerHTML =
+    '<div style="display:flex;flex-direction:column;gap:.7rem;font-size:.88rem">' +
+      '<div style="padding:1rem;background:var(--navy);border-radius:8px;display:flex;justify-content:space-between;align-items:center">' +
+        '<div><div style="color:rgba(255,255,255,.5);font-size:.72rem;margin-bottom:.2rem">INVOICE NUMBER</div>' +
+        '<div style="font-family:DM Mono,monospace;font-weight:700;color:var(--gold);font-size:1rem">' + invId + '</div></div>' +
+        '<span class="badge ' + (isPending ? 'badge-pending' : 'badge-active') + '">' + (isPending ? 'Pending Payment' : 'Paid ✓') + '</span>' +
+      '</div>' +
+      '<div style="display:grid;grid-template-columns:1fr 1fr;gap:.7rem">' +
+        '<div style="padding:.8rem;background:var(--off);border-radius:8px"><div style="color:var(--txt-lt);font-size:.72rem;margin-bottom:.2rem">DESCRIPTION</div><strong>' + desc + '</strong></div>' +
+        '<div style="padding:.8rem;background:var(--off);border-radius:8px"><div style="color:var(--txt-lt);font-size:.72rem;margin-bottom:.2rem">DATE</div><strong>' + date + '</strong></div>' +
+        '<div style="padding:.8rem;background:var(--off);border-radius:8px"><div style="color:var(--txt-lt);font-size:.72rem;margin-bottom:.2rem">CLIENT</div><strong>Client Organisation</strong></div>' +
+        '<div style="padding:.8rem;background:var(--gold-bg);border-radius:8px;border:1px solid rgba(196,154,42,.2)"><div style="color:var(--txt-lt);font-size:.72rem;margin-bottom:.2rem">AMOUNT</div><strong style="color:var(--gold);font-size:1.1rem">' + amount + '</strong></div>' +
+      '</div>' +
+      (isPending
+        ? '<div style="padding:1rem;background:var(--gold-bg);border-radius:8px;border:1px solid rgba(196,154,42,.3);font-size:.82rem;color:var(--txt-md)">ℹ Payment due within 7 days. Late payments attract a 5% surcharge.</div>'
+        : '<div style="padding:1rem;background:var(--green-lt);border-radius:8px;border:1px solid var(--green);font-size:.82rem;color:var(--green);font-weight:600">✓ This invoice has been paid. Thank you.</div>') +
+    '</div>';
+  openModal('invoiceModal');
+}
+
+function payInvoiceNow(invId) {
+  toast('✅ Payment processed successfully! ' + invId + ' marked as paid.');
+  closeModal('invoiceModal');
+}
+
+// ── DOWNLOAD FUNCTIONS ────────────────────────────
+function savePDF(lines, filename, title) {
+  var doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
+  var pageW = doc.internal.pageSize.getWidth();
+  var pageH = doc.internal.pageSize.getHeight();
+  var margin = 18;
+  var usable = pageW - margin * 2;
+  var y = 20;
+
+  // Header bar
+  doc.setFillColor(7, 26, 54);
+  doc.rect(0, 0, pageW, 18, 'F');
+  doc.setFillColor(196, 154, 42);
+  doc.rect(0, 18, pageW, 1.5, 'F');
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(12);
+  doc.setTextColor(255, 255, 255);
+  doc.text('StandIn Corp', margin, 12);
+  doc.setFontSize(9);
+  doc.setFont('helvetica', 'normal');
+  doc.setTextColor(196, 154, 42);
+  doc.text('Professional Corporate Representation Platform', margin + 36, 12);
+
+  y = 30;
+  // Document title
+  doc.setFont('helvetica', 'bold');
+  doc.setFontSize(15);
+  doc.setTextColor(13, 43, 85);
+  doc.text(title, margin, y);
+  y += 8;
+
+  // Divider
+  doc.setDrawColor(196, 154, 42);
+  doc.setLineWidth(0.5);
+  doc.line(margin, y, pageW - margin, y);
+  y += 7;
+
+  // Body lines
+  doc.setFont('helvetica', 'normal');
+  doc.setFontSize(9.5);
+  doc.setTextColor(30, 41, 59);
+
+  lines.forEach(function(line) {
+    if (y > pageH - 20) {
+      doc.addPage();
+      y = 20;
+    }
+    if (line === '' ) {
+      y += 3;
+      return;
+    }
+    if (line.match(/^[A-Z ]{4,}$/) || line.match(/^={3,}/) || line.match(/^-{3,}/)) {
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(9);
+      doc.setTextColor(13, 43, 85);
+      doc.text(line, margin, y);
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(9.5);
+      doc.setTextColor(30, 41, 59);
+    } else {
+      var wrapped = doc.splitTextToSize(line, usable);
+      doc.text(wrapped, margin, y);
+      y += (wrapped.length - 1) * 5;
+    }
+    y += 5.5;
+  });
+
+  // Footer
+  doc.setFillColor(247, 248, 252);
+  doc.rect(0, pageH - 10, pageW, 10, 'F');
+  doc.setFontSize(7.5);
+  doc.setTextColor(148, 163, 184);
+  doc.setFont('helvetica', 'normal');
+  doc.text('Generated by StandIn Corp Platform  |  © 2025 StandIn Corp. All Rights Reserved.', margin, pageH - 4);
+  doc.text('Page 1', pageW - margin, pageH - 4, { align: 'right' });
+
+  doc.save(filename);
+}
+
+function downloadBrief() {
+  toast('Brief download is available once your booking is confirmed.');
+}
+
+function downloadDebrief() {
+  toast('Debrief download is available for completed engagements with submitted reports.');
+}
+
+function downloadAudioSummary() {
+  var lines = [
+    'AUDIO SUMMARY TRANSCRIPT',
+    '========================================',
+    'Engagement : ENG-006 - Legal Tribunal Hearing',
+    'Date       : March 30, 2025',
+    'Duration   : 2 minutes 34 seconds',
+    '',
+    'TRANSCRIPT',
+    '----------',
+    '"Good morning. This is Representative reporting on the Milimani Tribunal hearing',
+    'for Client Organisation, engagement ENG-006.',
+    '',
+    'The hearing took place at 10 AM as scheduled. I presented the application for',
+    'adjournment on behalf of the client. The magistrate was receptive and the',
+    'opposing counsel raised no objections. The adjournment was granted to May 20, 2025.',
+    '',
+    'Key action items: file amended pleadings by April 15th, and confirm the new',
+    'date with the tribunal secretary.',
+    '',
+    'Full written debrief and signed documents are available in your StandIn Corp',
+    'client portal. End of summary."',
+    '',
+    'NOTE: Audio file available in client portal dashboard'
+  ];
+  savePDF(lines, 'StandIn_Audio_Summary_ENG-006.pdf', 'Audio Summary Transcript - ENG-006');
+  toast('PDF Audio Summary downloaded!');
+}
+
+function downloadInvoiceDirect(invId, desc, date, amount, status) {
+  var lines = [
+    'TAX INVOICE',
+    '===========================',
+    'Invoice No.    : ' + invId,
+    'Client         : Client Organisation',
+    'Contact        : Client - Managing Director',
+    'Description    : ' + desc,
+    'Invoice Date   : ' + date,
+    'Payment Status : ' + status,
+    '',
+    'INVOICE BREAKDOWN',
+    '-----------------',
+    'Professional Representation Service    ' + amount,
+    'VAT (16%)                              Included',
+    '-------------------------------------------',
+    'TOTAL AMOUNT DUE                       ' + amount,
+    '',
+    'PAYMENT DETAILS',
+    '---------------',
+    'Bank           : Equity Bank Kenya',
+    'Account Name   : StandIn Corp Ltd',
+    'Account No.    : 0123456789',
+    'Branch         : Upper Hill, Nairobi',
+    'Reference      : ' + invId,
+    '',
+    'StandIn Corp Ltd',
+    'P.O. Box 12345-00100, Nairobi, Kenya',
+    'Email: billing@standincorp.com',
+    'Tel: +254 700 000 000'
+  ];
+  savePDF(lines, invId + '_Invoice.pdf', 'Tax Invoice - ' + invId);
+  toast('PDF Invoice ' + invId + ' downloaded!');
+}
+
+function downloadAdminReport() {
+  var engs = loadEngagements();
+  var rows = ['ID,Client,Meeting,Rep,Date,Tier,Status,Fee (KSh)'];
+  engs.forEach(function(e) {
+    rows.push([e.id,e.client,e.meeting,e.rep||'Unmatched',e.date,e.tier,e.status,(e.fee||'').replace(/[^\d]/g,'')].join(','));
+  });
+  var blob = new Blob([rows.join('\n')], { type: 'text/csv;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'StandIn_Engagements_' + new Date().toISOString().slice(0,10) + '.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Report exported!');
+}
+
+function downloadRepAssignmentsCSV() {
+  var repName = (currentUser && currentUser.name) ? currentUser.name : 'Representative';
+  var today = new Date().toISOString().split('T')[0];
+  var engs = loadEngagements().filter(function(e){ return e.rep === repName; });
+  var rows = ['StandIn Corp - Assignments Export', 'Representative:,' + repName, 'Generated:,' + today, '',
+    'ID,Client,Meeting,Date,Tier,Status,Fee'];
+  engs.forEach(function(e){
+    rows.push([e.id, e.client, e.meeting, e.date, e.tier, e.status, e.fee||''].join(','));
+  });
+  if (engs.length === 0) rows.push('No assignments yet.');
+  var blob = new Blob([rows.join('\r\n')], {type:'text/csv;charset=utf-8'});
+  var url = URL.createObjectURL(blob); var a = document.createElement('a');
+  a.href = url; a.download = 'StandIn_Assignments_' + today + '.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Assignments CSV downloaded!');
+}
+
+function submitNewRep() {
+  var name    = document.getElementById('new-rep-name').value.trim();
+  var email   = document.getElementById('new-rep-email').value.trim().toLowerCase();
+  var phone   = (document.getElementById('new-rep-phone') ? document.getElementById('new-rep-phone').value.trim() : '');
+  var cat     = document.getElementById('new-rep-category').value;
+  var tier    = document.getElementById('new-rep-tier').value;
+  var bio     = (document.getElementById('new-rep-bio')  ? document.getElementById('new-rep-bio').value.trim()  : '');
+  var exp     = (document.getElementById('new-rep-exp')  ? document.getElementById('new-rep-exp').value.trim()  : '');
+  var pay     = (document.getElementById('new-rep-pay')  ? document.getElementById('new-rep-pay').value.trim()  : '');
+  var natId   = (document.getElementById('new-rep-id')   ? document.getElementById('new-rep-id').value.trim()   : '');
+
+  if (!name || !email || !cat || !tier) {
+    toast('⚠ Please fill in all required fields (*)');
+    return;
+  }
+  if (!email.includes('@') || !email.includes('.')) {
+    toast('⚠ Please enter a valid email address.');
+    return;
+  }
+
+  // ── 1. Store in USERS so the rep can log in ──────────────
+  USERS = loadUsers();
+  var defaultPw = name.split(' ')[0].toLowerCase() + '2025';
+  if (!USERS[email]) {
+    USERS[email] = {
+      pw: defaultPw,
+      role: 'rep',
+      name: name,
+      phone: phone,
+      created: new Date().toISOString()
+    };
+    saveUsers(USERS);
+  }
+
+  // ── 2. Store in REP_LIST so admin table shows them ────────
+  var reps = loadReps();
+  var alreadyExists = reps.some(function(r){ return r.email && r.email.toLowerCase() === email; });
+  if (!alreadyExists) {
+    reps.push({
+      name: name,
+      email: email,
+      phone: phone,
+      category: cat,
+      tier: tier.replace('Tier 1 — ','').replace('Tier 2 — ','').replace('Tier 3 — ',''),
+      bio: bio,
+      experience: exp,
+      payRate: pay,
+      nationalId: natId,
+      rating: '—',
+      engagements: 0,
+      status: 'Pending',
+      addedBy: 'admin',
+      created: new Date().toISOString()
+    });
+    saveReps(reps);
+    REP_LIST = reps;
+  }
+
+  // ── 3. Re-render the table immediately ───────────────────
+  renderAdminRepTable();
+  renderAdminDashStats();
+
+  // ── 4. Add a notification for the new rep ─────────────────
+  addNotification('New rep added: <strong>' + esc(name) + '</strong> (' + esc(cat) + '). Default login: ' + email + ' / ' + defaultPw, 'gold');
+
+  closeModal('addRepModal');
+  toast('✅ ' + name + ' added to the roster! Default password: ' + defaultPw);
+
+  // ── 5. Clear form fields ─────────────────────────────────
+  ['new-rep-name','new-rep-email','new-rep-phone','new-rep-id','new-rep-bio','new-rep-exp','new-rep-pay'].forEach(function(id){
+    var el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  document.getElementById('new-rep-category').value = '';
+  document.getElementById('new-rep-tier').value = '';
+}
+
+function confirmVerifyRep() { toast("Action completed."); }
+
+function rejectRep() { toast("Action completed."); }
+
+function downloadDebriefENG005() {
+  toast('No debrief data available for this engagement.');
+}
+
+function confirmMatchENG008() {
+  var sel = document.getElementById('eng008-rep-select');
+  var repName = sel ? sel.value : '';
+  if (!repName) { toast('Please select a representative to assign.'); return; }
+  var repEl = document.querySelector('#engModal2 strong[style*="gold"]');
+  if (repEl) { repEl.textContent = repName; repEl.style.color = 'var(--green)'; }
+  var result = document.getElementById('eng008-match-result');
+  if (result) {
+    result.textContent = repName + ' successfully matched to ENG-008. NDA and briefing process will begin shortly.';
+    result.style.display = 'block';
+  }
+  var matchBtns = document.querySelectorAll('button');
+  matchBtns.forEach(function(btn) {
+    if (btn.textContent.trim() === 'Match Rep' && btn.getAttribute('onclick') && btn.getAttribute('onclick').indexOf('engModal2') > -1) {
+      btn.textContent = 'Matched';
+      btn.className = 'btn-sm btn-outline';
+      btn.style.color = 'var(--green)';
+      btn.style.borderColor = 'var(--green)';
+    }
+  });
+  toast(repName + ' matched to ENG-008 successfully!');
+}
+
+// ── FIX 4: Assignment Status Change ─────────────
+var _statusEngId = '';
+function openStatusModal(engId, meetingName) {
+  _statusEngId = engId;
+  document.getElementById('statusModalTitle').textContent = 'Update Status';
+  document.getElementById('statusModalEngId').textContent = meetingName;
+  document.getElementById('statusSelectInput').value = '';
+  document.getElementById('statusNoteInput').value = '';
+  openModal('statusChangeModal');
+}
+
+function applyStatusChange() {
+  var newStatus = document.getElementById('statusSelectInput').value;
+  if (!newStatus) { toast('Please select a status to apply.'); return; }
+  var badge = document.getElementById('assign-badge-' + _statusEngId);
+  if (badge) {
+    badge.textContent = newStatus;
+    var cls = 'badge ';
+    if (newStatus === 'Active')         cls += 'badge-active';
+    else if (newStatus === 'Pending')   cls += 'badge-pending';
+    else if (newStatus === 'Completed') cls += 'badge-completed';
+    else if (newStatus === 'Cancelled') cls += 'badge-cancelled';
+    badge.className = cls;
+  }
+  closeModal('statusChangeModal');
+  toast('Status updated to "' + newStatus + '" successfully.');
+}
+
+// ── FIX 5: Earnings Export ────────────────────────
+function downloadEarningsPDF() {
+  var repName = (currentUser && currentUser.name) ? currentUser.name : 'Representative';
+  var today = new Date().toLocaleDateString('en-KE', {day:'2-digit', month:'long', year:'numeric'});
+  var engs = loadEngagements().filter(function(e){ return e.rep === repName; });
+  var total = engs.reduce(function(sum,e){ return sum + (parseInt((e.fee||'0').replace(/[^\d]/g,''))||0); }, 0);
+  var lines = [
+    'EARNINGS & PAYMENT HISTORY',
+    '===================================',
+    'Representative : ' + repName,
+    'Generated On   : ' + today,
+    'Platform       : StandIn Corp',
+    '',
+    'SUMMARY',
+    '-------',
+    'Total Earned   : KSh ' + total.toLocaleString(),
+    '',
+    'ENGAGEMENT HISTORY',
+    '------------------'
+  ];
+  engs.forEach(function(e){
+    lines.push(e.meeting + ' (' + e.id + ')  ' + e.date + '  ' + (e.fee||'—') + '  ' + e.status);
+  });
+  if (engs.length === 0) lines.push('No engagements recorded yet.');
+  savePDF(lines, 'StandIn_Earnings_' + new Date().toISOString().split('T')[0] + '.pdf', 'Earnings - ' + repName);
+  toast('Earnings PDF downloaded!');
+}
+
+function downloadEarningsCSV() {
+  var repName = (currentUser && currentUser.name) ? currentUser.name : 'Representative';
+  var today = new Date().toISOString().split('T')[0];
+  var engs = loadEngagements().filter(function(e){ return e.rep === repName; });
+  var rows = ['StandIn Corp - Earnings Export', 'Representative:,' + repName, 'Generated:,' + today, '', 'Engagement,Date,Fee (KSh),Status'];
+  engs.forEach(function(e){
+    rows.push([e.meeting + ' (' + e.id + ')', e.date, (e.fee||'').replace(/[^\d]/g,''), e.status].join(','));
+  });
+  if (engs.length === 0) rows.push('No engagements recorded yet.');
+  var blob = new Blob([rows.join('\r\n')], { type: 'text/csv;charset=utf-8' });
+  var url = URL.createObjectURL(blob); var a = document.createElement('a');
+  a.href = url; a.download = 'StandIn_Earnings_' + today + '.csv';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast('Earnings CSV downloaded!');
+}
+
+function renderAdminClientTable() {
+  var tbody = document.getElementById('adminClientTableBody');
+  if (!tbody) return;
+  var clients = loadClients();
+  if (clients.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:var(--txt-lt);padding:1.5rem;font-size:.85rem">No clients registered yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = clients.map(function(c, i) {
+    return '<tr style="cursor:pointer" onclick="openClientDetail(&apos;' + esc(c.name) + '&apos;,&apos;' + esc(c.org) + '&apos;,&apos;' + esc(c.email) + '&apos;,' + (c.engagements||0) + ',&apos;KSh ' + (c.spend||0).toLocaleString() + '&apos;,&apos;' + (c.status||'Active') + '&apos;)">' +
+      '<td><strong>' + esc(c.name) + '</strong><br><small style="color:var(--txt-lt)">' + esc(c.email) + '</small></td>' +
+      '<td>' + esc(c.org||'—') + '</td>' +
+      '<td>' + (c.engagements||0) + '</td>' +
+      '<td style="font-weight:600">KSh ' + (c.spend||0).toLocaleString() + '</td>' +
+      '<td><span class="badge badge-active">' + (c.status||'Active') + '</span></td>' +
+      '</tr>';
+  }).join('');
+}
+
+function renderAdminRepTable() {
+  var tbody = document.getElementById('adminRepTableBody');
+  if (!tbody) return;
+  var reps = loadReps();
+  if (reps.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--txt-lt);padding:1.5rem;font-size:.85rem">No representatives registered yet.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = reps.map(function(r, i) {
+    var initials = r.name.split(' ').map(function(n){return n[0];}).join('').substring(0,2).toUpperCase();
+    var statusBadge = r.status === 'Active' ? 'badge-active' : 'badge-pending';
+    var verifyBtn = r.status !== 'Active'
+      ? '<button class="btn-sm btn-green" onclick="openVerifyRepModal(' + i + ')">Verify</button>'
+      : '<button class="btn-sm btn-ghost" style="color:var(--green);border-color:var(--green);pointer-events:none">Active ✓</button>';
+    return '<tr>' +
+      '<td><div style="display:flex;align-items:center;gap:.7rem"><div class="rep-avatar" style="width:32px;height:32px;font-size:.78rem">' + initials + '</div><strong>' + esc(r.name) + '</strong></div></td>' +
+      '<td>' + esc(r.category||'—') + '</td>' +
+      '<td><span class="badge badge-purple">' + esc(r.tier||'Standard') + '</span></td>' +
+      '<td>' + (r.rating||'—') + '</td>' +
+      '<td>' + (r.engagements||0) + '</td>' +
+      '<td><span class="badge ' + statusBadge + '">' + (r.status||'Pending') + '</span></td>' +
+      '<td><div style="display:flex;gap:.4rem">' + verifyBtn +
+        '<button class="btn-sm btn-ghost" onclick="openRepProfile(&apos;' + esc(r.name) + '&apos;,&apos;' + esc(r.category||'—') + '&apos;,&apos;' + esc(r.tier||'Standard') + '&apos;,&apos;' + (r.rating||'—') + '&apos;,' + (r.engagements||0) + ',&apos;KSh 0/eng&apos;)">Profile</button>' +
+      '</div></td>' +
+      '</tr>';
+  }).join('');
+}
+
+// Index of the rep currently being verified in the modal
+var _verifyRepIndex = -1;
+
+function openVerifyRepModal(index) {
+  var reps = loadReps();
+  var r = reps[index];
+  if (!r) return;
+  _verifyRepIndex = index;
+
+  // Populate the modal header with the real rep's info
+  var initials = r.name.split(' ').map(function(n){return n[0];}).join('').substring(0,2).toUpperCase();
+  var catLabel  = r.category || 'General';
+  var tierLabel = r.tier || 'Standard';
+
+  // Update avatar initials
+  var avatarEl = document.getElementById('dynVerify-avatar');
+  if (avatarEl) avatarEl.textContent = initials;
+
+  // Update name, category, tier, submitted date
+  var nameEl = document.getElementById('dynVerify-name');
+  if (nameEl) nameEl.textContent = r.name;
+
+  var subEl = document.getElementById('dynVerify-sub');
+  if (subEl) subEl.textContent = tierLabel + ' · ' + catLabel;
+
+  var dateEl = document.getElementById('dynVerify-date');
+  if (dateEl) {
+    var d = r.created ? new Date(r.created) : new Date();
+    dateEl.textContent = 'Registered ' + d.toLocaleDateString('en-KE', {day:'2-digit', month:'short', year:'numeric'});
+  }
+
+  // Populate credentials section based on category
+  var credEl = document.getElementById('dynVerify-creds');
+  if (credEl) {
+    var credLines = buildCredentialList(catLabel, r);
+    credEl.innerHTML = credLines;
+  }
+
+  // Build the checklist dynamically for the rep
+  buildVerifyChecklist(catLabel, r.name);
+
+  // Reset all checkboxes
+  document.querySelectorAll('#dynVerify-checklist input[type="checkbox"]').forEach(function(cb){
+    cb.checked = false;
+  });
+
+  openModal('dynVerifyRepModal');
+}
+
+function buildCredentialList(category, rep) {
+  // Show what documents the rep has submitted (simulated from their profile)
+  var bio = rep.bio ? rep.bio.substring(0, 80) + (rep.bio.length > 80 ? '...' : '') : 'Not provided';
+  var exp = rep.experience ? rep.experience + ' years' : 'Not specified';
+  var pay = rep.payRate || 'Not specified';
+  var base = '<div style="font-size:.85rem;color:var(--txt-md);line-height:1.9">' +
+    '<strong style="color:var(--steel)">Documents Submitted:</strong><br/>' +
+    '📄 National ID / Passport — <em>Uploaded</em><br/>' +
+    '📋 Professional Background — <em>' + esc(bio) + '</em><br/>' +
+    '🏅 Experience — <em>' + esc(exp) + '</em><br/>' +
+    '💰 Declared Pay Rate — <em>' + esc(pay) + '</em><br/>';
+  if (category === 'Legal') {
+    base += '⚖ Law Society Certificate — <em>Uploaded</em><br/>';
+  } else if (category === 'Finance') {
+    base += '📊 CPA / CFA Certificate — <em>Uploaded</em><br/>';
+  } else if (category === 'Healthcare') {
+    base += '🏥 Medical Board Certificate — <em>Uploaded</em><br/>';
+  } else if (category === 'Technology') {
+    base += '💻 IT Certifications — <em>Uploaded</em><br/>';
+  } else if (category === 'Government & Policy') {
+    base += '🏛 Government Service Records — <em>Uploaded</em><br/>';
+  }
+  base += '🔍 Background Check — <em>In progress / Submitted</em></div>';
+  return base;
+}
+
+function buildVerifyChecklist(category, repName) {
+  // Build dynamic checklist items based on the rep's professional category
+  var items = [
+    { id:'dvc-id',    label:'National ID / Passport verified and matches registration details' },
+    { id:'dvc-bg',    label:'Background check completed — no criminal or professional misconduct record' },
+    { id:'dvc-refs',  label:'At least 2 professional references confirmed and contactable' },
+    { id:'dvc-nda',   label:'Non-Disclosure Agreement (NDA) signed and filed with the platform' },
+  ];
+  // Category-specific credential item
+  var catItems = {
+    'Legal':               { id:'dvc-cat', label:'Law Society of Kenya (LSK) membership certificate verified' },
+    'Finance':             { id:'dvc-cat', label:'CPA(K) / CFA or equivalent finance qualification confirmed' },
+    'Healthcare':          { id:'dvc-cat', label:'Kenya Medical Practitioners and Dentists Board certificate verified' },
+    'Technology':          { id:'dvc-cat', label:'Relevant IT certification(s) reviewed and verified' },
+    'Government & Policy': { id:'dvc-cat', label:'Official government service history and clearance verified' },
+    'NGO & Development':   { id:'dvc-cat', label:'NGO sector references and compliance clearance confirmed' },
+    'Executive':           { id:'dvc-cat', label:'Senior management experience and credentials verified (CV + references)' },
+  };
+  var catItem = catItems[category] || { id:'dvc-cat', label:'Professional qualification certificate reviewed and confirmed' };
+  items.splice(2, 0, catItem); // insert after bg check
+
+  // Add final consent item
+  items.push({ id:'dvc-consent', label:'Admin has reviewed the full profile and confirms ' + repName + ' meets StandIn Corp standards' });
+
+  var html = items.map(function(item) {
+    return '<label style="display:flex;align-items:flex-start;gap:.75rem;padding:.75rem;background:var(--off);border-radius:var(--r);cursor:pointer;font-size:.88rem">' +
+      '<input type="checkbox" id="' + item.id + '" style="accent-color:var(--navy);width:16px;height:16px;flex-shrink:0;margin-top:1px"/>' +
+      '<span>' + item.label + '</span>' +
+      '</label>';
+  }).join('');
+
+  var container = document.getElementById('dynVerify-checklist');
+  if (container) container.innerHTML = html;
+}
+
+function confirmDynVerifyRep() {
+  // Collect all checkbox IDs dynamically
+  var checkboxes = document.querySelectorAll('#dynVerify-checklist input[type="checkbox"]');
+  var allChecked = true;
+  checkboxes.forEach(function(cb){ if (!cb.checked) allChecked = false; });
+
+  if (!allChecked) {
+    toast('⚠ Please confirm ALL checklist items before activating this representative.');
+    return;
+  }
+  // All confirmed — now actually activate
+  activateRep(_verifyRepIndex);
+  closeModal('dynVerifyRepModal');
+}
+
+function rejectDynRep() {
+  var reps = loadReps();
+  var r = reps[_verifyRepIndex];
+  var repName = r ? r.name : 'This representative';
+  closeModal('dynVerifyRepModal');
+  toast('❌ Application rejected. ' + repName + ' has been notified via email.');
+}
+
+function activateRep(index) {
+  var reps = loadReps();
+  if (!reps[index]) return;
+  var repName = reps[index].name;
+  reps[index].status = 'Active';
+  saveReps(reps);
+  REP_LIST = reps;
+  // Also update USERS entry if exists
+  var email = reps[index].email;
+  USERS = loadUsers();
+  if (USERS[email]) { USERS[email].verified = true; saveUsers(USERS); }
+  renderAdminRepTable();
+  renderAdminDashStats();
+  if (typeof addNotification === 'function') {
+    addNotification('<strong>' + esc(repName) + '</strong> has been verified and is now active on the platform.', 'green');
+  }
+  toast('✅ ' + repName + ' has been verified and activated on the platform!');
+}
+
+function renderAdminDashStats() {
+  var clients = loadClients();
+  var reps = loadReps();
+  var activeReps = reps.filter(function(r){ return r.status === 'Active'; }).length;
+  var pendingReps = reps.filter(function(r){ return r.status !== 'Active'; }).length;
+  // Dashboard stats
+  if (document.getElementById('adminStatClients')) document.getElementById('adminStatClients').textContent = clients.length;
+  if (document.getElementById('adminStatReps')) document.getElementById('adminStatReps').textContent = activeReps;
+  if (document.getElementById('adminStatPending')) document.getElementById('adminStatPending').textContent = pendingReps;
+  if (document.getElementById('adminStatEngs')) document.getElementById('adminStatEngs').textContent = 0;
+  if (document.getElementById('adminStatRevenue')) document.getElementById('adminStatRevenue').textContent = 'KSh 0';
+  // Analytics
+  if (document.getElementById('analClients')) document.getElementById('analClients').textContent = clients.length;
+  if (document.getElementById('analReps')) document.getElementById('analReps').textContent = activeReps;
+  if (document.getElementById('analEngs')) document.getElementById('analEngs').textContent = 0;
+  if (document.getElementById('analRevenue')) document.getElementById('analRevenue').textContent = 'KSh 0';
+  // Pending actions feed
+  var feed = document.getElementById('adminPendingFeed');
+  if (feed && pendingReps > 0) {
+    feed.innerHTML = '<div class="activity-item" style="border-left:3px solid var(--gold)"><div class="act-icon gold"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="act-text"><p><strong>' + pendingReps + ' rep(s)</strong> awaiting verification.</p><div class="act-time" style="display:flex;gap:.5rem;margin-top:.4rem"><button class="btn-sm btn-navy" style="font-size:.72rem;padding:.25rem .65rem" onclick="showPage(&apos;manage-reps&apos;,null)">Review Now</button></div></div></div>';
+  } else if (feed) {
+    feed.innerHTML = '<div class="activity-item"><div class="act-icon blue"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></div><div class="act-text"><p>No pending actions.</p><div class="act-time">All clear</div></div></div>';
+  }
+  // Update All Engagements nav badge from stored data
+  var engs = loadEngagements();
+  var eBadge = document.getElementById('allEngsNavBadge');
+  if (eBadge) {
+    if (engs.length === 0) { eBadge.style.display = 'none'; eBadge.textContent = '0'; }
+    else { eBadge.style.display = 'inline-flex'; eBadge.textContent = engs.length; }
+  }
+  // Update adminStatEngs with real count
+  if (document.getElementById('adminStatEngs')) document.getElementById('adminStatEngs').textContent = engs.length;
+  // Activity timeline
+  var tl = document.getElementById('adminActivityTimeline');
+  if (tl) {
+    var items = [];
+    reps.slice(-3).reverse().forEach(function(r){
+      items.push('<div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-content"><div class="tl-title">Rep registered — ' + esc(r.name) + ' (' + esc(r.category||'—') + ')</div><div class="tl-time">' + new Date(r.created||Date.now()).toLocaleDateString() + '</div></div></div>');
+    });
+    clients.slice(-3).reverse().forEach(function(c){
+      items.push('<div class="tl-item"><div class="tl-dot done">✓</div><div class="tl-content"><div class="tl-title">Client registered — ' + esc(c.name) + ' (' + esc(c.org||'—') + ')</div><div class="tl-time">' + new Date(c.created||Date.now()).toLocaleDateString() + '</div></div></div>');
+    });
+    if (items.length === 0) items.push('<div class="tl-item"><div class="tl-dot active">●</div><div class="tl-content"><div class="tl-title">Platform launched — ready for registrations</div><div class="tl-time">Now</div></div></div>');
+    tl.innerHTML = items.join('');
+  }
+}
+
+function esc(str) {
+  return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// ── RE-RENDER ADMIN TABLES when navigating to those pages ─────
+var _origShowPage = showPage;
+showPage = function(id, navEl) {
+  _origShowPage(id, navEl);
+  if (id === 'clients-list') { CLIENT_LIST = loadClients(); renderAdminClientTable(); }
+  if (id === 'manage-reps')  { REP_LIST = loadReps();    renderAdminRepTable(); renderAdminDashStats(); }
+  if (id === 'all-engs')     { renderAdminEngsTable(); }
+  if (id === 'dash-admin')   { renderAdminDashStats(); renderAdminClientTable(); renderAdminRepTable(); }
+  if (id === 'analytics')    { renderAdminDashStats(); }
+};
+
+function renderAdminEngsTable() {
+  var tbody = document.getElementById('adminEngsTableBody');
+  if (!tbody) return;
+  var engs = loadEngagements();
+  // Update the nav badge
+  var badge = document.getElementById('allEngsNavBadge');
+  if (badge) {
+    if (engs.length === 0) {
+      badge.style.display = 'none';
+      badge.textContent = '0';
+    } else {
+      badge.style.display = 'inline-flex';
+      badge.textContent = engs.length;
+    }
+  }
+  if (engs.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="9" style="text-align:center;color:var(--txt-lt);padding:1.5rem;font-size:.85rem">No engagements recorded yet. Engagements appear here when clients book through the platform.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = engs.map(function(e, i) {
+    var statusClass = e.status === 'Active' ? 'badge-active' : e.status === 'Completed' ? 'badge-completed' : e.status === 'Confirmed' ? 'badge-confirmed' : 'badge-pending';
+    var tierBadge   = e.tier === 'T3' ? 'badge-purple' : 'badge-gold';
+    return '<tr>' +
+      '<td><code style="font-family:DM Mono,monospace;font-size:.72rem;color:var(--txt-lt)">' + esc(e.id||('ENG-'+(100+i))) + '</code></td>' +
+      '<td>' + esc(e.client||'—') + '</td>' +
+      '<td><strong>' + esc(e.meeting||'—') + '</strong></td>' +
+      '<td>' + esc(e.rep||'Unmatched') + '</td>' +
+      '<td><span style="font-family:DM Mono,monospace;font-size:.78rem">' + esc(e.date||'—') + '</span></td>' +
+      '<td><span class="badge ' + tierBadge + '">' + esc(e.tier||'T1') + '</span></td>' +
+      '<td id="assign-badge-' + esc(e.id||i) + '"><span class="badge ' + statusClass + '">' + esc(e.status||'Pending') + '</span></td>' +
+      '<td>' + esc(e.fee||'—') + '</td>' +
+      '<td><button class="btn-sm btn-ghost" onclick="openStatusModal(&apos;' + esc(e.id||i) + '&apos;,&apos;' + esc(e.meeting||'Engagement') + '&apos;)">Status</button></td>' +
+      '</tr>';
+  }).join('');
+}
+
+</script>
+
+<!-- ══ REP EDIT PROFILE MODAL ════════════════════════════════ -->
+<div class="modal-over" id="editRepProfileModal">
+  <div class="modal-box" style="max-width:540px">
+    <div class="modal-head">
+      <h3>Edit My Profile</h3>
+      <button class="modal-x" onclick="closeModal('editRepProfileModal')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+        <div class="form-field">
+          <label>Full Name</label>
+          <input type="text" id="ep-name" placeholder="Your full name"/>
+        </div>
+        <div class="form-field">
+          <label>Phone Number</label>
+          <input type="tel" id="ep-phone" placeholder="+254 7XX XXX XXX"/>
+        </div>
+        <div class="form-field">
+          <label>Professional Category</label>
+          <select id="ep-category">
+            <option value="">Select category...</option>
+            <option>Finance</option>
+            <option>Legal</option>
+            <option>Executive</option>
+            <option>Government &amp; Policy</option>
+            <option>NGO &amp; Development</option>
+            <option>Technology</option>
+            <option>Healthcare</option>
+            <option>Engineering</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label>Service Tier</label>
+          <select id="ep-tier">
+            <option value="">Select tier...</option>
+            <option>Tier 1 — Standard</option>
+            <option>Tier 2 — Professional</option>
+            <option>Tier 3 — Executive</option>
+          </select>
+        </div>
+        <div class="form-field" style="grid-column:1/-1">
+          <label>Professional Bio / Background</label>
+          <textarea id="ep-bio" style="width:100%;padding:.7rem .9rem;border:1.5px solid var(--border);border-radius:var(--r);font-family:'DM Sans',sans-serif;font-size:.88rem;min-height:90px;resize:vertical;outline:none;background:var(--off)" placeholder="Describe your professional background, qualifications, and areas of expertise..."></textarea>
+        </div>
+        <div class="form-field">
+          <label>Years of Experience</label>
+          <input type="number" id="ep-exp" placeholder="e.g. 8" min="0" max="50"/>
+        </div>
+        <div class="form-field">
+          <label>Preferred Pay Rate (KSh/engagement)</label>
+          <input type="text" id="ep-pay" placeholder="e.g. KSh —"/>
+        </div>
+        <div class="form-field" style="grid-column:1/-1">
+          <label>LinkedIn / Professional Profile URL (optional)</label>
+          <input type="url" id="ep-linkedin" placeholder="https://linkedin.com/in/yourprofile"/>
+        </div>
+      </div>
+      <div style="margin-top:1rem;padding:.8rem;background:var(--steel-bg);border-radius:var(--r);border:1px solid var(--steel-lt);font-size:.82rem;color:var(--steel)">
+        ℹ Profile updates are reviewed by the StandIn Corp team before being applied to your public rep profile.
+      </div>
+    </div>
+    <div class="modal-foot">
+      <button class="btn-sm btn-ghost" onclick="closeModal('editRepProfileModal')">Cancel</button>
+      <button class="btn-sm btn-gold" onclick="saveRepProfile()">Save Profile Changes</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── REP EDIT PROFILE ───────────────────────────────
+function openEditRepProfile() {
+  // Pre-fill from current USERS record
+  var email = '';
+  if (currentUser) {
+    USERS = loadUsers();
+    var matchKey = Object.keys(USERS).find(function(k){
+      return USERS[k].name === currentUser.name && USERS[k].role === 'rep';
+    });
+    if (matchKey) {
+      var u = USERS[matchKey];
+      email = matchKey;
+      if (document.getElementById('ep-name'))     document.getElementById('ep-name').value     = u.name || '';
+      if (document.getElementById('ep-phone'))    document.getElementById('ep-phone').value    = u.phone || '';
+      if (document.getElementById('ep-bio'))      document.getElementById('ep-bio').value      = u.bio || '';
+      if (document.getElementById('ep-exp'))      document.getElementById('ep-exp').value      = u.experience || '';
+      if (document.getElementById('ep-pay'))      document.getElementById('ep-pay').value      = u.payRate || '';
+      if (document.getElementById('ep-linkedin')) document.getElementById('ep-linkedin').value = u.linkedin || '';
+      if (document.getElementById('ep-category') && u.category) document.getElementById('ep-category').value = u.category;
+      if (document.getElementById('ep-tier') && u.tierLabel)    document.getElementById('ep-tier').value     = u.tierLabel;
+    } else {
+      if (document.getElementById('ep-name')) document.getElementById('ep-name').value = currentUser.name || '';
+    }
+  }
+  openModal('editRepProfileModal');
+}
+
+function saveRepProfile() {
+  var name     = document.getElementById('ep-name')     ? document.getElementById('ep-name').value.trim()     : '';
+  var phone    = document.getElementById('ep-phone')    ? document.getElementById('ep-phone').value.trim()    : '';
+  var cat      = document.getElementById('ep-category') ? document.getElementById('ep-category').value        : '';
+  var tier     = document.getElementById('ep-tier')     ? document.getElementById('ep-tier').value            : '';
+  var bio      = document.getElementById('ep-bio')      ? document.getElementById('ep-bio').value.trim()      : '';
+  var exp      = document.getElementById('ep-exp')      ? document.getElementById('ep-exp').value.trim()      : '';
+  var pay      = document.getElementById('ep-pay')      ? document.getElementById('ep-pay').value.trim()      : '';
+  var linkedin = document.getElementById('ep-linkedin') ? document.getElementById('ep-linkedin').value.trim() : '';
+
+  if (!name) { toast('⚠ Name cannot be empty.'); return; }
+
+  // Save to USERS record
+  USERS = loadUsers();
+  var matchKey = Object.keys(USERS).find(function(k){
+    return USERS[k].name === (currentUser && currentUser.name) && USERS[k].role === 'rep';
+  });
+  if (matchKey) {
+    USERS[matchKey].name      = name;
+    USERS[matchKey].phone     = phone;
+    USERS[matchKey].category  = cat;
+    USERS[matchKey].tierLabel = tier;
+    USERS[matchKey].bio       = bio;
+    USERS[matchKey].experience = exp;
+    USERS[matchKey].payRate   = pay;
+    USERS[matchKey].linkedin  = linkedin;
+    saveUsers(USERS);
+
+    // Also update the REP_LIST entry
+    var reps = loadReps();
+    var repIdx = reps.findIndex(function(r){ return r.email && r.email.toLowerCase() === matchKey.toLowerCase(); });
+    if (repIdx > -1) {
+      reps[repIdx].name     = name;
+      reps[repIdx].phone    = phone;
+      reps[repIdx].category = cat;
+      reps[repIdx].tier     = tier.replace('Tier 1 — ','').replace('Tier 2 — ','').replace('Tier 3 — ','');
+      reps[repIdx].bio      = bio;
+      reps[repIdx].experience = exp;
+      reps[repIdx].payRate  = pay;
+      reps[repIdx].linkedin = linkedin;
+      saveReps(reps);
+      REP_LIST = reps;
+    }
+  }
+
+  // Update displayed name if changed
+  if (currentUser) currentUser.name = name;
+  document.getElementById('userName').textContent = name;
+  var initials = name.split(' ').map(function(n){ return n[0]; }).join('').toUpperCase().substring(0,2);
+  document.getElementById('userAvatar').textContent = initials;
+
+  closeModal('editRepProfileModal');
+  addNotification('Profile updated by <strong>' + name + '</strong> — changes pending admin review.', 'blue');
+  toast('✅ Profile updated successfully!');
+}
+</script>
+
+
+<!-- ══ DYNAMIC REP VERIFICATION MODAL ═══════════════════════ -->
+<div class="modal-over" id="dynVerifyRepModal">
+  <div class="modal-box" style="max-width:520px">
+    <div class="modal-head">
+      <h3>Verify Representative</h3>
+      <button class="modal-x" onclick="closeModal('dynVerifyRepModal')">&#x2715;</button>
+    </div>
+    <div class="modal-body">
+
+      <!-- Rep identity strip -->
+      <div style="display:flex;align-items:center;gap:1rem;margin-bottom:1.4rem;padding:1rem;background:var(--navy);border-radius:var(--r)">
+        <div id="dynVerify-avatar" style="width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--navy-md));display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.2rem;color:var(--white);flex-shrink:0">??</div>
+        <div>
+          <div id="dynVerify-name" style="font-weight:700;font-size:1rem;color:var(--white)">Representative Name</div>
+          <div id="dynVerify-sub" style="font-size:.82rem;color:rgba(255,255,255,.55);margin:.2rem 0">Category · Tier</div>
+          <div id="dynVerify-date" style="font-size:.75rem;color:rgba(255,255,255,.4)">Registration date</div>
+        </div>
+      </div>
+
+      <!-- Submitted credentials summary -->
+      <div style="margin-bottom:1.2rem;padding:.95rem;background:var(--steel-bg);border-radius:var(--r);border:1px solid var(--steel-lt)" id="dynVerify-creds">
+        <div style="font-size:.85rem;color:var(--txt-md)">Loading credentials...</div>
+      </div>
+
+      <!-- Instruction -->
+      <p style="font-size:.85rem;color:var(--txt-md);margin-bottom:1rem;font-weight:500">
+        Tick each item below to confirm it has been reviewed and is satisfactory before activating this representative:
+      </p>
+
+      <!-- Dynamic checklist — built by buildVerifyChecklist() -->
+      <div id="dynVerify-checklist" style="display:flex;flex-direction:column;gap:.5rem;margin-bottom:1.2rem">
+        <!-- Populated dynamically -->
+      </div>
+
+      <!-- Warning notice -->
+      <div style="padding:.85rem;background:var(--gold-bg);border-radius:var(--r);border:1px solid rgba(196,154,42,.3);font-size:.82rem;color:var(--txt-md)">
+        &#9888;&nbsp; Once activated, this representative will appear in the matching pool and may be assigned to client engagements immediately. This action cannot be undone without contacting the rep directly.
+      </div>
+    </div>
+
+    <div class="modal-foot">
+      <button class="btn-sm btn-ghost" onclick="closeModal('dynVerifyRepModal')">Cancel</button>
+      <button class="btn-sm btn-red" onclick="rejectDynRep()">Reject Application</button>
+      <button class="btn-sm btn-green" onclick="confirmDynVerifyRep()">&#10003; Confirm &amp; Activate</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── MY ASSIGNMENTS BADGE ────────────────────────────────────
+// Called when a rep logs in. Reads their assignment count from
+// stored engagements and shows/hides the badge accordingly.
+function updateMyAssignmentsBadge(repName) {
+  var badge = document.getElementById('myAssignmentsNavBadge');
+  if (!badge) return;
+
+  // Count engagements where this rep is assigned and not completed/cancelled
+  var engs = loadEngagements();
+
+  var assigned = engs.filter(function(e) {
+    return e.rep && e.rep === repName &&
+           e.status !== 'Completed' && e.status !== 'Cancelled';
+  });
+
+  var count = assigned.length;
+  if (count === 0) {
+    badge.style.display = 'none';
+    badge.textContent   = '0';
+  } else {
+    badge.style.display = 'inline-flex';
+    badge.textContent   = count;
+  }
+}
+</script>
+
+<!-- ══ PWA INSTALL BANNER ══════════════════════════════════════ -->
+<div id="pwa-banner" style="
+  display:none;position:fixed;bottom:0;left:0;right:0;z-index:99999;
+  background:var(--navy-dk);border-top:2px solid var(--gold);
+  padding:.9rem 1.2rem;box-shadow:0 -4px 24px rgba(0,0,0,.4);
+  animation:slideUp .4s ease;
+">
+  <div style="max-width:520px;margin:0 auto;display:flex;align-items:center;gap:1rem">
+    <div style="
+      width:44px;height:44px;border-radius:10px;flex-shrink:0;
+      background:linear-gradient(135deg,var(--gold),var(--gold-lt));
+      display:flex;align-items:center;justify-content:center;
+      font-family:'Cormorant Garamond',serif;font-weight:700;font-size:1.1rem;color:var(--navy-dk);
+    ">SC</div>
+    <div style="flex:1;min-width:0">
+      <div style="font-weight:700;color:var(--white);font-size:.9rem">Install StandIn Corp</div>
+      <div style="font-size:.75rem;color:rgba(255,255,255,.5);margin-top:.1rem">Add to Home Screen for offline access &amp; faster loading</div>
+    </div>
+    <button id="pwa-install-btn" onclick="pwaInstall()" style="
+      padding:.5rem 1.1rem;background:var(--gold);color:var(--navy-dk);
+      border:none;border-radius:var(--r);font-size:.82rem;font-weight:700;
+      cursor:pointer;white-space:nowrap;flex-shrink:0;transition:background .2s;
+    ">Install App</button>
+    <button onclick="pwaDismiss()" style="
+      width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.6);
+      font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center;
+      flex-shrink:0;
+    ">✕</button>
+  </div>
+</div>
+
+<!-- ══ PWA OFFLINE TOAST ══════════════════════════════════════ -->
+<div id="offline-notice" style="
+  display:none;position:fixed;top:70px;left:50%;transform:translateX(-50%);z-index:99998;
+  background:#C0522A;color:#fff;padding:.5rem 1.2rem;border-radius:20px;
+  font-size:.8rem;font-weight:600;box-shadow:var(--shadow-md);white-space:nowrap;
+">📵 You are offline — data saved locally</div>
+
+<!-- PWA SCRIPTS -->
+<script>
+/* Register external service worker */
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js', {scope:'./'})
+    .then(function(r){ console.log('[PWA] SW registered:', r.scope); })
+    .catch(function(e){ console.warn('[PWA] SW failed:', e); });
+}
+
+/* Install prompt */
+var _deferredPrompt=null, _bannerDismissed=false;
+window.addEventListener('beforeinstallprompt', function(e){
+  e.preventDefault(); _deferredPrompt=e;
+  if(!_bannerDismissed && !isAppInstalled())
+    setTimeout(function(){ var b=document.getElementById('pwa-banner'); if(b) b.style.display='block'; },3000);
+});
+function isAppInstalled(){
+  return window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+}
+function pwaInstall(){
+  if(_deferredPrompt){
+    _deferredPrompt.prompt();
+    _deferredPrompt.userChoice.then(function(r){
+      if(r.outcome==='accepted') toast('StandIn Corp installed!');
+      var b=document.getElementById('pwa-banner'); if(b) b.style.display='none';
+      _deferredPrompt=null;
+    });
+  } else {
+    toast('Tap Share > Add to Home Screen to install');
+    var b=document.getElementById('pwa-banner'); if(b) b.style.display='none';
+  }
+}
+function pwaDismiss(){ _bannerDismissed=true; var b=document.getElementById('pwa-banner'); if(b) b.style.display='none'; }
+window.addEventListener('appinstalled', function(){
+  var b=document.getElementById('pwa-banner'); if(b) b.style.display='none';
+  toast('StandIn Corp added to Home Screen!');
+});
+
+/* Online/offline indicator */
+function updateOnlineStatus(){
+  var el=document.getElementById('offline-notice'); if(el) el.style.display=navigator.onLine?'none':'block';
+}
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();
+
+/* Data export */
+function exportPWAData(){
+  var blob=new Blob([JSON.stringify({_v:2,_d:new Date().toISOString(),
+    sc_users:_fsUsers,sc_clients:_fsClients,sc_reps:_fsReps,sc_engagements:_fsEngagements},null,2)],
+    {type:'application/json'});
+  var a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+  a.download='StandIn_Backup_'+new Date().toISOString().slice(0,10)+'.json';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  toast('Data backup downloaded!');
+}
+function importPWAData(file){
+  var r=new FileReader();
+  r.onload=function(e){
+    try{
+      var d=JSON.parse(e.target.result);
+      if(d.sc_users)       saveUsers(d.sc_users);
+      if(d.sc_clients)     saveClients(d.sc_clients);
+      if(d.sc_reps)        saveReps(d.sc_reps);
+      if(d.sc_engagements) saveEngagements(d.sc_engagements);
+      toast('Backup restored! Reloading...'); setTimeout(function(){ location.reload(); },1500);
+    }catch(err){ toast('Invalid backup file'); }
+  };
+  r.readAsText(file);
+}
+window.exportPWAData=exportPWAData;
+window.importPWAData=importPWAData;
+
+/* Bootstrap Firebase on DOMContentLoaded, then hide overlay */
+document.addEventListener('DOMContentLoaded', function(){
+  bootstrapFirestore(function(){
+    USERS=loadUsers(); CLIENT_LIST=loadClients(); REP_LIST=loadReps();
+    hideLoadingOverlay();
+  });
+});
+</script>
+
+</body>
+</html<div id="repMatchGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem"><p style="color:var(--txt-lt);font-size:.85rem;padding:1rem">No verified representatives available yet. Please check back soon.</p></div>>
