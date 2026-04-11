@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>StandIn Corp — When You Cannot Be There, We Are.</title>
+<meta name="description" content="Professional corporate representation services. We send vetted, trained delegates to attend meetings, hearings, and engagements on your behalf."/>
+<meta name="theme-color" content="#0D2B55"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* ── RESET & ROOT ──────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D2B55;
+  --navy-dk:#071A36;
+  --navy-md:#1A3F72;
+  --navy-lt:#2A5090;
+  --gold:#C49A2A;
+  --gold-lt:#E8B830;
+  --gold-bg:#FDF8EE;
+  --gold-pale:#FBF3DC;
+  --steel:#1A6FA8;
+  --steel-lt:#D0E4F5;
+  --steel-bg:#EBF4FB;
+  --green:#2E7D52;
+  --green-lt:#E8F5EE;
+  --white:#FFFFFF;
+  --off:#F7F8FC;
+  --txt:#1E293B;
+  --txt-md:#475569;
+  --txt-lt:#94A3B8;
+  --border:#E5E9F2;
+  --shadow:0 1px 4px rgba(13,43,85,.08),0 4px 16px rgba(13,43,85,.06);
+  --shadow-md:0 4px 24px rgba(13,43,85,.12);
+  --shadow-lg:0 12px 60px rgba(13,43,85,.18);
+  --r:8px;
+  --r-lg:14px;
+  --r-xl:20px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--txt);font-size:15px;line-height:1.6;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{text-decoration:none;color:inherit}
+*::-webkit-scrollbar{width:5px}
+*::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
+
+/* ── TYPOGRAPHY ────────────────────────────────────────────── */
+h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:700;line-height:1.15;letter-spacing:-.01em}
+.serif{font-family:'Cormorant Garamond',serif}
+.mono{font-family:'DM Mono',monospace}
+
+/* ── NAV ───────────────────────────────────────────────────── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(255,255,255,.96);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  height:68px;
+  display:flex;align-items:center;
+  padding:0 max(2rem,calc((100vw - 1200px)/2));
+  gap:2rem;
+  transition:box-shadow .3s;
+}
+nav.scrolled{box-shadow:var(--shadow-md)}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.45rem;font-weight:700;
+  color:var(--navy);white-space:nowrap;margin-right:auto;
+}
+.nav-logo span{color:var(--gold)}
+.nav-links{display:flex;align-items:center;gap:.2rem}
+.nav-links a{
+  padding:.45rem .9rem;border-radius:var(--r);
+  font-size:.875rem;font-weight:500;color:var(--txt-md);
+  transition:all .18s;
+}
+.nav-links a:hover{color:var(--navy);background:var(--off)}
+.nav-cta-group{display:flex;align-items:center;gap:.7rem}
+.btn-ghost-nav{
+  padding:.45rem 1.1rem;border-radius:var(--r);
+  font-size:.875rem;font-weight:600;color:var(--navy);
+  border:1.5px solid var(--border);
+  transition:all .18s;
+}
+.btn-ghost-nav:hover{border-color:var(--navy);background:var(--off)}
+.btn-primary-nav{
+  padding:.5rem 1.3rem;border-radius:var(--r);
+  font-size:.875rem;font-weight:700;
+  background:var(--navy);color:var(--white);
+  border:none;cursor:pointer;
+  transition:all .2s;
+  display:inline-flex;align-items:center;gap:.4rem;
+}
+.btn-primary-nav:hover{background:var(--navy-md);transform:translateY(-1px);box-shadow:var(--shadow-md)}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:.5rem;cursor:pointer;background:none;border:none}
+.hamburger span{width:22px;height:2px;background:var(--navy);border-radius:2px;transition:all .25s}
+
+/* ── HERO ──────────────────────────────────────────────────── */
+#hero{
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:68px max(2rem,calc((100vw - 1200px)/2)) 0;
+  background:var(--white);
+  position:relative;overflow:hidden;
+}
+.hero-bg-decor{
+  position:absolute;top:0;right:0;
+  width:55%;height:100%;
+  background:linear-gradient(135deg,var(--off) 0%,#EDF4FB 100%);
+  clip-path:polygon(12% 0,100% 0,100% 100%,0 100%);
+  z-index:0;
+}
+.hero-bg-dots{
+  position:absolute;right:5%;top:15%;
+  width:380px;height:380px;
+  background-image:radial-gradient(var(--border) 1.5px,transparent 1.5px);
+  background-size:22px 22px;
+  opacity:.6;z-index:0;
+  border-radius:50%;
+}
+.hero-inner{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:5rem;align-items:center;
+  width:100%;position:relative;z-index:1;
+  padding:6rem 0 5rem;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.35rem .9rem;border-radius:20px;
+  background:var(--green-lt);border:1px solid rgba(46,125,82,.2);
+  font-size:.78rem;font-weight:700;color:var(--green);
+  margin-bottom:1.5rem;letter-spacing:.03em;text-transform:uppercase;
+}
+.hero-badge::before{
+  content:'';width:7px;height:7px;border-radius:50%;
+  background:var(--green);
+  animation:pulse 2s infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero-h1{
+  font-size:clamp(2.6rem,5vw,4rem);
+  color:var(--navy-dk);
+  margin-bottom:1.4rem;
+  line-height:1.1;
+}
+.hero-h1 em{
+  font-style:italic;color:var(--gold);
+  display:block;
+}
+.hero-desc{
+  font-size:1.05rem;color:var(--txt-md);
+  line-height:1.75;max-width:480px;margin-bottom:2.2rem;
+}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3rem}
+.btn-hero-primary{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.9rem;border-radius:var(--r);
+  background:var(--navy);color:var(--white);
+  font-size:1rem;font-weight:700;border:none;cursor:pointer;
+  transition:all .22s;
+}
+.btn-hero-primary:hover{background:var(--navy-md);transform:translateY(-2px);box-shadow:0 8px 30px rgba(13,43,85,.3)}
+.btn-hero-primary svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5}
+.btn-hero-secondary{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.85rem 1.7rem;border-radius:var(--r);
+  background:transparent;color:var(--navy);
+  font-size:1rem;font-weight:600;
+  border:1.5px solid var(--border);cursor:pointer;
+  transition:all .22s;
+}
+.btn-hero-secondary:hover{border-color:var(--navy);background:var(--off)}
+.hero-stats{display:flex;gap:2rem;flex-wrap:wrap}
+.hero-stat{}
+.hero-stat-val{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2rem;font-weight:700;color:var(--navy);
+  line-height:1;
+}
+.hero-stat-val span{color:var(--gold)}
+.hero-stat-lbl{font-size:.78rem;color:var(--txt-lt);font-weight:500;margin-top:.2rem}
+
+/* Hero right — live order cards */
+.hero-cards{
+  display:flex;flex-direction:column;gap:1rem;
+  padding-left:1rem;
+}
+.live-card{
+  background:var(--white);border-radius:var(--r-lg);
+  border:1px solid var(--border);
+  padding:1.1rem 1.3rem;
+  box-shadow:var(--shadow);
+  animation:slideInCard .5s ease both;
+}
+.live-card:nth-child(1){animation-delay:.1s}
+.live-card:nth-child(2){animation-delay:.25s}
+.live-card:nth-child(3){animation-delay:.4s}
+@keyframes slideInCard{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+.lc-label{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--txt-lt);margin-bottom:.4rem}
+.lc-title{font-size:.95rem;font-weight:600;color:var(--txt);display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.lc-badge{
+  padding:.2rem .65rem;border-radius:20px;
+  font-size:.72rem;font-weight:700;white-space:nowrap;
+}
+.lc-badge.verified{background:#DCFCE7;color:#166534}
+.lc-badge.active{background:var(--steel-bg);color:var(--steel)}
+.lc-badge.delivered{background:var(--off);color:var(--txt-lt);border:1px solid var(--border)}
+.lc-sub{font-size:.82rem;color:var(--txt-md);margin-top:.25rem}
+
+/* ── SECTION COMMON ────────────────────────────────────────── */
+.section{padding:6rem max(2rem,calc((100vw - 1200px)/2))}
+.section-alt{background:var(--off)}
+.section-navy{background:var(--navy-dk);color:var(--white)}
+.section-header{text-align:center;max-width:640px;margin:0 auto 3.5rem}
+.section-eyebrow{
+  display:inline-block;
+  font-size:.75rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.9rem;
+}
+.section-title{font-size:clamp(1.9rem,3.5vw,2.8rem);color:var(--navy);margin-bottom:1rem}
+.section-navy .section-title{color:var(--white)}
+.section-sub{font-size:1rem;color:var(--txt-md);line-height:1.75}
+.section-navy .section-sub{color:rgba(255,255,255,.6)}
+
+/* ── HOW IT WORKS ──────────────────────────────────────────── */
+.steps-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+  gap:0;position:relative;
+}
+.steps-grid::before{
+  content:'';position:absolute;top:36px;left:0;right:0;height:1.5px;
+  background:linear-gradient(90deg,transparent,var(--border) 15%,var(--border) 85%,transparent);
+  z-index:0;
+}
+.step-item{
+  text-align:center;padding:0 1.5rem;position:relative;z-index:1;
+}
+.step-num{
+  width:72px;height:72px;border-radius:50%;
+  background:var(--white);border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 1.3rem;
+  font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--navy);
+  box-shadow:var(--shadow);
+  transition:all .3s;
+}
+.step-item:hover .step-num{
+  background:var(--navy);color:var(--gold);
+  border-color:var(--navy);box-shadow:var(--shadow-md);
+  transform:scale(1.08);
+}
+.step-title{font-size:1rem;font-weight:700;color:var(--navy);margin-bottom:.5rem}
+.step-desc{font-size:.875rem;color:var(--txt-md);line-height:1.6}
+
+/* ── SERVICES ──────────────────────────────────────────────── */
+.services-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+.service-card{
+  background:var(--white);border-radius:var(--r-lg);
+  border:1px solid var(--border);
+  padding:2rem 1.8rem;
+  transition:all .25s;
+  position:relative;overflow:hidden;
+}
+.service-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:var(--border);transition:background .3s;
+}
+.service-card:hover{border-color:var(--navy);box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.service-card:hover::before{background:var(--gold)}
+.service-card.featured{
+  border-color:var(--navy);
+  background:linear-gradient(160deg,var(--navy-dk) 0%,var(--navy-md) 100%);
+  color:var(--white);
+}
+.service-card.featured::before{background:var(--gold)}
+.service-tier{
+  font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.8rem;
+}
+.service-card.featured .service-tier{color:var(--gold-lt)}
+.service-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.5rem;font-weight:700;color:var(--navy);
+  margin-bottom:.5rem;
+}
+.service-card.featured .service-name{color:var(--white)}
+.service-price{
+  font-size:.85rem;font-weight:600;color:var(--txt-lt);
+  margin-bottom:1.2rem;padding-bottom:1.2rem;
+  border-bottom:1px solid var(--border);
+}
+.service-card.featured .service-price{
+  color:rgba(255,255,255,.55);border-color:rgba(255,255,255,.12);
+}
+.service-features{list-style:none;display:flex;flex-direction:column;gap:.7rem;margin-bottom:1.8rem}
+.service-features li{
+  display:flex;align-items:flex-start;gap:.7rem;
+  font-size:.875rem;color:var(--txt-md);line-height:1.5;
+}
+.service-card.featured .service-features li{color:rgba(255,255,255,.75)}
+.service-features li::before{
+  content:'✓';
+  width:18px;height:18px;border-radius:50%;
+  background:var(--green-lt);color:var(--green);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;font-weight:900;flex-shrink:0;margin-top:1px;
+}
+.service-card.featured .service-features li::before{
+  background:rgba(196,154,42,.2);color:var(--gold-lt);
+}
+.service-cta{
+  display:inline-flex;align-items:center;gap:.4rem;
+  padding:.6rem 1.2rem;border-radius:var(--r);
+  font-size:.85rem;font-weight:700;
+  border:1.5px solid var(--border);color:var(--navy);
+  background:transparent;cursor:pointer;
+  transition:all .2s;width:100%;justify-content:center;
+}
+.service-cta:hover{border-color:var(--navy);background:var(--off)}
+.service-card.featured .service-cta{
+  background:var(--gold);color:var(--navy-dk);
+  border-color:var(--gold);
+}
+.service-card.featured .service-cta:hover{background:var(--gold-lt)}
+
+/* ── STATS BANNER ──────────────────────────────────────────── */
+.stats-banner{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:0;
+}
+.stat-item{
+  text-align:center;padding:2.5rem 1rem;
+  border-right:1px solid rgba(255,255,255,.08);
+}
+.stat-item:last-child{border-right:none}
+.stat-big{
+  font-family:'Cormorant Garamond',serif;
+  font-size:3rem;font-weight:700;color:var(--white);
+  line-height:1;margin-bottom:.4rem;
+}
+.stat-big span{color:var(--gold)}
+.stat-label{font-size:.82rem;color:rgba(255,255,255,.5);font-weight:500}
+
+/* ── WHY STANDIN ───────────────────────────────────────────── */
+.why-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+.why-card{
+  background:var(--white);border-radius:var(--r-lg);
+  border:1px solid var(--border);
+  padding:1.8rem;
+  transition:all .25s;
+}
+.why-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.why-icon{
+  width:48px;height:48px;border-radius:var(--r);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:1.1rem;font-size:1.3rem;
+}
+.why-icon.navy{background:rgba(13,43,85,.08)}
+.why-icon.gold{background:var(--gold-bg)}
+.why-icon.green{background:var(--green-lt)}
+.why-icon.steel{background:var(--steel-bg)}
+.why-icon.purple{background:#F0EBF8}
+.why-icon.red{background:#FDEEE8}
+.why-title{font-size:1.05rem;font-weight:700;color:var(--navy);margin-bottom:.5rem}
+.why-desc{font-size:.875rem;color:var(--txt-md);line-height:1.65}
+
+/* ── CATEGORIES ────────────────────────────────────────────── */
+.cats-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:1rem;
+}
+.cat-card{
+  background:var(--white);border-radius:var(--r-lg);
+  border:1px solid var(--border);
+  padding:1.5rem;text-align:center;
+  transition:all .25s;cursor:pointer;
+}
+.cat-card:hover{border-color:var(--navy);box-shadow:var(--shadow-md);transform:translateY(-3px)}
+.cat-icon{font-size:2rem;margin-bottom:.8rem}
+.cat-name{font-size:.9rem;font-weight:700;color:var(--navy);margin-bottom:.3rem}
+.cat-desc{font-size:.78rem;color:var(--txt-lt)}
+
+/* ── TESTIMONIALS ──────────────────────────────────────────── */
+.testimonials-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+.testi-card{
+  background:var(--white);border-radius:var(--r-lg);
+  border:1px solid var(--border);
+  padding:1.8rem;
+  transition:all .25s;
+}
+.testi-card:hover{box-shadow:var(--shadow-md)}
+.testi-quote{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;font-style:italic;color:var(--txt);
+  line-height:1.7;margin-bottom:1.2rem;
+}
+.testi-quote::before{content:'"';color:var(--gold);font-size:2rem;line-height:0;vertical-align:-.4rem;margin-right:.2rem}
+.testi-divider{height:1px;background:var(--border);margin-bottom:1.2rem}
+.testi-author{display:flex;align-items:center;gap:.8rem}
+.testi-avatar{
+  width:40px;height:40px;border-radius:50%;
+  background:linear-gradient(135deg,var(--navy),var(--navy-md));
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-weight:700;
+  color:var(--gold);font-size:.95rem;flex-shrink:0;
+}
+.testi-name{font-size:.875rem;font-weight:700;color:var(--navy)}
+.testi-role{font-size:.78rem;color:var(--txt-lt)}
+
+/* ── PRICING ───────────────────────────────────────────────── */
+.pricing-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;align-items:start;
+}
+.price-card{
+  background:var(--white);border-radius:var(--r-xl);
+  border:1px solid var(--border);
+  padding:2rem;
+  transition:all .25s;
+}
+.price-card:hover{box-shadow:var(--shadow-lg)}
+.price-card.featured-price{
+  background:var(--navy-dk);color:var(--white);
+  border-color:var(--navy);
+  transform:scale(1.03);
+}
+.price-tag-label{
+  font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--gold);margin-bottom:.6rem;
+}
+.price-tag-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.7rem;font-weight:700;color:var(--navy);margin-bottom:.4rem;
+}
+.price-card.featured-price .price-tag-name{color:var(--white)}
+.price-amount{
+  font-size:1rem;color:var(--txt-md);margin-bottom:1.5rem;
+  padding-bottom:1.5rem;border-bottom:1px solid var(--border);
+}
+.price-amount strong{
+  font-family:'Cormorant Garamond',serif;
+  font-size:2.2rem;font-weight:700;color:var(--navy);
+}
+.price-card.featured-price .price-amount{
+  color:rgba(255,255,255,.55);border-color:rgba(255,255,255,.1);
+}
+.price-card.featured-price .price-amount strong{color:var(--gold)}
+.price-features{list-style:none;display:flex;flex-direction:column;gap:.8rem;margin-bottom:2rem}
+.price-features li{
+  display:flex;align-items:flex-start;gap:.65rem;
+  font-size:.875rem;color:var(--txt-md);
+}
+.price-card.featured-price .price-features li{color:rgba(255,255,255,.75)}
+.price-features li span.ck{
+  width:18px;height:18px;border-radius:50%;flex-shrink:0;margin-top:1px;
+  background:var(--green-lt);color:var(--green);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.65rem;font-weight:900;
+}
+.price-card.featured-price .price-features li span.ck{background:rgba(196,154,42,.25);color:var(--gold-lt)}
+.price-btn{
+  width:100%;padding:.8rem;border-radius:var(--r);
+  font-size:.9rem;font-weight:700;cursor:pointer;
+  border:1.5px solid var(--border);background:transparent;
+  color:var(--navy);transition:all .2s;
+}
+.price-btn:hover{border-color:var(--navy);background:var(--off)}
+.price-card.featured-price .price-btn{
+  background:var(--gold);border-color:var(--gold);color:var(--navy-dk);
+}
+.price-card.featured-price .price-btn:hover{background:var(--gold-lt)}
+
+/* ── FAQ ───────────────────────────────────────────────────── */
+.faq-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:1px;background:var(--border);
+  border-radius:var(--r-lg);overflow:hidden;
+}
+.faq-item{
+  background:var(--white);padding:1.5rem 2rem;cursor:pointer;
+  transition:background .2s;
+}
+.faq-item:hover{background:var(--off)}
+.faq-q{
+  font-size:.95rem;font-weight:700;color:var(--navy);
+  display:flex;justify-content:space-between;align-items:center;gap:1rem;
+  margin-bottom:0;
+}
+.faq-q .arrow{
+  width:22px;height:22px;border-radius:50%;background:var(--off);
+  display:flex;align-items:center;justify-content:center;
+  font-size:.7rem;color:var(--txt-lt);flex-shrink:0;transition:all .3s;
+}
+.faq-a{
+  font-size:.875rem;color:var(--txt-md);line-height:1.7;
+  margin-top:.8rem;display:none;
+}
+.faq-item.open .faq-a{display:block}
+.faq-item.open .faq-q .arrow{background:var(--navy);color:var(--white);transform:rotate(45deg)}
+
+/* ── CTA SECTION ───────────────────────────────────────────── */
+.cta-section{
+  background:linear-gradient(135deg,var(--navy-dk) 0%,var(--navy-md) 100%);
+  text-align:center;
+  padding:6rem max(2rem,calc((100vw - 1200px)/2));
+  position:relative;overflow:hidden;
+}
+.cta-section::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.cta-inner{position:relative;z-index:1;max-width:700px;margin:0 auto}
+.cta-eyebrow{
+  display:inline-block;
+  padding:.35rem 1rem;border-radius:20px;
+  background:rgba(196,154,42,.15);border:1px solid rgba(196,154,42,.3);
+  font-size:.78rem;font-weight:700;color:var(--gold);
+  letter-spacing:.1em;text-transform:uppercase;margin-bottom:1.5rem;
+}
+.cta-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.2rem,4vw,3.2rem);font-weight:700;
+  color:var(--white);margin-bottom:1rem;line-height:1.15;
+}
+.cta-sub{font-size:1rem;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:2.5rem}
+.cta-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.btn-cta-primary{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.9rem 2rem;border-radius:var(--r);
+  background:var(--gold);color:var(--navy-dk);
+  font-size:1rem;font-weight:700;border:none;cursor:pointer;
+  transition:all .22s;
+}
+.btn-cta-primary:hover{background:var(--gold-lt);transform:translateY(-2px);box-shadow:0 8px 30px rgba(196,154,42,.4)}
+.btn-cta-secondary{
+  display:inline-flex;align-items:center;gap:.5rem;
+  padding:.9rem 1.8rem;border-radius:var(--r);
+  background:transparent;color:var(--white);
+  font-size:1rem;font-weight:600;
+  border:1.5px solid rgba(255,255,255,.25);cursor:pointer;
+  transition:all .22s;
+}
+.btn-cta-secondary:hover{border-color:rgba(255,255,255,.5);background:rgba(255,255,255,.06)}
+
+/* ── FOOTER ────────────────────────────────────────────────── */
+footer{
+  background:var(--navy-dk);color:rgba(255,255,255,.55);
+  padding:4rem max(2rem,calc((100vw - 1200px)/2)) 2rem;
+}
+.footer-grid{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:3rem;margin-bottom:3rem;
+}
+.footer-brand .nav-logo{font-size:1.3rem;margin-bottom:1rem;display:block}
+.footer-tagline{font-size:.875rem;line-height:1.7;margin-bottom:1.5rem}
+.footer-col-title{
+  font-size:.75rem;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;color:rgba(255,255,255,.35);
+  margin-bottom:1rem;
+}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.footer-links a{
+  font-size:.875rem;color:rgba(255,255,255,.5);
+  transition:color .2s;
+}
+.footer-links a:hover{color:var(--gold)}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.06);
+  padding-top:1.5rem;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+  font-size:.8rem;
+}
+.footer-bottom-links{display:flex;gap:1.5rem}
+.footer-bottom-links a{color:rgba(255,255,255,.35);transition:color .2s}
+.footer-bottom-links a:hover{color:rgba(255,255,255,.6)}
+
+/* ── MOBILE NAV ────────────────────────────────────────────── */
+.mobile-nav{
+  display:none;position:fixed;inset:0;z-index:999;
+  background:var(--navy-dk);
+  flex-direction:column;align-items:center;justify-content:center;
+  gap:1.5rem;
+}
+.mobile-nav.open{display:flex}
+.mobile-nav a{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.8rem;font-weight:700;color:var(--white);
+  transition:color .2s;
+}
+.mobile-nav a:hover{color:var(--gold)}
+.mobile-nav .close-nav{
+  position:absolute;top:1.5rem;right:1.5rem;
+  background:none;border:none;color:var(--white);
+  font-size:1.5rem;cursor:pointer;
+}
+
+/* ── RESPONSIVE ────────────────────────────────────────────── */
+@media(max-width:1024px){
+  .services-grid,.pricing-grid{grid-template-columns:1fr 1fr}
+  .cats-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .stats-banner{grid-template-columns:repeat(2,1fr)}
+  .stat-item:nth-child(2){border-right:none}
+  .stat-item:nth-child(3){border-top:1px solid rgba(255,255,255,.08);border-right:1px solid rgba(255,255,255,.08)}
+}
+@media(max-width:768px){
+  .hero-inner{grid-template-columns:1fr;gap:3rem;padding:4rem 0 3rem}
+  .hero-bg-decor{display:none}
+  .hero-cards{padding-left:0}
+  .steps-grid{grid-template-columns:1fr 1fr}
+  .steps-grid::before{display:none}
+  .services-grid,.pricing-grid,.testimonials-grid,.why-grid{grid-template-columns:1fr}
+  .price-card.featured-price{transform:none}
+  .faq-grid{grid-template-columns:1fr}
+  .footer-grid{grid-template-columns:1fr}
+  .nav-links,.nav-cta-group .btn-ghost-nav{display:none}
+  .hamburger{display:flex}
+  .cats-grid{grid-template-columns:repeat(2,1fr)}
+  .stats-banner{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  .hero-stats{gap:1.5rem}
+  .hero-actions{flex-direction:column}
+  .cta-btns{flex-direction:column;align-items:center}
+}
+
+/* ── ANIMATIONS ────────────────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.fade-up{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══════════════════════════════════════════════════════ -->
+<nav id="mainNav">
+  <a href="#" class="nav-logo">StandIn<span>Corp</span></a>
+  <div class="nav-links">
+    <a href="#how-it-works">How It Works</a>
+    <a href="#services">Services</a>
+    <a href="#categories">Who We Serve</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-cta-group">
+    <a href="./app.html" class="btn-ghost-nav">Sign In</a>
+    <a href="./app.html" class="btn-primary-nav">
+      Get Started
+      <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Nav -->
+<div class="mobile-nav" id="mobileNav">
+  <button class="close-nav" id="closeNav">✕</button>
+  <a href="#how-it-works" onclick="closeMobileNav()">How It Works</a>
+  <a href="#services" onclick="closeMobileNav()">Services</a>
+  <a href="#categories" onclick="closeMobileNav()">Who We Serve</a>
+  <a href="#pricing" onclick="closeMobileNav()">Pricing</a>
+  <a href="#faq" onclick="closeMobileNav()">FAQ</a>
+  <a href="./app.html" style="color:var(--gold)">Sign In → Platform</a>
+</div>
+
+<!-- ═══ HERO ════════════════════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg-decor"></div>
+  <div class="hero-bg-dots"></div>
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge">Live &amp; Operating Across Kenya</div>
+      <h1 class="hero-h1">
+        Professional Presence
+        <em>When You Cannot Be There</em>
+      </h1>
+      <p class="hero-desc">
+        We send verified, trained corporate delegates to attend meetings, hearings, board sessions, and engagements on your behalf. No scams. No conflicts. Just accountable, professional representation.
+      </p>
+      <div class="hero-actions">
+        <a href="./app.html" class="btn-hero-primary">
+          Book a Representative
+          <svg viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#how-it-works" class="btn-hero-secondary">How It Works</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-val">50<span>+</span></div>
+          <div class="hero-stat-lbl">Vetted Representatives</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-val">98<span>%</span></div>
+          <div class="hero-stat-lbl">Engagement Success Rate</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-val">15<span>+</span></div>
+          <div class="hero-stat-lbl">Counties Covered</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-val">5<span>%</span></div>
+          <div class="hero-stat-lbl">Platform Fee Only</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-cards">
+        <div class="live-card">
+          <div class="lc-label">Latest Engagement</div>
+          <div class="lc-title">
+            Board Meeting — Westlands, Nairobi
+            <span class="lc-badge verified">Verified ✓</span>
+          </div>
+          <div class="lc-sub">Rep confirmed on-site · Finance Tier 2</div>
+        </div>
+        <div class="live-card">
+          <div class="lc-label">Representative Dispatched</div>
+          <div class="lc-title">
+            Amara K. → Legal Hearing, Milimani
+            <span class="lc-badge active">Active</span>
+          </div>
+          <div class="lc-sub">En route · 18 min ago · NDA signed</div>
+        </div>
+        <div class="live-card">
+          <div class="lc-label">Engagement Closed</div>
+          <div class="lc-title">
+            Investor Pitch — KES 2,400,000 deal
+            <span class="lc-badge delivered">Delivered</span>
+          </div>
+          <div class="lc-sub">Post-brief submitted · Client rated 5 ★</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ HOW IT WORKS ════════════════════════════════════════════════ -->
+<section class="section section-alt" id="how-it-works">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">The Process</span>
+    <h2 class="section-title">From Booking to Debrief — In 7 Steps</h2>
+    <p class="section-sub">Every engagement follows a structured, accountable workflow designed to protect your interests at every stage.</p>
+  </div>
+  <div class="steps-grid fade-up">
+    <div class="step-item">
+      <div class="step-num">01</div>
+      <div class="step-title">Submit Your Request</div>
+      <div class="step-desc">Provide meeting details, required expertise, date, location, and authority scope via the platform.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">02</div>
+      <div class="step-title">Rep Matched</div>
+      <div class="step-desc">Our ops team selects the best-fit credentialed professional from the roster. You approve within 24 hours.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">03</div>
+      <div class="step-title">Briefing Session</div>
+      <div class="step-desc">Your rep reviews all materials, objectives, speaking points, and the defined boundaries of authority.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">04</div>
+      <div class="step-title">NDA &amp; Contracts Signed</div>
+      <div class="step-desc">All legal documents — NDA, scope-of-authority, and engagement letter — are executed digitally.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">05</div>
+      <div class="step-title">Attendance</div>
+      <div class="step-desc">Your rep attends in full professional capacity with secure real-time communication where applicable.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">06</div>
+      <div class="step-title">Post-Meeting Debrief</div>
+      <div class="step-desc">Within 24 hours: full written brief, meeting minutes, signed documents, and audio summary delivered.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-num">07</div>
+      <div class="step-title">Quality Review</div>
+      <div class="step-desc">You rate the engagement. Feedback improves the platform and keeps our standards world-class.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ STATS BANNER ════════════════════════════════════════════════ -->
+<div class="section-navy" style="padding:0">
+  <div class="stats-banner">
+    <div class="stat-item fade-up">
+      <div class="stat-big">500<span>+</span></div>
+      <div class="stat-label">Engagements Completed</div>
+    </div>
+    <div class="stat-item fade-up">
+      <div class="stat-big">98<span>%</span></div>
+      <div class="stat-label">Client Satisfaction Rate</div>
+    </div>
+    <div class="stat-item fade-up">
+      <div class="stat-big">50<span>+</span></div>
+      <div class="stat-label">Vetted Professionals</div>
+    </div>
+    <div class="stat-item fade-up">
+      <div class="stat-big">15<span>+</span></div>
+      <div class="stat-label">Counties Covered</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ SERVICES ════════════════════════════════════════════════════ -->
+<section class="section" id="services">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">Services Portfolio</span>
+    <h2 class="section-title">Three Tiers of Professional Representation</h2>
+    <p class="section-sub">Choose the tier that matches your meeting's stakes. Every tier includes full NDA protection, professional indemnity insurance, and a post-engagement debrief.</p>
+  </div>
+  <div class="services-grid fade-up">
+
+    <div class="service-card">
+      <div class="service-tier">Tier 1</div>
+      <div class="service-name">Standard Representation</div>
+      <div class="service-price">KSh 25,900 – 64,800 per engagement</div>
+      <ul class="service-features">
+        <li>Attendance at administrative &amp; coordination meetings</li>
+        <li>Delivery of pre-prepared statements &amp; presentations</li>
+        <li>Formal note-taking &amp; attendance confirmation</li>
+        <li>Signing of routine, pre-approved documentation</li>
+        <li>Full post-meeting report within 24 hours</li>
+      </ul>
+      <a href="./app.html" class="service-cta">Book Standard Rep →</a>
+    </div>
+
+    <div class="service-card featured">
+      <div class="service-tier">Tier 2 — Most Popular</div>
+      <div class="service-name">Professional Specialist</div>
+      <div class="service-price">KSh 103,600 – 323,700 per engagement</div>
+      <ul class="service-features">
+        <li>Credentialed professional matched to your industry</li>
+        <li>Active participation in technical &amp; legal discussions</li>
+        <li>Authorized to answer questions within defined brief</li>
+        <li>Secure real-time client consultation during meeting</li>
+        <li>Full documentation pack included</li>
+      </ul>
+      <a href="./app.html" class="service-cta">Book Professional Rep →</a>
+    </div>
+
+    <div class="service-card">
+      <div class="service-tier">Tier 3</div>
+      <div class="service-name">Executive Proxy</div>
+      <div class="service-price">KSh 388,500+ per engagement</div>
+      <ul class="service-features">
+        <li>Senior-level C-suite calibre delegate</li>
+        <li>Full negotiation, presentation &amp; advocacy authority</li>
+        <li>Continuous secure real-time client communication</li>
+        <li>Audio summary, signed docs &amp; full outcome report</li>
+        <li>Ideal for investment pitches &amp; M&amp;A discussions</li>
+      </ul>
+      <a href="./app.html" class="service-cta">Book Executive Rep →</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ WHO WE SERVE / CATEGORIES ══════════════════════════════════ -->
+<section class="section section-alt" id="categories">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">Who We Serve</span>
+    <h2 class="section-title">Representation Across Every Profession</h2>
+    <p class="section-sub">Our vetted roster spans every major professional sector — so your delegate always arrives credentialed, prepared, and credible in the room.</p>
+  </div>
+  <div class="cats-grid fade-up">
+    <div class="cat-card">
+      <div class="cat-icon">⚖️</div>
+      <div class="cat-name">Legal Professionals</div>
+      <div class="cat-desc">Court attendances, arbitration &amp; legal hearings</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">📊</div>
+      <div class="cat-name">Finance &amp; Accounting</div>
+      <div class="cat-desc">Audits, investor meetings &amp; financial reviews</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🏛️</div>
+      <div class="cat-name">Government &amp; Policy</div>
+      <div class="cat-desc">Regulatory hearings &amp; inter-agency meetings</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">💼</div>
+      <div class="cat-name">C-Suite Executives</div>
+      <div class="cat-desc">Board meetings, strategy reviews &amp; negotiations</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🌍</div>
+      <div class="cat-name">NGOs &amp; Development</div>
+      <div class="cat-desc">Donor meetings &amp; field representation</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🏥</div>
+      <div class="cat-name">Healthcare &amp; Medical</div>
+      <div class="cat-desc">Medical boards &amp; clinical governance meetings</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">💻</div>
+      <div class="cat-name">Technology &amp; IT</div>
+      <div class="cat-desc">Technical reviews, spec meetings &amp; IT audits</div>
+    </div>
+    <div class="cat-card">
+      <div class="cat-icon">🏗️</div>
+      <div class="cat-name">Real Estate &amp; Construction</div>
+      <div class="cat-desc">Site meetings, planning hearings &amp; negotiations</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ WHY STANDIN CORP ═════════════════════════════════════════════ -->
+<section class="section" id="why">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">Why StandIn Corp</span>
+    <h2 class="section-title">The Standard No One Else Has Built</h2>
+    <p class="section-sub">We are not a staffing agency, a temp firm, or a virtual assistant service. We are a corporate representation company — the first to build this at scale.</p>
+  </div>
+  <div class="why-grid fade-up">
+    <div class="why-card">
+      <div class="why-icon navy">🔒</div>
+      <div class="why-title">Ironclad NDA Protection</div>
+      <div class="why-desc">Every representative signs a binding Non-Disclosure Agreement before any briefing. Breach triggers immediate termination and legal action.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon gold">🎯</div>
+      <div class="why-title">Precision Matching</div>
+      <div class="why-desc">We match by industry, seniority, location, language, and meeting type. Generic delegation is not our model — precision is.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon green">✅</div>
+      <div class="why-title">Rigorous Vetting</div>
+      <div class="why-desc">Background checks, credential verification, professional references, and ongoing quarterly performance reviews for every rep on the roster.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon steel">📋</div>
+      <div class="why-title">Full Accountability</div>
+      <div class="why-desc">Every engagement is documented and reported. Clients receive a comprehensive post-meeting brief within 24 hours without exception.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon purple">🛡️</div>
+      <div class="why-title">Professional Indemnity Insurance</div>
+      <div class="why-desc">All engagements are covered by professional indemnity insurance. Your interests are protected even in the unlikely event of an error.</div>
+    </div>
+    <div class="why-card">
+      <div class="why-icon red">⚡</div>
+      <div class="why-title">Urgent Dispatch Available</div>
+      <div class="why-desc">Need a rep within 24–48 hours? Our urgent dispatch service covers same-day and next-day engagements across all tiers.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TESTIMONIALS ════════════════════════════════════════════════ -->
+<section class="section section-alt" id="testimonials">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">Client Testimonials</span>
+    <h2 class="section-title">What Our Clients Say</h2>
+    <p class="section-sub">From Nairobi boardrooms to tribunal hearings — professionals across Kenya trust StandIn Corp.</p>
+  </div>
+  <div class="testimonials-grid fade-up">
+    <div class="testi-card">
+      <div class="testi-quote">Our legal rep attended three tribunal hearings while I was in simultaneous client meetings. The debrief reports were more thorough than what my own associate would have produced.</div>
+      <div class="testi-divider"></div>
+      <div class="testi-author">
+        <div class="testi-avatar">DM</div>
+        <div>
+          <div class="testi-name">David M.</div>
+          <div class="testi-role">Managing Partner, Nairobi Law Chambers</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">I was in Dubai when our AGM took place. StandIn Corp sent a finance professional who represented us flawlessly. The shareholders didn't know the difference — and that's exactly the point.</div>
+      <div class="testi-divider"></div>
+      <div class="testi-author">
+        <div class="testi-avatar">PN</div>
+        <div>
+          <div class="testi-name">Patricia N.</div>
+          <div class="testi-role">CEO, Riverside Capital Group</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-quote">We used StandIn Corp for four consecutive donor coordination meetings while our field director was deployed. Every rep arrived briefed, professional, and on time. Exceptional service.</div>
+      <div class="testi-divider"></div>
+      <div class="testi-author">
+        <div class="testi-avatar">AK</div>
+        <div>
+          <div class="testi-name">Amara K.</div>
+          <div class="testi-role">Programme Director, East Africa Development Fund</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PRICING ══════════════════════════════════════════════════════ -->
+<section class="section" id="pricing">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">Transparent Pricing</span>
+    <h2 class="section-title">Simple, Honest Fees</h2>
+    <p class="section-sub">No hidden costs. No surprises. Every engagement priced clearly — with retainer options for high-frequency clients.</p>
+  </div>
+  <div class="pricing-grid fade-up">
+
+    <div class="price-card">
+      <div class="price-tag-label">Tier 1</div>
+      <div class="price-tag-name">Standard</div>
+      <div class="price-amount"><strong>KSh 25,900</strong> – 64,800 / engagement</div>
+      <ul class="price-features">
+        <li><span class="ck">✓</span> Administrative &amp; coordination meetings</li>
+        <li><span class="ck">✓</span> Statement &amp; presentation delivery</li>
+        <li><span class="ck">✓</span> Formal note-taking</li>
+        <li><span class="ck">✓</span> 24-hour debrief report</li>
+        <li><span class="ck">✓</span> NDA protection included</li>
+      </ul>
+      <a href="./app.html"><button class="price-btn">Get Started →</button></a>
+    </div>
+
+    <div class="price-card featured-price">
+      <div class="price-tag-label">Tier 2 — Most Popular</div>
+      <div class="price-tag-name">Professional</div>
+      <div class="price-amount"><strong>KSh 103,600</strong> – 323,700 / engagement</div>
+      <ul class="price-features">
+        <li><span class="ck">✓</span> Credentialed industry-matched rep</li>
+        <li><span class="ck">✓</span> Active technical participation</li>
+        <li><span class="ck">✓</span> Secure real-time client consultation</li>
+        <li><span class="ck">✓</span> Full documentation pack</li>
+        <li><span class="ck">✓</span> Professional indemnity insurance</li>
+      </ul>
+      <a href="./app.html"><button class="price-btn">Get Started →</button></a>
+    </div>
+
+    <div class="price-card">
+      <div class="price-tag-label">Tier 3</div>
+      <div class="price-tag-name">Executive Proxy</div>
+      <div class="price-amount"><strong>KSh 388,500+</strong> / engagement</div>
+      <ul class="price-features">
+        <li><span class="ck">✓</span> C-suite calibre delegate</li>
+        <li><span class="ck">✓</span> Full negotiation authority</li>
+        <li><span class="ck">✓</span> Continuous client communication</li>
+        <li><span class="ck">✓</span> Audio brief &amp; full outcome report</li>
+        <li><span class="ck">✓</span> Custom quote for complex engagements</li>
+      </ul>
+      <a href="./app.html"><button class="price-btn">Request a Quote →</button></a>
+    </div>
+
+  </div>
+
+  <!-- Retainer note -->
+  <div class="fade-up" style="margin-top:2rem;text-align:center;padding:1.5rem;background:var(--gold-pale);border-radius:var(--r-lg);border:1px solid rgba(196,154,42,.2)">
+    <p style="font-size:.9rem;color:var(--txt-md)">
+      <strong style="color:var(--navy)">Monthly Retainers available from KSh 194,400/mo</strong> — Priority access, dedicated rep assignment, and discounted engagement rates. 
+      <a href="./app.html" style="color:var(--navy);font-weight:700;border-bottom:1px solid var(--gold)">Contact us to discuss →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ═══ FAQ ══════════════════════════════════════════════════════════ -->
+<section class="section section-alt" id="faq">
+  <div class="section-header fade-up">
+    <span class="section-eyebrow">FAQ</span>
+    <h2 class="section-title">Frequently Asked Questions</h2>
+    <p class="section-sub">Everything you need to know before booking your first representative.</p>
+  </div>
+  <div class="faq-grid fade-up">
+    <div class="faq-item">
+      <div class="faq-q">Is this legal? Can someone truly represent me at a formal meeting? <span class="arrow">+</span></div>
+      <div class="faq-a">Yes. Professional representation is a well-established legal practice. StandIn Corp operates under scope-of-authority agreements and, where required, limited power of attorney instruments. Our legal team ensures every engagement is fully compliant with local law.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I know my confidential information is safe? <span class="arrow">+</span></div>
+      <div class="faq-a">Every representative signs a comprehensive NDA before any briefing. All platform data is encrypted at rest and in transit. Role-based access ensures reps only see information relevant to their specific active engagement. We maintain full audit trails.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How quickly can a rep be dispatched? <span class="arrow">+</span></div>
+      <div class="faq-a">Standard booking requires 48–72 hours notice for optimal matching. We also offer an Urgent Dispatch service for same-day and 24-hour deployments, subject to availability, at a 40% surcharge on the base engagement fee.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What happens if the rep performs below standard? <span class="arrow">+</span></div>
+      <div class="faq-a">We maintain a satisfaction guarantee. If you are not satisfied with the engagement, our quality team investigates within 24 hours. We offer a partial or full refund depending on the circumstances, backed by our professional indemnity insurance coverage.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Can the rep sign documents or make commitments on my behalf? <span class="arrow">+</span></div>
+      <div class="faq-a">Only within the precise scope defined in your scope-of-authority agreement. For contract signing, a limited power of attorney is prepared. Nothing beyond your defined scope can be agreed to — this is a core safeguard of our service model.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do you operate outside Nairobi? <span class="arrow">+</span></div>
+      <div class="faq-a">Yes. We currently have verified representatives across 15+ counties in Kenya. For international engagements, we offer cross-border deployment including travel logistics coordination. Contact us for a custom quote for any engagement outside our standard coverage area.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I communicate with my rep during the meeting? <span class="arrow">+</span></div>
+      <div class="faq-a">Tier 2 and Tier 3 engagements include secure real-time communication via the StandIn Corp platform. You can send instructions, respond to questions, and receive live updates while your rep is in the meeting room.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How is StandIn Corp different from a staffing agency? <span class="arrow">+</span></div>
+      <div class="faq-a">Fundamentally different. Staffing agencies place people into jobs. We deploy credentialed professionals for single, specific engagements under legal agreements that protect all parties. We are a corporate representation firm — a new category entirely.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA SECTION ══════════════════════════════════════════════════ -->
+<section class="cta-section" id="contact">
+  <div class="cta-inner">
+    <div class="cta-eyebrow">Ready to Get Started?</div>
+    <h2 class="cta-title">Your Next Meeting Is Covered.</h2>
+    <p class="cta-sub">Join hundreds of professionals across Kenya who never miss a critical meeting. Book your first representative today — or speak to our team about a custom retainer plan.</p>
+    <div class="cta-btns">
+      <a href="./app.html" class="btn-cta-primary">
+        Open the Platform
+        <svg viewBox="0 0 24 24" style="width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="./app.html" class="btn-cta-secondary">Sign In to Your Account</a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══════════════════════════════════════════════════════ -->
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <span class="nav-logo">StandIn<span>Corp</span></span>
+      <p class="footer-tagline">"When You Cannot Be There — We Are."<br/>Professional corporate representation services across Kenya and beyond.</p>
+      <p style="font-size:.78rem;color:rgba(255,255,255,.25)">© 2025 StandIn Corp. All Rights Reserved.<br/>Professional Indemnity Insured · NDA Protected · LLC Registered</p>
+    </div>
+    <div>
+      <div class="footer-col-title">Platform</div>
+      <ul class="footer-links">
+        <li><a href="./app.html">Sign In</a></li>
+        <li><a href="./app.html">Create Account</a></li>
+        <li><a href="./app.html">Book a Rep</a></li>
+        <li><a href="./app.html">My Engagements</a></li>
+        <li><a href="./app.html">Admin Dashboard</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Services</div>
+      <ul class="footer-links">
+        <li><a href="#services">Tier 1 — Standard</a></li>
+        <li><a href="#services">Tier 2 — Professional</a></li>
+        <li><a href="#services">Tier 3 — Executive Proxy</a></li>
+        <li><a href="#pricing">Monthly Retainers</a></li>
+        <li><a href="#pricing">Urgent Dispatch</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Company</div>
+      <ul class="footer-links">
+        <li><a href="#how-it-works">How It Works</a></li>
+        <li><a href="#why">Why StandIn Corp</a></li>
+        <li><a href="#categories">Who We Serve</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 StandIn Corp. All Rights Reserved.</span>
+    <div class="footer-bottom-links">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">NDA Framework</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── NAV SCROLL ───────────────────────────────── */
+var nav = document.getElementById('mainNav');
+window.addEventListener('scroll', function() {
+  if (window.scrollY > 20) nav.classList.add('scrolled');
+  else nav.classList.remove('scrolled');
+});
+
+/* ── MOBILE NAV ───────────────────────────────── */
+document.getElementById('hamburgerBtn').addEventListener('click', function() {
+  document.getElementById('mobileNav').classList.add('open');
+  document.body.style.overflow = 'hidden';
+});
+document.getElementById('closeNav').addEventListener('click', closeMobileNav);
+function closeMobileNav() {
+  document.getElementById('mobileNav').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ── FAQ ACCORDION ────────────────────────────── */
+document.querySelectorAll('.faq-item').forEach(function(item) {
+  item.addEventListener('click', function() {
+    var isOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(function(i){ i.classList.remove('open'); });
+    if (!isOpen) item.classList.add('open');
+  });
+});
+
+/* ── SCROLL REVEAL ────────────────────────────── */
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(entry) {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(function(el) {
+  observer.observe(el);
+});
+
+/* ── SMOOTH SCROLL for anchor links ──────────── */
+document.querySelectorAll('a[href^="#"]').forEach(function(link) {
+  link.addEventListener('click', function(e) {
+    var target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      var offset = 80;
+      var top = target.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: top, behavior: 'smooth' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
