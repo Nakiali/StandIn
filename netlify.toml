@@ -1,4 +1,4 @@
-# StandIn Corp — Netlify Configuration (SECURE VERSION)
+# StandIn Corp — Netlify Configuration (CSP fixed for inline scripts)
 
 [[redirects]]
   from = "/app"
@@ -30,8 +30,8 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
-    # STRICT CSP - no unsafe-inline for scripts (requires nonce or hash in production)
-    Content-Security-Policy = "default-src 'self'; script-src 'self' https://www.gstatic.com https://cdnjs.cloudflare.com https://*.firebaseio.com https://*.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com wss://*.firebaseio.com; img-src 'self' data:; frame-ancestors 'none'"
+    # Fixed CSP: allows inline scripts, blob URLs, and source maps
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://www.gstatic.com https://cdnjs.cloudflare.com https://*.firebaseio.com https://*.googleapis.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; connect-src 'self' https://*.googleapis.com https://*.firebaseio.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://securetoken.googleapis.com wss://*.firebaseio.com https://cdnjs.cloudflare.com https://www.gstatic.com; img-src 'self' data:; frame-ancestors 'none'"
 
 [[headers]]
   for = "/index.html"
