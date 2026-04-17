@@ -762,9 +762,11 @@ function bootstrapFirestore(callback) {
        the silent sign-out races with doLogin() setting _loginInProgress,
        causing the subsequent signed-in event to be treated as another
        stale session and silently signed out again — producing the hang. */
-    if (_staleSigningOut) return;
+    // FIXED:
+      if (_staleSigningOut && !firebaseUser) return;  // suppress the null sign-out event only
+      if (_staleSigningOut && !window._loginInProgress) return; // suppress stale re-auths
 
-    if (firebaseUser) {
+       if (firebaseUser) {
       window._pendingAuthEmail = firebaseUser.email;
 
       /* Fast-path — profile already in memory */
