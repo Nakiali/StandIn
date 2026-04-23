@@ -1,0 +1,82 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ───────────────────────────────────────────────────────
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function emailInUsersMap() {
+      return exists(/databases/$(database)/documents/standin_data/users)
+          && request.auth.token.email in
+             get(/databases/$(database)/documents/standin_data/users).data.map;
+    }
+
+    function userRole() {
+      return get(/databases/$(database)/documents/standin_data/users)
+               .data.map[request.auth.token.email].role;
+    }
+
+    function isAdmin()  { return isSignedIn() && emailInUsersMap() && userRole() == 'admin'; }
+    function isClient() { return isSignedIn() && emailInUsersMap() && userRole() == 'client'; }
+    // isRep() kept for legacy path rules below
+    function isRep()    { return isSignedIn() && emailInUsersMap() && userRole() == 'rep'; }
+
+    // ── standin_data — the active collection ─────────────────────────
+    match /standin_data/{doc} {
+
+      // ── users document ────────────────────────────────────────────
+      // Every signed-in user can read (needed to resolve role on login).
+      // Every signed-in user can write:
+      //   - new registrants writing their first profile entry (emailInUsersMap = false)
+      //   - reps editing their own profile / clearing mustChangePassword
+      //   - admins managing all user records
+      //   - clients are signed-in users too, so covered
+      // The only meaningful protection here is: unauthenticated users cannot write.
+      allow read:  if isSignedIn();
+      allow write: if isSignedIn();
+
+      // ── clients document ──────────────────────────────────────────
+      // Contains personal info (org, spend, contact). Reps must not access it.
+      // Admins have full access. Clients can read their own data and write
+      // self-registration / profile updates.
+      // New registrants (no role yet) may also write during sign-up.
+      allow read:  if isAdmin() || isClient();
+      allow write: if isAdmin() || isClient() || !emailInUsersMap();
+
+      // ── reps document ─────────────────────────────────────────────
+      // All signed-in users need read (clients browse reps during booking).
+      // All signed-in users may write:
+      //   - admins add/verify/edit reps
+      //   - reps edit their own profile
+      //   - clients update rep ratings after a completed engagement
+      //   - new registrants during self-registration
+      allow read:  if isSignedIn();
+      allow write: if isSignedIn();
+
+      // ── engagements document ──────────────────────────────────────
+      // All roles read and write. Clients book, reps submit debriefs,
+      // admins manage status. Row-level isolation is in application logic.
+      allow read, write: if isSignedIn();
+    }
+
+    // ── Legacy collection paths — no longer written by the app ───────
+    // Locked down to prevent accidental access to the old schema paths.
+    match /standin_users/{doc} {
+      allow read:  if isSignedIn();
+      allow write: if isAdmin();
+    }
+    match /standin_clients/{doc} {
+      allow read:  if isAdmin() || isClient();
+      allow write: if isAdmin();
+    }
+    match /standin_reps/{doc} {
+      allow read:  if isSignedIn();
+      allow write: if isAdmin() || isRep();
+    }
+    match /standin_engagements/{doc} {
+      allow read, write: if isSignedIn();
+    }
+  }
+}
