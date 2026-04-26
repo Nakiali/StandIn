@@ -1,0 +1,100 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ───────────────────────────────────────────────────────
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function usersDocData() {
+      return get(/databases/$(database)/documents/standin_data/users).data;
+    }
+
+    function emailInUsersMap() {
+      return exists(/databases/$(database)/documents/standin_data/users)
+          && request.auth.token.email in usersDocData().map;
+    }
+
+    function userRole() {
+      return usersDocData().map[request.auth.token.email].role;
+    }
+
+    function isAdmin()  { return isSignedIn() && emailInUsersMap() && userRole() == 'admin'; }
+    function isClient() { return isSignedIn() && emailInUsersMap() && userRole() == 'client'; }
+    function isRep()    { return isSignedIn() && emailInUsersMap() && userRole() == 'rep'; }
+
+    // ── standin_data — the active collection ─────────────────────────
+    // FIX: Previously one wildcard block (match /standin_data/{doc}) contained
+    // all allow statements. In Firestore, if ANY allow condition under a path
+    // matches, access is granted — so the broad users rules
+    // (allow read/write: if isSignedIn()) were silently overriding the tighter
+    // clients rules below them, allowing reps to read client data.
+    // Fixed by giving each document its own explicit match.
+
+    // ── users document ────────────────────────────────────────────────
+    match /standin_data/users {
+      allow read: if isSignedIn();
+
+      allow write: if
+        isAdmin()
+        || (
+          // Self-registration: new user, MUST register as client only
+          // (reps and admins can never be self-created)
+          isSignedIn()
+          && !emailInUsersMap()
+          && request.resource.data.map[request.auth.token.email].role == 'client'
+        )
+        || (
+          // Existing client/rep updating their own profile — cannot change their role
+          isSignedIn()
+          && emailInUsersMap()
+          && (isClient() || isRep())
+          && request.resource.data.map[request.auth.token.email].role
+             == resource.data.map[request.auth.token.email].role
+        );
+    }
+
+    // ── clients document ──────────────────────────────────────────────
+    // Reps must not access client financial/contact data.
+    // Self-registration write is allowed ONLY if the new role is 'client'
+    // (reps are added by admin only — never by self-registration).
+    match /standin_data/clients {
+      allow read:  if isAdmin() || isClient();
+      allow write: if isAdmin()
+                   || isClient()
+                   || (isSignedIn() && !emailInUsersMap()
+                       && request.resource.data.list == resource.data.list); // new user can't inject into clients list directly
+    }
+
+    // ── reps document ─────────────────────────────────────────────────
+    // Self-registration is NOT allowed for reps — admin-only creation.
+    match /standin_data/reps {
+      allow read:  if isSignedIn();
+      allow write: if isAdmin()
+                   || isRep();
+    }
+
+    // ── engagements document ──────────────────────────────────────────
+    match /standin_data/engagements {
+      allow read, write: if isSignedIn();
+    }
+
+    // ── Legacy collection paths — locked down ────────────────────────
+    match /standin_users/{doc} {
+      allow read:  if isSignedIn();
+      allow write: if isAdmin();
+    }
+    match /standin_clients/{doc} {
+      allow read:  if isAdmin() || isClient();
+      allow write: if isAdmin();
+    }
+    match /standin_reps/{doc} {
+      allow read:  if isSignedIn();
+      allow write: if isAdmin() || isRep();
+    }
+    match /standin_engagements/{doc} {
+      allow read, write: if isSignedIn();
+    }
+  }
+}
